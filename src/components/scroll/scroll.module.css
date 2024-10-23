@@ -1,0 +1,29 @@
+.container {
+    position: absolute;
+    bottom: 72px;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.container:hover {
+    cursor: pointer;
+}
+
+.container h1 {
+    color: #FAFAFF;
+    text-align: center;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: -0.42px;
+    opacity: 0.8;
+}
+
+.dark h1 {
+    color: #3A3A60;
+}

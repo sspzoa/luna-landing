@@ -1,28 +1,29 @@
 // src/components/DataProvider.tsx
 'use client';
 
-import type React from 'react';
-import { useEffect } from 'react';
-import { useAtomValue, useSetAtom } from 'jotai';
+import { fetchAwards, fetchInformation, fetchMembers, fetchProjects, fetchQnA } from '@/lib/api-client';
 import {
   awardsAtom,
+  informationAtom,
+  isDataInitializedAtom,
+  isDataLoadingAtom,
   membersAtom,
   projectsAtom,
   qnaAtom,
-  informationAtom,
-  isDataLoadingAtom,
-  isDataInitializedAtom
 } from '@/store';
 import { useQuery } from '@tanstack/react-query';
-import { fetchAllData } from '@/lib/api-client';
-import LoadingPage from './LoadingPage';
+import { useAtomValue, useSetAtom } from 'jotai';
+import type React from 'react';
+import { useEffect, useState } from 'react';
 
 interface DataProviderProps {
   children: React.ReactNode;
 }
 
 const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
-  // Jotai atoms
+  const [loadedCount, setLoadedCount] = useState(0);
+  const totalDataTypes = 5;
+
   const setAwards = useSetAtom(awardsAtom);
   const setMembers = useSetAtom(membersAtom);
   const setProjects = useSetAtom(projectsAtom);
@@ -31,22 +32,57 @@ const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
   const setIsDataLoading = useSetAtom(isDataLoadingAtom);
   const setIsDataInitialized = useSetAtom(isDataInitializedAtom);
 
-  const isDataLoading = useAtomValue(isDataLoadingAtom);
-  const isDataInitialized = useAtomValue(isDataInitializedAtom);
-
-  // React Query를 사용하여 모든 데이터 가져오기
-  const { data, isLoading, isError, error } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ['allData'],
-    queryFn: fetchAllData,
-    staleTime: 1000 * 60 * 5, // 5분
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
+    queryFn: async () => {
+      const dataTypes = [
+        { name: 'awards', fetch: fetchAwards, setter: setAwards },
+        { name: 'members', fetch: fetchMembers, setter: setMembers },
+        { name: 'projects', fetch: fetchProjects, setter: setProjects },
+        { name: 'qna', fetch: fetchQnA, setter: setQnA },
+        { name: 'information', fetch: fetchInformation, setter: setInformation },
+      ];
+
+      type DataTypeKey = 'awards' | 'members' | 'projects' | 'qna' | 'information';
+
+      interface DataTypeMapping {
+        name: DataTypeKey;
+        fetch: () => Promise<any>;
+        setter: (data: any) => void;
+      }
+
+      const typedDataTypes: DataTypeMapping[] = dataTypes as DataTypeMapping[];
+
+      const allData: Record<DataTypeKey, any> = {
+        awards: [],
+        members: [],
+        projects: [],
+        qna: [],
+        information: [],
+      };
+
+      const fetchPromises = typedDataTypes.map(async (dataType) => {
+        try {
+          const result = await dataType.fetch();
+
+          allData[dataType.name] = result;
+
+          setLoadedCount((prev) => prev + 1);
+
+          return result;
+        } catch (error) {
+          console.error(`Error loading ${dataType.name}:`, error);
+          throw error;
+        }
+      });
+
+      await Promise.all(fetchPromises);
+      return allData;
+    },
   });
 
-  // 데이터가 로드되면 Jotai atoms 업데이트
   useEffect(() => {
     if (data) {
-      console.log('Data loaded:', data);
       setAwards(data.awards);
       setMembers(data.members);
       setProjects(data.projects);
@@ -57,7 +93,6 @@ const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
     }
   }, [data, setAwards, setMembers, setProjects, setQnA, setInformation, setIsDataLoading, setIsDataInitialized]);
 
-  // 오류 발생 시 표시
   if (isError) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center gap-8 bg-red-100">
@@ -71,12 +106,22 @@ const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
     );
   }
 
-  // 데이터 로딩 중 로딩 페이지 표시
-  if (isLoading || isDataLoading || !isDataInitialized) {
-    return <LoadingPage />;
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center gap-8">
+        <div className="flex items-center justify-center h-full">
+          <div className="animate-spin rounded-full h-10 w-10 border-b-2" />
+        </div>
+        <div className="flex flex-col justify-center items-center gap-2">
+          <p className="text-center text-lg font-bold">초기 데이터를 불러오는 중입니다</p>
+          <p className="text-center text-lg font-bold">
+            {loadedCount}/{totalDataTypes}
+          </p>
+        </div>
+      </div>
+    );
   }
 
-  // 데이터 로드 후 자식 컴포넌트 렌더링
   return <>{children}</>;
 };
 

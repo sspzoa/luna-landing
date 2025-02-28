@@ -59,13 +59,11 @@ export interface Information {
   rewards?: string;
 }
 
-// API Response types
 export interface ApiResponse<T> {
   data: T;
   error?: string;
 }
 
-// Additional utility types for the application
 export interface PaginationParams {
   page: number;
   limit: number;
@@ -77,14 +75,12 @@ export interface ApiError {
   details?: any;
 }
 
-// State related types
 export interface AppState {
   isLoading: boolean;
   isInitialized: boolean;
   error: ApiError | null;
 }
 
-// Filter types
 export interface MemberFilters {
   generation?: string;
   position?: string;

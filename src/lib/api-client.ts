@@ -1,5 +1,5 @@
 // src/lib/api-client.ts
-import type {Award, Information, Member, Project, QnA} from "@/types";
+import type { Award, Information, Member, Project, QnA } from '@/types';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3002/api';
 
@@ -57,7 +57,7 @@ export async function fetchAllData(): Promise<AllData> {
     fetchMembers(),
     fetchProjects(),
     fetchQnA(),
-    fetchInformation()
+    fetchInformation(),
   ]);
 
   return {
@@ -65,6 +65,6 @@ export async function fetchAllData(): Promise<AllData> {
     members,
     projects,
     qna,
-    information
+    information,
   };
 }

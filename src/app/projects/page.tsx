@@ -1,12 +1,9 @@
 // src/app/projects/page.tsx
 'use client';
 
-import React from 'react';
+import { informationAtom, isDataInitializedAtom } from '@/store';
 import { useAtomValue } from 'jotai';
-import {
-  informationAtom,
-  isDataInitializedAtom
-} from '@/store';
+import React from 'react';
 
 export default function Projects() {
   const information = useAtomValue(informationAtom);

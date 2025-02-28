@@ -47,27 +47,27 @@ export default function Navbar() {
         </Link>
         <div className="flex flex-row justify-center items-center gap-10">
           <Link
-            className={`${textColor} hover:opacity-50 ease-in-out text-15 ${pathname === '/' ? 'font-semibold' : 'opacity-60'} transition-colors duration-300`}
+            className={`${textColor} hover:opacity-50 text-15 ${pathname === '/' ? 'font-semibold' : 'opacity-60'} transition-all duration-300`}
             href="/">
             홈
           </Link>
           <Link
-            className={`${textColor} hover:opacity-50 ease-in-out text-15 ${pathname === '/members' ? 'font-semibold' : 'opacity-60'} transition-colors duration-300`}
+            className={`${textColor} hover:opacity-50 text-15 ${pathname === '/members' ? 'font-semibold' : 'opacity-60'} transition-all duration-300`}
             href="/members">
             멤버
           </Link>
           <Link
-            className={`${textColor} hover:opacity-50 ease-in-out text-15 ${pathname === '/awards' ? 'font-semibold' : 'opacity-60'} transition-colors duration-300`}
+            className={`${textColor} hover:opacity-50 text-15 ${pathname === '/awards' ? 'font-semibold' : 'opacity-60'} transition-all duration-300`}
             href="/awards">
             업적
           </Link>
           <Link
-            className={`${textColor} hover:opacity-50 ease-in-out text-15 ${pathname === '/projects' ? 'font-semibold' : 'opacity-60'} transition-colors duration-300`}
+            className={`${textColor} hover:opacity-50 text-15 ${pathname === '/projects' ? 'font-semibold' : 'opacity-60'} transition-all duration-300`}
             href="/projects">
             프로젝트
           </Link>
           <Link
-            className={`${textColor} hover:opacity-50 ease-in-out text-15 ${pathname === '/qna' ? 'font-semibold' : 'opacity-60'} transition-colors duration-300`}
+            className={`${textColor} hover:opacity-50 text-15 ${pathname === '/qna' ? 'font-semibold' : 'opacity-60'} transition-all duration-300`}
             href="/qna">
             Q&A
           </Link>

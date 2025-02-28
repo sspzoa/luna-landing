@@ -28,28 +28,28 @@ export default function Footer() {
         <div className="flex flex-col items-end justify-center gap-5">
           <div className="flex flex-row gap-4 items-end justify-center">
             <Link
-              className="hover:opacity-50 ease-in-out duration-300"
+              className="hover:opacity-50 duration-300"
               href="https://www.instagram.com/dimigo_luna/"
               target="_blank"
               rel="noreferrer noopener">
               <Image src="/icons/instagram.svg" alt="instagram" width={24} height={24} draggable={false} />
             </Link>
             <Link
-              className="hover:opacity-50 ease-in-out duration-300"
+              className="hover:opacity-50 duration-300"
               href="https://github.com/LUNA-coding"
               target="_blank"
               rel="noreferrer noopener">
               <Image src="/icons/github.svg" alt="github" width={24} height={24} draggable={false} />
             </Link>
             <Link
-              className="hover:opacity-50 ease-in-out duration-300"
+              className="hover:opacity-50 duration-300"
               href="https://www.youtube.com/channel/UCWfvTEUzP9b2pPTDBSi9IMg"
               target="_blank"
               rel="noreferrer noopener">
               <Image src="/icons/youtube.svg" alt="youtube" width={24} height={24} draggable={false} />
             </Link>
             <Link
-              className="hover:opacity-50 ease-in-out duration-300"
+              className="hover:opacity-50 duration-300"
               href="https://www.facebook.com/lunacoding/"
               target="_blank"
               rel="noreferrer noopener">
@@ -59,7 +59,7 @@ export default function Footer() {
           <p className="text-12 font-semibold">
             Refreshed by{' '}
             <Link
-              className="hover:opacity-50 ease-in-out duration-300"
+              className="hover:opacity-50 duration-300"
               href="https://github.com/sspzoa"
               target="_blank"
               rel="noreferrer noopener">
@@ -67,7 +67,7 @@ export default function Footer() {
             </Link>{' '}
             / © 2018-{currentYear}{' '}
             <Link
-              className="hover:opacity-50 ease-in-out duration-300"
+              className="hover:opacity-50 duration-300"
               href="https://github.com/LUNA-coding"
               target="_blank"
               rel="noreferrer noopener">

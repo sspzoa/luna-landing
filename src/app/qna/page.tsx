@@ -1,4 +1,4 @@
-// src/app/page.tsx
+// src/app/qna/page.tsx
 'use client';
 
 import React from 'react';
@@ -8,7 +8,7 @@ import {
   isDataInitializedAtom
 } from '@/store';
 
-export default function Home() {
+export default function Qna() {
   const information = useAtomValue(informationAtom);
   const isDataInitialized = useAtomValue(isDataInitializedAtom);
 

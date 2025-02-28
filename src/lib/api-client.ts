@@ -1,10 +1,10 @@
 // src/lib/api-client.ts
 import type { Award, Information, Member, Project, QnA } from '@/types';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3002/api';
+const API_BASE_URL = 'https://api.luna.codes/api';
 
 export async function fetchAwards(): Promise<Award[]> {
-  const response = await fetch(`${API_BASE_URL}/awards`);
+  const response = await fetch(`${API_BASE_URL}/awards`, { mode: 'no-cors' });
   if (!response.ok) {
     throw new Error('Failed to fetch awards');
   }
@@ -12,7 +12,7 @@ export async function fetchAwards(): Promise<Award[]> {
 }
 
 export async function fetchMembers(): Promise<Member[]> {
-  const response = await fetch(`${API_BASE_URL}/members`);
+  const response = await fetch(`${API_BASE_URL}/members`, { mode: 'no-cors' });
   if (!response.ok) {
     throw new Error('Failed to fetch members');
   }
@@ -20,7 +20,7 @@ export async function fetchMembers(): Promise<Member[]> {
 }
 
 export async function fetchProjects(): Promise<Project[]> {
-  const response = await fetch(`${API_BASE_URL}/projects`);
+  const response = await fetch(`${API_BASE_URL}/projects`, { mode: 'no-cors' });
   if (!response.ok) {
     throw new Error('Failed to fetch projects');
   }
@@ -28,7 +28,7 @@ export async function fetchProjects(): Promise<Project[]> {
 }
 
 export async function fetchQnA(): Promise<QnA[]> {
-  const response = await fetch(`${API_BASE_URL}/qna`);
+  const response = await fetch(`${API_BASE_URL}/qna`, { mode: 'no-cors' });
   if (!response.ok) {
     throw new Error('Failed to fetch QnA');
   }
@@ -36,7 +36,7 @@ export async function fetchQnA(): Promise<QnA[]> {
 }
 
 export async function fetchInformation(): Promise<Information[]> {
-  const response = await fetch(`${API_BASE_URL}/information`);
+  const response = await fetch(`${API_BASE_URL}/information`, { mode: 'no-cors' });
   if (!response.ok) {
     throw new Error('Failed to fetch information');
   }

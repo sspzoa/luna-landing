@@ -1,4 +1,4 @@
-// src/app/page.tsx
+// src/app/awards/page.tsx
 'use client';
 
 import React from 'react';
@@ -8,7 +8,7 @@ import {
   isDataInitializedAtom
 } from '@/store';
 
-export default function Home() {
+export default function Awards() {
   const information = useAtomValue(informationAtom);
   const isDataInitialized = useAtomValue(isDataInitializedAtom);
 

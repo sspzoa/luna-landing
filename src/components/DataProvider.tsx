@@ -95,9 +95,9 @@ const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
 
   if (isError) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center gap-8 bg-red-100">
+      <div className="min-h-screen flex flex-col items-center justify-center gap-8 bg-[#ffe2e2]">
         <div className="flex flex-col justify-center items-center gap-2">
-          <p className="text-center text-lg font-bold text-red-900">
+          <p className="text-center text-lg font-bold text-[#82181a]">
             필요한 데이터를 불러오는 중 문제가 발생했습니다. <br />
             페이지를 새로고침해 주세요.
           </p>
@@ -113,7 +113,7 @@ const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
           <div className="animate-spin rounded-full h-10 w-10 border-b-2" />
         </div>
         <div className="flex flex-col justify-center items-center gap-2">
-          <p className="text-center text-lg font-bold">초기 데이터를 불러오는 중입니다</p>
+          <p className="text-center text-lg font-bold">초기 데이터를 불러오는 중입니다.</p>
           <p className="text-center text-lg font-bold">
             {loadedCount}/{totalDataTypes}
           </p>

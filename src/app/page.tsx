@@ -1,24 +1,21 @@
 // src/app/page.tsx
 'use client';
 
-import React from 'react';
+import { informationAtom, isDataInitializedAtom } from '@/store';
 import { useAtomValue } from 'jotai';
-import {
-  informationAtom,
-  isDataInitializedAtom
-} from '@/store';
+import React from 'react';
 
 export default function Home() {
   const information = useAtomValue(informationAtom);
   const isDataInitialized = useAtomValue(isDataInitializedAtom);
 
-  if (!isDataInitialized) {
+  if (!isDataInitialized || !information.length) {
     return null;
   }
 
   return (
     <div className="flex justify-center items-center w-full h-screen">
-      <h1>{information[0].moto}</h1>
+      <h1>{information[0]?.moto}</h1>
     </div>
   );
 }

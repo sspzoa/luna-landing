@@ -1,12 +1,9 @@
 // src/app/awards/page.tsx
 'use client';
 
-import React from 'react';
+import { informationAtom, isDataInitializedAtom } from '@/store';
 import { useAtomValue } from 'jotai';
-import {
-  informationAtom,
-  isDataInitializedAtom
-} from '@/store';
+import React from 'react';
 
 export default function Awards() {
   const information = useAtomValue(informationAtom);

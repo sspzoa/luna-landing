@@ -1,12 +1,9 @@
 // src/app/members/page.tsx
 'use client';
 
-import React from 'react';
+import { informationAtom, isDataInitializedAtom } from '@/store';
 import { useAtomValue } from 'jotai';
-import {
-  informationAtom,
-  isDataInitializedAtom
-} from '@/store';
+import React from 'react';
 
 export default function Members() {
   const information = useAtomValue(informationAtom);

@@ -34,7 +34,7 @@ export default function Navbar() {
   return (
     <div
       className={`${backgroundColor} fixed top-0 w-full z-50 flex justify-center items-center p-9 transition-colors duration-300 backdrop-blur-sm`}>
-      <div className="max-w-[1200px] w-full flex flex-row justify-between items-center">
+      <div className="max-w-[1200px] w-full flex flex-col md:flex-row gap-5 justify-between items-center">
         <Link href="/" className="flex flex-row justify-center items-center gap-2.5">
           <Image
             src={shouldBeTransparent ? '/icons/logo_white.svg' : '/icons/logo.svg'}
@@ -47,27 +47,27 @@ export default function Navbar() {
         </Link>
         <div className="flex flex-row justify-center items-center gap-10">
           <Link
-            className={`${textColor} hover:opacity-50 text-15 ${pathname === '/' ? 'font-semibold' : 'opacity-60'} transition-all duration-300`}
+            className={`${textColor} text-15 ${pathname === '/' ? 'hover:opacity-50 font-semibold' : 'hover:opacity-30 opacity-60'} transition-all duration-300`}
             href="/">
             홈
           </Link>
           <Link
-            className={`${textColor} hover:opacity-50 text-15 ${pathname === '/members' ? 'font-semibold' : 'opacity-60'} transition-all duration-300`}
+            className={`${textColor} text-15 ${pathname === '/members' ? 'hover:opacity-50 font-semibold' : 'hover:opacity-30 opacity-60'} transition-all duration-300`}
             href="/members">
             멤버
           </Link>
           <Link
-            className={`${textColor} hover:opacity-50 text-15 ${pathname === '/awards' ? 'font-semibold' : 'opacity-60'} transition-all duration-300`}
+            className={`${textColor} text-15 ${pathname === '/awards' ? 'hover:opacity-50 font-semibold' : 'hover:opacity-30 opacity-60'} transition-all duration-300`}
             href="/awards">
             업적
           </Link>
           <Link
-            className={`${textColor} hover:opacity-50 text-15 ${pathname === '/projects' ? 'font-semibold' : 'opacity-60'} transition-all duration-300`}
+            className={`${textColor} text-15 ${pathname === '/projects' ? 'hover:opacity-50 font-semibold' : 'hover:opacity-30 opacity-60'} transition-all duration-300`}
             href="/projects">
             프로젝트
           </Link>
           <Link
-            className={`${textColor} hover:opacity-50 text-15 ${pathname === '/qna' ? 'font-semibold' : 'opacity-60'} transition-all duration-300`}
+            className={`${textColor} text-15 ${pathname === '/qna' ? 'hover:opacity-50 font-semibold' : 'hover:opacity-30 opacity-60'} transition-all duration-300`}
             href="/qna">
             Q&A
           </Link>

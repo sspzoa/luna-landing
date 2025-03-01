@@ -9,6 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@splinetool/loader": "^1.9.72",
+    "@splinetool/react-spline": "^4.0.0",
+    "@splinetool/runtime": "^1.9.72",
     "@tanstack/query-sync-storage-persister": "^5.66.4",
     "@tanstack/react-query": "^5.66.9",
     "@tanstack/react-query-devtools": "^5.66.9",
@@ -16,7 +19,8 @@
     "jotai": "^2.12.1",
     "next": "15.2.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "three": "^0.174.0"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
@@ -24,6 +28,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/three": "^0.174.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

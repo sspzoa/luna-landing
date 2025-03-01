@@ -20,7 +20,7 @@ export default function Footer() {
       <div className="max-w-[1200px] w-full flex flex-row justify-between items-center opacity-40">
         <div className="flex flex-row justify-center items-center gap-6">
           <Image src="/icons/logo.svg" alt="logo" width={54} height={54} draggable={false} />
-          <div className="flex-col flex gap-0.5">
+          <div className="flex-col flex gap-2">
             <p className="text-16">{information[0]?.moto},</p>
             <p className="text-24 font-semibold">LUNA</p>
           </div>

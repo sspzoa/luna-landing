@@ -187,7 +187,7 @@ const MemberList: React.FC<MembersProps> = ({ members }) => {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 max-w-[1200px] w-full gap-20">
+      <div className="grid grid-cols-2 md:grid-cols-3 max-w-[1200px] w-full gap-20">
         {membersByGeneration.grouped[selectedGeneration || membersByGeneration.activeGeneration]?.map((member) => (
           <div key={member.id} className="flex flex-col justify-center items-center gap-5">
             <p className="text-16 opacity-50 font-semibold">{member.position || 'Member'}</p>

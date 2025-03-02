@@ -16,3 +16,15 @@ body {
   --luna-white: #fafaff;
   --luna-white-50: #fafaff80;
 }
+
+@keyframes bounce {
+  0% {
+    transform: translate(0, -10px);
+  }
+  50% {
+    transform: translate(0, 20px);
+  }
+  100% {
+    transform: translate(0, -10px);
+  }
+}

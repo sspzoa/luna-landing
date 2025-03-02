@@ -144,6 +144,8 @@ const MemberList: React.FC<MembersProps> = ({ members }) => {
   }
 
   function shouldUseDefaultImage(member: Member): boolean {
+    if (member.lunaGeneration === '명예 멤버') return true;
+
     if (!member.generation) return false;
 
     const match = member.generation.match(/(\d+)기/);

@@ -38,8 +38,8 @@ const Intro: React.FC<IntroProps> = ({ information }) => {
   const { scaledVh } = useScaling();
   return (
     <div style={{ height: scaledVh(100) }} className="relative flex justify-center items-center w-full p-9">
-      <div className="flex  flex-col md:flex-row justify-between items-center w-full max-w-[1200px] gap-9">
-        <div className="flex flex-col gap-7 shrink-0 self-start">
+      <div className="flex flex-col md:flex-row justify-between items-center w-full max-w-[1200px] gap-9">
+        <div className="flex flex-col gap-7 shrink-0 self-start md:self-center">
           <div className="flex flex-col gap-4">
             <p className="text-40 text-luna-bright font-medium">{information[0].moto},</p>
             <p className="text-96 text-luna-purple font-extrabold">LUNA</p>

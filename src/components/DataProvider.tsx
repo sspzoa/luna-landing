@@ -112,12 +112,11 @@ const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
         <div className="flex items-center justify-center h-full">
           <div className="animate-spin rounded-full h-10 w-10 border-b-2" />
         </div>
-        <div className="flex flex-col justify-center items-center gap-2">
-          <p className="text-center text-lg font-bold">초기 데이터를 불러오는 중입니다.</p>
+        {process.env.NODE_ENV === 'development' && (
           <p className="text-center text-lg font-bold">
             {loadedCount}/{totalDataTypes}
           </p>
-        </div>
+        )}
       </div>
     );
   }

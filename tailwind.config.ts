@@ -24,6 +24,7 @@ const config: Config = {
       40: ['40px', { lineHeight: 'normal', letterSpacing: '-1.2px' }],
       36: ['36px', { lineHeight: 'normal', letterSpacing: '-1.08px' }],
       32: ['32px', { lineHeight: 1.8, letterSpacing: '-0.96px' }],
+      28: ['28px', { lineHeight: '40px' }],
       24: ['24px', { lineHeight: 'normal', letterSpacing: '-0.72px' }],
       20: ['20px', { lineHeight: 1.8, letterSpacing: '-0.6px' }],
       16: ['16px', { letterSpacing: '-0.48px' }],

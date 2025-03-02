@@ -2,6 +2,7 @@
 'use client';
 
 import { DarkScroller } from '@/components/common/Scroller';
+import { useScaling } from '@/components/layout/ScalingLayout';
 import { informationAtom, isDataInitializedAtom, projectsAtom } from '@/store';
 import type { Information, Project } from '@/types';
 import { useAtomValue } from 'jotai';
@@ -33,10 +34,11 @@ interface IntroProps {
 }
 
 const Intro: React.FC<IntroProps> = ({ information }) => {
+  const { scaledVh } = useScaling();
   return (
-    <div className="relative flex justify-center items-center w-full min-h-[100dvh] p-9">
-      <div className="flex flex-row justify-between items-center w-full max-w-[1200px] gap-9">
-        <div className="flex flex-col gap-7 shrink-0">
+    <div style={{ height: scaledVh(100) }} className="relative flex justify-center items-center w-full p-9">
+      <div className="flex  flex-col lg:flex-row justify-between items-center w-full max-w-[1200px] gap-9">
+        <div className="flex flex-col gap-7 shrink-0 self-start">
           <div className="flex flex-col gap-4">
             <p className="text-40 text-luna-bright font-medium">{information[0].moto},</p>
             <p className="text-96 text-luna-purple font-extrabold">LUNA</p>
@@ -46,16 +48,14 @@ const Intro: React.FC<IntroProps> = ({ information }) => {
             사회적 문제들을 해결하고 <strong>모두가 함께 살 수 있는 세상을 만들기 위해 노력하고 있습니다.</strong>
           </p>
         </div>
-        <div className="shrink">
-          <Image
-            src="/images/home/luna_model.png"
-            alt="luna_model"
-            width={500}
-            height={418}
-            draggable={false}
-            className="max-w-[500px] w-full h-auto"
-          />
-        </div>
+        <Image
+          className="self-end"
+          src="/images/home/luna_model.png"
+          alt="luna_model"
+          width={500}
+          height={418}
+          draggable={false}
+        />
       </div>
       <DarkScroller />
     </div>
@@ -147,8 +147,8 @@ interface ContestsProps {
 const Contests: React.FC<ContestsProps> = ({ information }) => {
   return (
     <div className="flex flex-col justify-center items-center w-full py-40 p-9">
-      <div className="flex flex-row justify-between items-center w-full max-w-[1200px] gap-9">
-        <div className="flex flex-col gap-4 shrink-0">
+      <div className="flex flex-col lg:flex-row justify-between items-center w-full max-w-[1200px] gap-9">
+        <div className="self-start flex flex-col gap-4 shrink-0">
           <div className="flex flex-col gap-3">
             <p className="text-32 font-medium">
               <strong className="text-luna-purple">{information[0].contests}개</strong>의 대회,
@@ -166,16 +166,14 @@ const Contests: React.FC<ContestsProps> = ({ information }) => {
             <Image src="/icons/arrow_forward_ios.svg" alt="arrow_forward_ios" width={16} height={16} />
           </Link>
         </div>
-        <div className="shrink">
-          <Image
-            alt="luna_model"
-            width={500}
-            height={418}
-            draggable={false}
-            className="max-w-[500px] w-full h-auto rounded-3xl aspect-[1.5] object-cover"
-            src="/images/home/award.webp"
-          />
-        </div>
+        <Image
+          alt="award"
+          width={500}
+          height={418}
+          draggable={false}
+          className="self-end rounded-3xl aspect-[1.5] object-cover"
+          src="/images/home/award.webp"
+        />
       </div>
     </div>
   );
@@ -183,7 +181,7 @@ const Contests: React.FC<ContestsProps> = ({ information }) => {
 
 const Future: React.FC = () => {
   return (
-    <div className="flex flex-col justify-center items-center w-full pt-40 pb-80 p-9">
+    <div className="flex flex-col justify-center items-center w-full pt-40 pb-80 p-9 overflow-hidden">
       <div className="relative isolate">
         <div className="relative px-20 py-25 bg-[#C7C7C71A] border-2 border-[#fff6] backdrop-blur-sm rounded-[50px] z-20">
           <p className="text-28 text-center font-medium">

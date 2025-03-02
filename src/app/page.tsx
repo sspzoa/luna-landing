@@ -25,6 +25,7 @@ export default function Home() {
       <Projects information={information} projects={projects} />
       <Contests information={information} />
       <Future />
+      <MadeBy />
     </div>
   );
 }
@@ -37,7 +38,7 @@ const Intro: React.FC<IntroProps> = ({ information }) => {
   const { scaledVh } = useScaling();
   return (
     <div style={{ height: scaledVh(100) }} className="relative flex justify-center items-center w-full p-9">
-      <div className="flex  flex-col lg:flex-row justify-between items-center w-full max-w-[1200px] gap-9">
+      <div className="flex  flex-col md:flex-row justify-between items-center w-full max-w-[1200px] gap-9">
         <div className="flex flex-col gap-7 shrink-0 self-start">
           <div className="flex flex-col gap-4">
             <p className="text-40 text-luna-bright font-medium">{information[0].moto},</p>
@@ -97,7 +98,7 @@ const Projects: React.FC<ProjectsProps> = ({ information, projects }) => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center w-full py-40 gap-20">
+    <div className="flex flex-col justify-center items-center w-full py-50 gap-20">
       <div className="max-w-[1272px] w-full justify-start items-start px-9">
         <p className="text-32 font-medium text-left">루나의 크루원들은 지금까지 자발적으로</p>
       </div>
@@ -146,8 +147,8 @@ interface ContestsProps {
 
 const Contests: React.FC<ContestsProps> = ({ information }) => {
   return (
-    <div className="flex flex-col justify-center items-center w-full py-40 p-9">
-      <div className="flex flex-col lg:flex-row justify-between items-center w-full max-w-[1200px] gap-9">
+    <div className="flex flex-col justify-center items-center w-full py-50 p-9">
+      <div className="flex flex-col md:flex-row justify-between items-center w-full max-w-[1200px] gap-9">
         <div className="self-start flex flex-col gap-4 shrink-0">
           <div className="flex flex-col gap-3">
             <p className="text-32 font-medium">
@@ -181,7 +182,7 @@ const Contests: React.FC<ContestsProps> = ({ information }) => {
 
 const Future: React.FC = () => {
   return (
-    <div className="flex flex-col justify-center items-center w-full pt-40 pb-80 p-9 overflow-hidden">
+    <div className="flex flex-col justify-center items-center w-full py-50 overflow-hidden">
       <div className="relative isolate">
         <div className="relative px-20 py-25 bg-[#C7C7C71A] border-2 border-[#fff6] backdrop-blur-sm rounded-[50px] z-20">
           <p className="text-28 text-center font-medium">
@@ -238,6 +239,23 @@ const Future: React.FC = () => {
           draggable={false}
         />
       </div>
+    </div>
+  );
+};
+
+const MadeBy: React.FC = () => {
+  return (
+    <div className="flex flex-col justify-center items-center w-full pt-50 pb-100 animate-pulse">
+      <p className="text-40 opacity-10">
+        Refreshed by{' '}
+        <Link
+          className="hover:opacity-50 duration-300 font-bold"
+          href="https://github.com/sspzoa"
+          target="_blank"
+          rel="noreferrer noopener">
+          sspzoa
+        </Link>
+      </p>
     </div>
   );
 };

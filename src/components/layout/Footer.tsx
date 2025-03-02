@@ -57,15 +57,7 @@ export default function Footer() {
             </Link>
           </div>
           <p className="text-12 font-semibold">
-            {/*Refreshed by{' '}*/}
-            {/*<Link*/}
-            {/*  className="hover:opacity-50 duration-300"*/}
-            {/*  href="https://github.com/sspzoa"*/}
-            {/*  target="_blank"*/}
-            {/*  rel="noreferrer noopener">*/}
-            {/*  sspzoa*/}
-            {/*</Link>{' '}*/}
-            {/*/ */}© 2018-{currentYear}{' '}
+            © 2018-{currentYear}{' '}
             <Link
               className="hover:opacity-50 duration-300"
               href="https://github.com/LUNA-coding"

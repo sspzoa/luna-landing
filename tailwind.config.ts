@@ -12,6 +12,7 @@ const config: Config = {
       'luna-bright': 'var(--luna-bright)',
       'luna-purple': 'var(--luna-purple)',
       'luna-dark': 'var(--luna-dark)',
+      'luna-dark-10': 'var(--luna-dark-10)',
       'luna-black': 'var(--luna-black)',
       'luna-white': 'var(--luna-white)',
       'luna-white-50': 'var(--luna-white-50)',

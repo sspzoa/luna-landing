@@ -159,7 +159,7 @@ const MemberList: React.FC<MembersProps> = ({ members }) => {
     <div className="py-25 px-9 flex flex-col justify-center items-center w-full gap-25">
       <div className="flex flex-col justify-center items-center gap-7">
         <p className="text-48 font-bold">{membersByGeneration.activeGeneration}</p>
-        <div className="flex flex-row flex-wrap justify-center items-center gap-4">
+        <div className="flex flex-row flex-wrap justify-center items-center gap-4 max-w-[1200px]">
           {membersByGeneration.generations.map((generation) => (
             <div
               key={generation}

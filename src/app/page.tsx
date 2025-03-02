@@ -34,9 +34,9 @@ interface IntroProps {
 
 const Intro: React.FC<IntroProps> = ({ information }) => {
   return (
-    <div className="flex justify-center items-center w-full min-h-[100dvh]">
-      <div className="flex flex-row justify-between items-center w-full max-w-[1200px]">
-        <div className="flex flex-col gap-7">
+    <div className="relative flex justify-center items-center w-full min-h-[100dvh] p-9">
+      <div className="flex flex-row justify-between items-center w-full max-w-[1200px] gap-9">
+        <div className="flex flex-col gap-7 shrink-0">
           <div className="flex flex-col gap-4">
             <p className="text-40 text-luna-bright font-medium">{information[0].moto},</p>
             <p className="text-96 text-luna-purple font-extrabold">LUNA</p>
@@ -46,7 +46,16 @@ const Intro: React.FC<IntroProps> = ({ information }) => {
             사회적 문제들을 해결하고 <strong>모두가 함께 살 수 있는 세상을 만들기 위해 노력하고 있습니다.</strong>
           </p>
         </div>
-        <Image src="/images/home/luna_model.png" alt="luna_model" width={500} height={418} draggable={false} />
+        <div className="shrink">
+          <Image
+            src="/images/home/luna_model.png"
+            alt="luna_model"
+            width={500}
+            height={418}
+            draggable={false}
+            className="max-w-[500px] w-full h-auto"
+          />
+        </div>
       </div>
       <DarkScroller />
     </div>
@@ -89,7 +98,7 @@ const Projects: React.FC<ProjectsProps> = ({ information, projects }) => {
 
   return (
     <div className="flex flex-col justify-center items-center w-full py-40 gap-20">
-      <div className="max-w-[1200px] w-full justify-start items-start">
+      <div className="max-w-[1272px] w-full justify-start items-start px-9">
         <p className="text-32 font-medium text-left">루나의 크루원들은 지금까지 자발적으로</p>
       </div>
       <div className="flex flex-col justify-center items-center gap-3 w-full overflow-hidden">
@@ -114,7 +123,7 @@ const Projects: React.FC<ProjectsProps> = ({ information, projects }) => {
           </div>
         ))}
       </div>
-      <div className="max-w-[1200px] w-full flex flex-col justify-end items-end gap-4">
+      <div className="max-w-[1272px] w-full flex flex-col justify-end items-end gap-4 px-9">
         <p className="text-32 font-medium text-right">
           <strong className="text-luna-purple">{information[0].projects}개의 프로젝트</strong>를 진행하며
           <br />
@@ -136,28 +145,10 @@ interface ContestsProps {
 }
 
 const Contests: React.FC<ContestsProps> = ({ information }) => {
-  const [scrollY, setScrollY] = React.useState(0);
-
-  React.useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
-  const getTranslateY = () => {
-    const baseSpeed = 0.3;
-    return `translateY(${scrollY * baseSpeed * -1}px)`;
-  };
-
   return (
-    <div className="flex flex-col justify-center items-center w-full py-40">
-      <div className="flex flex-row justify-between items-center w-full max-w-[1200px]">
-        <div className="flex flex-col gap-4">
+    <div className="flex flex-col justify-center items-center w-full py-40 p-9">
+      <div className="flex flex-row justify-between items-center w-full max-w-[1200px] gap-9">
+        <div className="flex flex-col gap-4 shrink-0">
           <div className="flex flex-col gap-3">
             <p className="text-32 font-medium">
               <strong className="text-luna-purple">{information[0].contests}개</strong>의 대회,
@@ -175,17 +166,16 @@ const Contests: React.FC<ContestsProps> = ({ information }) => {
             <Image src="/icons/arrow_forward_ios.svg" alt="arrow_forward_ios" width={16} height={16} />
           </Link>
         </div>
-        <Image
-          style={{
-            transform: getTranslateY(),
-          }}
-          className="rounded-3xl aspect-[1.5] object-cover translate-y-[500px]"
-          src="/images/home/award.webp"
-          alt="award"
-          width={500}
-          height={418}
-          draggable={false}
-        />
+        <div className="shrink">
+          <Image
+            alt="luna_model"
+            width={500}
+            height={418}
+            draggable={false}
+            className="max-w-[500px] w-full h-auto rounded-3xl aspect-[1.5] object-cover"
+            src="/images/home/award.webp"
+          />
+        </div>
       </div>
     </div>
   );
@@ -193,7 +183,7 @@ const Contests: React.FC<ContestsProps> = ({ information }) => {
 
 const Future: React.FC = () => {
   return (
-    <div className="flex flex-col justify-center items-center w-full pt-40 pb-80">
+    <div className="flex flex-col justify-center items-center w-full pt-40 pb-80 p-9">
       <div className="relative isolate">
         <div className="relative px-20 py-25 bg-[#C7C7C71A] border-2 border-[#fff6] backdrop-blur-sm rounded-[50px] z-20">
           <p className="text-28 text-center font-medium">

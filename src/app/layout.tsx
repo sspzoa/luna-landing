@@ -2,8 +2,10 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
+import FixedScalingLayout from '@/components/layout/FixedScalingLayout';
 import Footer from '@/components/layout/Footer';
 import Navbar from '@/components/layout/Navbar';
+import ScalingLayout from '@/components/layout/ScalingLayout';
 import { PersistQueryClientProvider } from '@/providers/PersistQueryClientProvider';
 import type React from 'react';
 
@@ -31,8 +33,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body className={`${SuitVariable.variable} antialiased`}>
         <PersistQueryClientProvider>
           <Navbar />
-          {children}
-          <Footer />
+          <ScalingLayout>
+            {children}
+            <Footer />
+          </ScalingLayout>
         </PersistQueryClientProvider>
       </body>
     </html>

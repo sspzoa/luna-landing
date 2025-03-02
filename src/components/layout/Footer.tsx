@@ -17,7 +17,7 @@ export default function Footer() {
 
   return (
     <div className="w-full flex justify-center items-center p-[54px] bg-[#E2E0EC]">
-      <div className="max-w-[1200px] w-full flex flex-col md:flex-row justify-between items-center opacity-40 gap-5">
+      <div className="max-w-[1200px] w-full flex flex-row justify-between items-center opacity-40 gap-5">
         <div className="flex flex-row justify-center items-center gap-6 self-start">
           <Image src="/icons/logo.svg" alt="logo" width={54} height={54} draggable={false} />
           <div className="flex-col flex gap-2">

@@ -194,7 +194,7 @@ const Future: React.FC = () => {
           </p>
         </div>
         <Image
-          className="absolute bottom-[-80px] left-[-70px] z-30 translate-y-[10px]"
+          className="absolute bottom-[-80px] left-[-70px] z-40 translate-y-[10px]"
           style={{ animation: 'bounce 4s infinite', animationDelay: '0.2s' }}
           src="/images/home/future/circle1.png"
           alt="circle1"

@@ -109,6 +109,7 @@ const AwardsList: React.FC<ProjectsProps> = ({ projects }) => {
               alt={project.name || 'project'}
               width={140}
               height={140}
+              draggable={false}
             />
             <div className="flex flex-col gap-1.5">
               <p className="text-24 font-bold">{project.name}</p>

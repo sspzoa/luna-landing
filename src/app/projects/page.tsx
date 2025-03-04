@@ -20,7 +20,7 @@ export default function Projects() {
   return (
     <div className="flex flex-col justify-center items-center w-full">
       <Intro projects={projects} />
-      <AwardsList projects={projects} />
+      <ProjectsList projects={projects} />
     </div>
   );
 }
@@ -57,13 +57,17 @@ interface ProjectsProps {
   projects: Project[];
 }
 
-const AwardsList: React.FC<ProjectsProps> = ({ projects }) => {
+const ProjectsList: React.FC<ProjectsProps> = ({ projects }) => {
   const years = useMemo(() => {
     const uniqueYears = Array.from(new Set(projects.map((project) => project.year))).filter(Boolean) as string[];
     return uniqueYears.sort((a, b) => Number.parseInt(b) - Number.parseInt(a));
   }, [projects]);
 
-  const [selectedYear, setSelectedYear] = useState<string>(years[0]);
+  const lastYear = String(new Date().getFullYear() - 1);
+
+  const defaultYear = years.includes(lastYear) ? lastYear : years[0];
+
+  const [selectedYear, setSelectedYear] = useState<string>(defaultYear);
 
   const filteredProjects = useMemo(() => {
     return projects.filter((project) => project.year === selectedYear);

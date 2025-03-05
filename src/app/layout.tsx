@@ -1,21 +1,11 @@
 // src/app/layout.tsx
 import type { Metadata } from 'next';
-import localFont from 'next/font/local';
 import './globals.css';
 import Footer from '@/components/layout/Footer';
 import Navbar from '@/components/layout/Navbar';
 import ScalingLayout from '@/components/layout/ScalingLayout';
 import { PersistQueryClientProvider } from '@/providers/PersistQueryClientProvider';
 import type React from 'react';
-
-const SuitVariable = localFont({
-  src: [
-    {
-      path: './fonts/SUIT-Variable.woff2',
-    },
-  ],
-  variable: '--font-SuitVariable',
-});
 
 export const metadata: Metadata = {
   title: 'IT 소셜벤처 동아리, LUNA',
@@ -29,7 +19,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="ko">
-      <body className={`${SuitVariable.variable} antialiased`}>
+      <body className="antialiased">
         <PersistQueryClientProvider>
           <Navbar />
           <ScalingLayout>

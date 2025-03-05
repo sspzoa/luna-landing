@@ -56,7 +56,7 @@ export interface Information {
   moto?: string;
   contests?: string;
   projects?: string;
-  rewards?: string;
+  prizemoney?: string;
 }
 
 export interface ApiResponse<T> {

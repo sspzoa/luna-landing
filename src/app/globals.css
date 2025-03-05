@@ -1,5 +1,11 @@
+@import url("https://cdn.jsdelivr.net/gh/sun-typeface/SUIT@2/fonts/static/woff2/SUIT.css");
 @import "tailwindcss";
+
 @config "../../tailwind.config.ts";
+
+* {
+  font-family: "SUIT", sans-serif;
+}
 
 html,
 body {
@@ -16,6 +22,11 @@ body {
   --luna-black: #2b274b;
   --luna-white: #fafaff;
   --luna-white-50: #fafaff80;
+}
+
+strong {
+  font-weight: 700;
+  font-style: normal;
 }
 
 @keyframes bounce {

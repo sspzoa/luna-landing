@@ -24,11 +24,6 @@ body {
   --luna-white-50: #fafaff80;
 }
 
-strong {
-  font-weight: 700;
-  font-style: normal;
-}
-
 @keyframes bounce {
   0% {
     transform: translate(0, -10px);

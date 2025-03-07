@@ -34,16 +34,16 @@ const Intro: React.FC<IntroProps> = ({ information }) => {
   const { scaledVh } = useScaling();
   return (
     <div style={{ height: scaledVh(100) }} className="relative flex justify-center items-center w-full p-9">
-      <div className="flex flex-col-reverse md:flex-row justify-between items-center w-full max-w-[1200px] gap-9">
+      <div className="relative flex flex-col-reverse md:flex-row-reverse justify-between items-center w-full max-w-[1200px] gap-9">
         <Image
-          className="self-start"
+          className="self-start  md:self-center md:absolute md:left-0"
           src="/images/awards/main.webp"
           alt="luna_model"
           width={397}
           height={301}
           draggable={false}
         />
-        <div className="flex flex-col gap-7 shrink-0 self-end md:self-center">
+        <div className="flex flex-col gap-7 shrink-0 self-end md:self-center z-10">
           <div className="flex flex-col gap-4">
             <p className="text-36 text-luna-bright font-medium text-right">{information[0]?.moto},</p>
             <p className="text-84 text-luna-purple font-extrabold text-right">루나의 업적</p>

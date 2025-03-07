@@ -38,8 +38,8 @@ const Intro: React.FC<IntroProps> = ({ information }) => {
   const { scaledVh } = useScaling();
   return (
     <div style={{ height: scaledVh(100) }} className="relative flex justify-center items-center w-full p-9">
-      <div className="flex flex-col md:flex-row justify-between items-center w-full max-w-[1200px] gap-9">
-        <div className="flex flex-col gap-7 shrink-0 self-start md:self-center">
+      <div className="md:relative flex flex-col md:flex-row justify-between items-center w-full max-w-[1200px] gap-9">
+        <div className="flex flex-col gap-7 shrink-0 self-start md:self-center z-10">
           <div className="flex flex-col gap-4">
             <p className="text-40 text-luna-bright font-medium">{information[0].moto},</p>
             <p className="text-96 text-luna-purple font-extrabold">LUNA</p>
@@ -50,7 +50,7 @@ const Intro: React.FC<IntroProps> = ({ information }) => {
           </p>
         </div>
         <Image
-          className="self-end"
+          className="self-end md:self-center md:absolute md:right-0"
           src="/images/home/luna_model.png"
           alt="luna_model"
           width={500}
@@ -148,8 +148,8 @@ interface ContestsProps {
 const Contests: React.FC<ContestsProps> = ({ information }) => {
   return (
     <div className="flex flex-col justify-center items-center w-full py-50 p-9">
-      <div className="flex flex-col md:flex-row justify-between items-center w-full max-w-[1200px] gap-9">
-        <div className="self-start flex flex-col gap-4 shrink-0">
+      <div className="relative flex flex-col md:flex-row justify-between items-center w-full max-w-[1200px] gap-9">
+        <div className="self-start flex flex-col gap-4 shrink-0 z-10">
           <div className="flex flex-col gap-3">
             <p className="text-32 font-medium">
               <strong className="text-luna-purple">{information[0].contests}개</strong>의 대회,
@@ -172,7 +172,7 @@ const Contests: React.FC<ContestsProps> = ({ information }) => {
           width={500}
           height={418}
           draggable={false}
-          className="self-end rounded-3xl aspect-[1.5] object-cover"
+          className="md:self-center md:absolute md:right-0 self-end rounded-3xl aspect-[1.5] object-cover"
           src="/images/home/award.webp"
         />
       </div>

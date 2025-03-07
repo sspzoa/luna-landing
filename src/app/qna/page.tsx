@@ -42,8 +42,8 @@ const QnaSection: React.FC<QnaProps> = ({ qna }) => {
 
   return (
     <div className="relative flex flex-col gap-30 justify-center items-center w-full pt-40 pb-30 px-9">
-      <div className="flex flex-col md:flex-row justify-between items-center w-full max-w-[1200px] gap-9">
-        <div className="flex flex-col gap-4 shrink-0 self-start md:self-center">
+      <div className="relative flex flex-col md:flex-row justify-between items-center w-full max-w-[1200px] min-h-[315px] gap-9">
+        <div className="flex flex-col gap-4 shrink-0 self-start md:self-center z-10">
           <p className="text-36 text-luna-dark font-semibold">자주 묻는 질문</p>
           <p className="text-wrap text-20 max-w-[435px]">
             루나에 대해서 자주 묻는 질문을 정리했습니다.
@@ -52,7 +52,7 @@ const QnaSection: React.FC<QnaProps> = ({ qna }) => {
           </p>
         </div>
         <iframe
-          className="self-end rounded-3xl border-2 border-luna-dark-10"
+          className="self-end md:self-center md:absolute md:right-0 rounded-3xl border-2 border-luna-dark-10"
           width="560"
           height="315"
           src="https://www.youtube-nocookie.com/embed/hIX8CQHqW-M?si=MjRFgxRxhsyvhzuc"

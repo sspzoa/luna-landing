@@ -30,7 +30,7 @@ interface ScalingLayoutProps {
 
 export default function ScalingLayout({
   children,
-  minWidth = 768,
+  minWidth = 700,
   className = '',
   disableScalingAboveMinWidth = true,
   maxScale = 1,

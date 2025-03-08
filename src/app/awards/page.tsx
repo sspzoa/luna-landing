@@ -122,7 +122,7 @@ const AwardsList: React.FC<AwardsProps> = ({ awards }) => {
       <div className="grid grid-cols-2 md:grid-cols-3 max-w-[1200px] w-full gap-x-8 gap-y-7">
         {filteredAwards.map((award) => (
           <div key={award.id} className="flex flex-col w-full border-2 border-luna-dark-10 rounded-[20px]">
-            <Image
+            <img
               className="rounded-t-[20px] w-full h-[180px] object-cover"
               src={award.image || '/images/awards/default.svg'}
               alt={award.name || 'award'}

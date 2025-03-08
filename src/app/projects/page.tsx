@@ -107,7 +107,7 @@ const ProjectsList: React.FC<ProjectsProps> = ({ projects }) => {
           <div
             key={project.id}
             className="flex flex-row items-center w-full border-2 border-luna-dark-10 rounded-[20px] p-7 gap-7">
-            <img
+            <Image
               className="aspect-square object-contain"
               src={project.image || '/images/projects/default.svg'}
               alt={project.name || 'project'}

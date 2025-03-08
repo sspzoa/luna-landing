@@ -193,7 +193,7 @@ const MemberList: React.FC<MembersProps> = ({ members }) => {
         {membersByGeneration.grouped[selectedGeneration || membersByGeneration.activeGeneration]?.map((member) => (
           <div key={member.id} className="flex flex-col justify-center items-center gap-5">
             <p className="text-16 opacity-50 font-semibold">{member.position || 'Member'}</p>
-            <img
+            <Image
               className="rounded-full object-cover aspect-square"
               src={
                 shouldUseDefaultImage(member)

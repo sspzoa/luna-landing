@@ -85,25 +85,6 @@ const MemberList: React.FC<MembersProps> = ({ members }) => {
   const membersByGeneration = useMemo(() => {
     const grouped: Record<string, Member[]> = {};
 
-    const activeGeneration = selectedGeneration || (members.length > 0 ? getHighestGeneration(members) : '');
-
-    const generationSet = new Set<string>();
-    for (const member of members) {
-      if (member.lunaGeneration) {
-        generationSet.add(member.lunaGeneration);
-      }
-    }
-
-    const generations = Array.from(generationSet).sort((a, b) => {
-      const numA = Number.parseInt(a.match(/\d+/)?.[0] || '0');
-      const numB = Number.parseInt(b.match(/\d+/)?.[0] || '0');
-      return numB - numA;
-    });
-
-    if (!selectedGeneration && generations.length > 0) {
-      setSelectedGeneration(generations[0]);
-    }
-
     for (const member of members) {
       const gen = member.lunaGeneration || '기타';
       if (!grouped[gen]) {
@@ -120,28 +101,38 @@ const MemberList: React.FC<MembersProps> = ({ members }) => {
       });
     }
 
-    return { grouped, generations, activeGeneration };
-  }, [members, selectedGeneration]);
-
-  function getHighestGeneration(members: Member[]): string {
-    let highest = 0;
-    let highestGen = '';
-
+    const generationSet = new Set<string>();
     for (const member of members) {
       if (member.lunaGeneration) {
-        const match = member.lunaGeneration.match(/LUNA\s+(\d+)기/);
-        if (match?.[1]) {
-          const generationNumber = Number.parseInt(match[1]);
-          if (!Number.isNaN(generationNumber) && generationNumber > highest) {
-            highest = generationNumber;
-            highestGen = member.lunaGeneration;
-          }
-        }
+        generationSet.add(member.lunaGeneration);
       }
     }
 
-    return highestGen;
-  }
+    const generations = Array.from(generationSet).sort((a, b) => {
+      const numA = Number.parseInt(a.match(/\d+/)?.[0] || '0');
+      const numB = Number.parseInt(b.match(/\d+/)?.[0] || '0');
+      return numB - numA;
+    });
+
+    let defaultGeneration = '';
+    if (generations.length > 0) {
+      const newestGeneration = generations[0];
+
+      if (grouped[newestGeneration] && grouped[newestGeneration].length <= 3) {
+        defaultGeneration = generations.length > 1 ? generations[1] : newestGeneration;
+      } else {
+        defaultGeneration = newestGeneration;
+      }
+    }
+
+    if (!selectedGeneration && defaultGeneration) {
+      setSelectedGeneration(defaultGeneration);
+    }
+
+    const activeGeneration = selectedGeneration || defaultGeneration;
+
+    return { grouped, generations, activeGeneration };
+  }, [members, selectedGeneration]);
 
   function shouldUseDefaultImage(member: Member): boolean {
     if (member.lunaGeneration === '명예 멤버') return true;

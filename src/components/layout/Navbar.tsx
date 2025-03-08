@@ -13,7 +13,7 @@ export default function Navbar() {
   const [scale, setScale] = useState(1);
 
   const calculateScale = useCallback((width: number): number => {
-    const minWidth = 600;
+    const minWidth = 768;
     const scaleStep = 0.01;
 
     if (width < minWidth) {

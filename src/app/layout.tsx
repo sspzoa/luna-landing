@@ -6,6 +6,7 @@ import Navbar from '@/components/layout/Navbar';
 import ScalingLayout from '@/components/layout/ScalingLayout';
 import { PersistQueryClientProvider } from '@/providers/PersistQueryClientProvider';
 import type React from 'react';
+import { Analytics } from '@vercel/analytics/vue';
 
 export const metadata: Metadata = {
   title: 'IT 소셜벤처 동아리, LUNA',
@@ -20,13 +21,15 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="ko">
       <body className="antialiased">
-        <PersistQueryClientProvider>
-          <Navbar />
-          <ScalingLayout>
-            {children}
-            <Footer />
-          </ScalingLayout>
-        </PersistQueryClientProvider>
+        <Analytics>
+          <PersistQueryClientProvider>
+            <Navbar />
+            <ScalingLayout>
+              {children}
+              <Footer />
+            </ScalingLayout>
+          </PersistQueryClientProvider>
+        </Analytics>
       </body>
     </html>
   );

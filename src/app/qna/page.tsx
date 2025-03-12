@@ -28,6 +28,12 @@ interface QnaProps {
 const QnaSection: React.FC<QnaProps> = ({ qna }) => {
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
 
+  const sortedQna = [...qna].sort((a, b) => {
+    if (a.order === undefined) return 1;
+    if (b.order === undefined) return -1;
+    return a.order - b.order;
+  });
+
   const toggleExpand = (id: string) => {
     setExpandedIds((prevExpandedIds) => {
       const newExpandedIds = new Set(prevExpandedIds);
@@ -64,7 +70,7 @@ const QnaSection: React.FC<QnaProps> = ({ qna }) => {
         />
       </div>
       <div className="w-full max-w-[1200px] flex flex-col gap-7">
-        {qna.map((item) => (
+        {sortedQna.map((item) => (
           <div key={item.id}>
             <div
               className={`flex flex-col border-2 border-luna-dark-10 rounded-3xl overflow-hidden transition-all duration-300 ease-in-out ${
@@ -103,7 +109,7 @@ const QnaSection: React.FC<QnaProps> = ({ qna }) => {
           </div>
         ))}
 
-        {qna.length === 0 && (
+        {sortedQna.length === 0 && (
           <div className="flex justify-center items-center p-10 border-2 border-luna-dark-10 rounded-3xl">
             <p className="text-18 font-medium opacity-70">현재 등록된 질문이 없습니다.</p>
           </div>

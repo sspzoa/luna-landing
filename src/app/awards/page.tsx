@@ -42,7 +42,6 @@ const Intro: React.FC<IntroProps> = ({ information }) => {
           width={397}
           height={301}
           draggable={false}
-          unoptimized={true}
         />
         <div className="flex flex-col gap-7 shrink-0 self-end md:self-center z-10">
           <div className="flex flex-col gap-4">
@@ -130,6 +129,7 @@ const AwardsList: React.FC<AwardsProps> = ({ awards }) => {
               width={376}
               height={180}
               draggable={false}
+              unoptimized={true}
             />
             <div className="p-5 flex flex-col gap-5">
               <div className="flex flex-col gap-1.5">

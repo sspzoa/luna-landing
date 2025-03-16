@@ -8,4 +8,4 @@ COPY . .
 RUN bun run build
 
 EXPOSE 3003
-CMD [ "bun", "start" ]
+CMD [ "bun", "start", "-p", "3003" ]

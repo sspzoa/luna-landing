@@ -195,7 +195,6 @@ const MemberList: React.FC<MembersProps> = ({ members }) => {
               width={140}
               height={140}
               draggable={false}
-              unoptimized={true}
             />
             <div className="flex flex-col justify-center items-center gap-1.5">
               <p className="text-24 font-semibold">{member.name}</p>

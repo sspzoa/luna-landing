@@ -35,8 +35,18 @@ const Intro: React.FC<IntroProps> = ({ projects }) => {
 
   return (
     <div style={{ height: scaledVh(100) }} className="relative flex justify-center items-center w-full p-9">
-      <div className="absolute inset-0 bg-[url(/images/projects/background.png)] bg-cover bg-center" />
-      <div className="absolute inset-0 bg-[#000] opacity-50" />
+      <div className="absolute inset-0 overflow-hidden">
+        <Image
+          src="/images/projects/background.png"
+          alt="Projects background"
+          fill
+          priority
+          quality={75}
+          sizes="100vw"
+          className="object-cover"
+        />
+        <div className="absolute inset-0 bg-[#000] opacity-50" />
+      </div>
 
       <div className="flex flex-col lg:flex-row justify-center items-center w-full max-w-[1200px] gap-9 relative z-10">
         <div className="flex flex-col gap-7 justify-center items-center">

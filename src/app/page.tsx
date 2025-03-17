@@ -56,7 +56,6 @@ const Intro: React.FC<IntroProps> = ({ information }) => {
           width={500}
           height={418}
           draggable={false}
-          priority={true}
         />
       </div>
       <DarkScroller />

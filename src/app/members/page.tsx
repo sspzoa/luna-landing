@@ -58,10 +58,9 @@ const Intro: React.FC<IntroProps> = ({ members }) => {
           src="/images/members/background.png"
           alt="Members background"
           fill
-          priority
-          quality={75}
           sizes="100vw"
           className="object-cover"
+          priority={true}
         />
         <div className="absolute inset-0 bg-[#000] opacity-50" />
       </div>
@@ -204,6 +203,7 @@ const MemberList: React.FC<MembersProps> = ({ members }) => {
               alt={`${member.name} profile`}
               width={140}
               height={140}
+              quality={75}
               draggable={false}
               priority={true}
             />

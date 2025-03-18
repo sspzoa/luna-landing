@@ -8,8 +8,6 @@ import { useAtomValue } from 'jotai';
 import Image from 'next/image';
 import { useMemo, useState } from 'react';
 import type React from 'react';
-import GoogleAdDisplay from '@/components/GoogleAdDisplay';
-import Script from 'next/script';
 
 export default function Members() {
   const members = useAtomValue(membersAtom);
@@ -159,24 +157,6 @@ const MemberList: React.FC<MembersProps> = ({ members }) => {
     return generationNumber <= currentYear - 2004;
   }
 
-  const displayedMembers = useMemo(() => {
-    const originalMembers =
-      membersByGeneration.grouped[selectedGeneration || membersByGeneration.activeGeneration] || [];
-
-    // Add ad member
-    const adMember: Member = {
-      id: 'ad-member',
-      name: 'LUNA 파트너스',
-      position: '광고',
-      description: '루나와 함께하세요',
-      lunaGeneration: selectedGeneration || membersByGeneration.activeGeneration,
-      generation: '',
-      class: '',
-    };
-
-    return [...originalMembers, adMember];
-  }, [selectedGeneration, membersByGeneration]);
-
   return (
     <div className="py-25 px-9 flex flex-col justify-center items-center w-full gap-25">
       <div className="flex flex-col justify-center items-center gap-7">
@@ -210,32 +190,23 @@ const MemberList: React.FC<MembersProps> = ({ members }) => {
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-3 max-w-[1200px] w-full gap-20">
-        {displayedMembers.map((member) => (
+        {membersByGeneration.grouped[selectedGeneration || membersByGeneration.activeGeneration]?.map((member) => (
           <div key={member.id} className="flex flex-col justify-center items-center gap-5">
             <p className="text-16 opacity-50 font-semibold">{member.position || 'Member'}</p>
-            {member.id === 'ad-member' ? (
-              <div className="relative w-[140px] h-[140px] rounded-full overflow-hidden">
-                <GoogleAdDisplay />
-                <div className="absolute top-2 left-13 bg-luna-purple text-luna-white text-12 px-2 py-1 rounded">
-                  광고
-                </div>
-              </div>
-            ) : (
-              <Image
-                className="rounded-full object-cover aspect-square"
-                src={
-                  shouldUseDefaultImage(member)
-                    ? '/images/members/default.svg'
-                    : member.image || '/images/members/default.svg'
-                }
-                alt={`${member.name} profile`}
-                width={140}
-                height={140}
-                quality={75}
-                draggable={false}
-                priority={true}
-              />
-            )}
+            <Image
+              className="rounded-full object-cover aspect-square"
+              src={
+                shouldUseDefaultImage(member)
+                  ? '/images/members/default.svg'
+                  : member.image || '/images/members/default.svg'
+              }
+              alt={`${member.name} profile`}
+              width={140}
+              height={140}
+              quality={75}
+              draggable={false}
+              priority={true}
+            />
             <div className="flex flex-col justify-center items-center gap-1.5">
               <p className="text-24 font-semibold">{member.name}</p>
               <p className="font-16 font-medium opacity-50">

@@ -7,7 +7,6 @@ import ScalingLayout from '@/components/layout/ScalingLayout';
 import { PersistQueryClientProvider } from '@/providers/PersistQueryClientProvider';
 import type React from 'react';
 import { Analytics } from '@vercel/analytics/react';
-import Script from 'next/script';
 
 export const metadata: Metadata = {
   title: 'IT 소셜벤처 동아리, LUNA',
@@ -22,10 +21,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="ko">
       <head>
-        <Script
-          id="google-adsense"
+        <script
           async
-          strategy="afterInteractive"
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2186209581588169"
           crossOrigin="anonymous"
         />

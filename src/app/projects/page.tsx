@@ -8,7 +8,6 @@ import { useAtomValue } from 'jotai';
 import Image from 'next/image';
 import type React from 'react';
 import { useMemo, useState } from 'react';
-import GoogleAdDisplay from '@/components/GoogleAdDisplay';
 
 export default function Projects() {
   const projects = useAtomValue(projectsAtom);
@@ -80,17 +79,7 @@ const ProjectsList: React.FC<ProjectsProps> = ({ projects }) => {
   const [selectedYear, setSelectedYear] = useState<string>(defaultYear);
 
   const filteredProjects = useMemo(() => {
-    const originalProjects = projects.filter((project) => project.year === selectedYear);
-
-    const adProject: Project = {
-      id: 'ad-project',
-      year: selectedYear,
-      name: 'LUNA 파트너스',
-      description: '루나와 함께하세요',
-      public_url: '',
-    };
-
-    return [...originalProjects, adProject];
+    return projects.filter((project) => project.year === selectedYear);
   }, [projects, selectedYear]);
 
   return (
@@ -127,24 +116,15 @@ const ProjectsList: React.FC<ProjectsProps> = ({ projects }) => {
           <div
             key={project.id}
             className="flex flex-row items-center w-full border-2 border-luna-dark-10 rounded-[20px] p-7 gap-7">
-            {project.id === 'ad-project' ? (
-              <div className="relative w-[140px] h-[140px] rounded-md overflow-hidden">
-                <GoogleAdDisplay />
-                <div className="absolute top-2 right-2 bg-luna-purple text-luna-white text-12 px-2 py-1 rounded">
-                  광고
-                </div>
-              </div>
-            ) : (
-              <Image
-                className="aspect-square object-contain"
-                src={project.image || '/images/projects/default.svg'}
-                alt={project.name || 'project'}
-                width={140}
-                height={140}
-                draggable={false}
-                priority={true}
-              />
-            )}
+            <Image
+              className="aspect-square object-contain"
+              src={project.image || '/images/projects/default.svg'}
+              alt={project.name || 'project'}
+              width={140}
+              height={140}
+              draggable={false}
+              priority={true}
+            />
             <div className="flex flex-col gap-1.5">
               <p className="text-24 font-bold">{project.name}</p>
               <p className="text-16 font-medium text-wrap">{project.description}</p>

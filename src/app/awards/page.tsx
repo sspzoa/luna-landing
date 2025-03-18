@@ -8,6 +8,7 @@ import { useAtomValue } from 'jotai';
 import Image from 'next/image';
 import type React from 'react';
 import { useMemo, useState } from 'react';
+import GoogleAdDisplay from '@/components/GoogleAdDisplay';
 
 export default function Awards() {
   const information = useAtomValue(informationAtom);
@@ -81,21 +82,18 @@ const AwardsList: React.FC<AwardsProps> = ({ awards }) => {
   const [selectedYear, setSelectedYear] = useState<string>(defaultYear);
 
   const filteredAwards = useMemo(() => {
-    // 원래 필터링된 어워드에 기존 어워드를 유지
     const originalAwards = awards.filter((award) => award.year === selectedYear);
 
-    // 광고 어워드를 추가
     const adAward: Award = {
       id: 'ad-award',
       year: selectedYear,
       name: 'LUNA 파트너스',
       prize: '루나와 함께하세요',
-      team: '후원',
-      members: ['스폰서십 문의'],
+      team: '광고',
+      members: ['Google AdSense'],
       date: {
         start: new Date().toISOString(),
       },
-      image: '/images/awards/advertisement.webp', // 광고 이미지 (별도로 추가해야 함)
     };
 
     return [...originalAwards, adAward];
@@ -142,7 +140,7 @@ const AwardsList: React.FC<AwardsProps> = ({ awards }) => {
           <div key={award.id} className="flex flex-col w-full border-2 border-luna-dark-10 rounded-[20px]">
             {award.id === 'ad-award' ? (
               <div className="rounded-t-[20px] w-full h-[180px] relative overflow-hidden">
-                <div className="w-full h-full flex justify-center items-center bg-gray-100">asd</div>
+                <GoogleAdDisplay />
                 <div className="absolute top-2 right-2 bg-luna-purple text-luna-white text-12 px-2 py-1 rounded">
                   광고
                 </div>

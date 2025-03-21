@@ -1,4 +1,4 @@
-name: CI/CD Docker
+name: CI/CD Minikube
 
 on:
   push:
@@ -7,52 +7,79 @@ on:
 env:
   DOCKER_IMAGE: ghcr.io/${{ github.repository }}
   VERSION: ${{ github.sha }}
-  NAME: ${{ github.repository_id }}
+  NAME: app-${{ github.repository_id }}
 
 jobs:
   build:
-    name: Build
+    name: Build & Push
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Set up Docker Buildx
-        id: buildx
         uses: docker/setup-buildx-action@v3
+
       - name: Cache Docker layers
         uses: actions/cache@v4
         with:
           path: /tmp/.buildx-cache
           key: ${{ runner.os }}-buildx-${{ env.VERSION }}
           restore-keys: ${{ runner.os }}-buildx-
+
       - name: Login to GHCR
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GHCR_TOKEN }}
+
       - name: Build and Push Docker Image
-        id: docker_build
         uses: docker/build-push-action@v5
         with:
-          builder: ${{ steps.buildx.outputs.name }}
           push: true
           tags: ${{ env.DOCKER_IMAGE }}:latest
 
   deploy:
     needs: build
-    name: Deploy
+    name: Deploy to Minikube
     runs-on: [ self-hosted, label-go ]
     steps:
-      - name: Login to GHCR
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GHCR_TOKEN }}
-      - name: Docker Run
+      - uses: actions/checkout@v4
+
+      - name: Set Docker environment for Minikube
         run: |
-          docker stop ${{ env.NAME }} || true
-          docker rm ${{ env.NAME }} || true
-          docker rmi ${{ env.DOCKER_IMAGE }}:latest || true
-          docker run -d -p 3002:3000 --name ${{ env.NAME }} --restart always \
-            ${{ env.DOCKER_IMAGE }}:latest
+          minikube status || minikube start --driver=docker
+
+      - name: Configure GHCR Credentials for Kubernetes
+        run: |
+          kubectl delete secret ghcr-secret --ignore-not-found=true
+          kubectl create secret docker-registry ghcr-secret \
+            --docker-server=ghcr.io \
+            --docker-username=${{ github.repository_owner }} \
+            --docker-password=${{ secrets.GHCR_TOKEN }}
+
+      - name: Deploy Application to Minikube
+        run: |
+          kubectl delete deployment/${{ env.NAME }} --ignore-not-found=true
+          kubectl delete service/${{ env.NAME }}-service --ignore-not-found=true
+
+          kubectl create deployment ${{ env.NAME }} \
+            --image=${{ env.DOCKER_IMAGE }}:latest \
+            --dry-run=client -o yaml > deploy.yaml
+
+          kubectl patch --local -f deploy.yaml \
+            -p '{"spec":{"template":{"spec":{"imagePullSecrets":[{"name":"ghcr-secret"}]}}}}' \
+            -o yaml > deploy-with-secret.yaml
+
+          kubectl apply -f deploy-with-secret.yaml
+
+          kubectl expose deployment ${{ env.NAME }} \
+            --type=NodePort \
+            --port=3000 \
+            --name=${{ env.NAME }}-service \
+            --overrides='{"spec":{"ports":[{"port":3000,"targetPort":3000,"nodePort":30002}]}}' \
+            --dry-run=client -o yaml | kubectl apply -f -
+
+      - name: Verify Deployment
+        run: |
+          kubectl rollout status deployment/${{ env.NAME }}
+          minikube service ${NAME}-service --url

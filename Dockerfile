@@ -7,5 +7,4 @@ RUN bun install
 COPY . .
 RUN bun run build
 
-EXPOSE 3003
-CMD [ "bun", "start", "-p", "3003" ]
+CMD [ "bun", "start" ]

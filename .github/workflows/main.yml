@@ -54,5 +54,5 @@ jobs:
           docker stop ${{ env.NAME }} || true
           docker rm ${{ env.NAME }} || true
           docker rmi ${{ env.DOCKER_IMAGE }}:latest || true
-          docker run -d -p 3000:3002 --name ${{ env.NAME }} --restart always \
+          docker run -d -p 3002:3000 --name ${{ env.NAME }} --restart always \
             ${{ env.DOCKER_IMAGE }}:latest

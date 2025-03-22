@@ -21,7 +21,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="ko">
       <body className="antialiased">
-        <Analytics />
         <PersistQueryClientProvider>
           <Navbar />
           <ScalingLayout>

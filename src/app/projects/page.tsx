@@ -123,7 +123,6 @@ const ProjectsList: React.FC<ProjectsProps> = ({ projects }) => {
               width={140}
               height={140}
               draggable={false}
-              priority={true}
             />
             <div className="flex flex-col gap-1.5">
               <p className="text-24 font-bold">{project.name}</p>

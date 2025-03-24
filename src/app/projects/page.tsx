@@ -117,7 +117,7 @@ const ProjectsList: React.FC<ProjectsProps> = ({ projects }) => {
             key={project.id}
             className="flex flex-row items-center w-full border-2 border-luna-dark-10 rounded-[20px] p-7 gap-7">
             <Image
-              className="aspect-square object-contain"
+              className="aspect-square object-contain flex-shrink-0"
               src={project.image || '/images/projects/default.svg'}
               alt={project.name || 'project'}
               width={140}

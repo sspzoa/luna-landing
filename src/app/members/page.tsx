@@ -203,7 +203,6 @@ const MemberList: React.FC<MembersProps> = ({ members }) => {
               alt={`${member.name} profile`}
               width={140}
               height={140}
-              quality={75}
               draggable={false}
             />
             <div className="flex flex-col justify-center items-center gap-1.5">

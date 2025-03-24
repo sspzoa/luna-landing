@@ -130,7 +130,6 @@ const AwardsList: React.FC<AwardsProps> = ({ awards }) => {
               width={376}
               height={180}
               draggable={false}
-              quality={75}
             />
             <div className="p-5 flex flex-col gap-5">
               <div className="flex flex-col gap-1.5">

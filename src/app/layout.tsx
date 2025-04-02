@@ -20,6 +20,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="ko">
+      <head>
+        <meta name="google-site-verification" content="w_nnQriETB8E6N6G5_VmiJNX9KEXKxaqCigLRsVmi4g" />
+      </head>
       <body className="antialiased">
         <PersistQueryClientProvider>
           <Navbar />

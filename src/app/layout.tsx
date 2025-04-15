@@ -1,4 +1,3 @@
-// src/app/layout.tsx
 import type { Metadata } from 'next';
 import './globals.css';
 import Footer from '@/components/layout/Footer';
@@ -6,6 +5,7 @@ import Navbar from '@/components/layout/Navbar';
 import ScalingLayout from '@/components/layout/ScalingLayout';
 import { PersistQueryClientProvider } from '@/providers/PersistQueryClientProvider';
 import type React from 'react';
+import { Analytics } from '@vercel/analytics/react';
 
 export const metadata: Metadata = {
   title: 'IT 소셜벤처 동아리, LUNA',
@@ -24,6 +24,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <meta name="google-site-verification" content="w_nnQriETB8E6N6G5_VmiJNX9KEXKxaqCigLRsVmi4g" />
       </head>
       <body className="antialiased">
+        <Analytics />
         <PersistQueryClientProvider>
           <Navbar />
           <ScalingLayout>

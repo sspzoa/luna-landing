@@ -26,13 +26,13 @@ export interface Award {
   image?: string;
   name?: string;
   prize?: string;
-  prizemoney?: string;
   team?: string;
   members?: string[];
   date?: {
     start: string;
     end?: string;
   };
+  prizemoney?: string;
 }
 
 export interface Project {

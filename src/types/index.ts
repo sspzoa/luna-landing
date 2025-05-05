@@ -26,7 +26,7 @@ export interface Award {
   image?: string;
   name?: string;
   prize?: string;
-  prizeMoney?: string;
+  prizemoney?: string;
   team?: string;
   members?: string[];
   date?: {

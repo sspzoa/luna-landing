@@ -15,8 +15,8 @@ export function PersistQueryClientProvider({ children }: { children: React.React
       new QueryClient({
         defaultOptions: {
           queries: {
-            staleTime: 1000 * 60 * 60,
-            gcTime: 1000 * 60 * 60,
+            staleTime: 1000 * 60 * 30,
+            gcTime: 1000 * 60 * 30,
             refetchOnWindowFocus: false,
             refetchOnMount: true,
             refetchOnReconnect: true,
@@ -37,7 +37,7 @@ export function PersistQueryClientProvider({ children }: { children: React.React
       persistQueryClient({
         queryClient,
         persister: localStoragePersister,
-        maxAge: 1000 * 60 * 60,
+        maxAge: 1000 * 60 * 30,
         buster: '1.0',
       });
     }

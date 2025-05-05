@@ -40,6 +40,7 @@ class ErrorBoundary extends Component<Props, State> {
               페이지를 새로고침해 주세요.
             </p>
             <button
+              type="button"
               onClick={() => window.location.reload()}
               className="mt-4 px-4 py-2 bg-[#82181a] text-white rounded hover:bg-[#6a1315] transition-colors">
               새로고침

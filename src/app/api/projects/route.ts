@@ -1,4 +1,3 @@
-// src/app/api/projects/route.ts
 import { NextResponse } from 'next/server';
 import { NOTION_CONFIG } from '../config';
 import { fetchNotionDatabase, transformProjects } from '../utils';

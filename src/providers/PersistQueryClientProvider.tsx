@@ -1,4 +1,3 @@
-// src/providers/PersistQueryClientProvider.tsx
 'use client';
 
 import DataProvider from '@/components/DataProvider';
@@ -16,11 +15,11 @@ export function PersistQueryClientProvider({ children }: { children: React.React
       new QueryClient({
         defaultOptions: {
           queries: {
-            staleTime: 1000 * 60 * 60, // 1 hour
-            gcTime: 1000 * 60 * 60 * 2, // 2 hours
+            staleTime: 1000 * 60 * 60,
+            gcTime: 1000 * 60 * 60,
             refetchOnWindowFocus: false,
-            refetchOnMount: true, // Changed to true to get fresh data
-            refetchOnReconnect: true, // Changed to true to get fresh data after reconnection
+            refetchOnMount: true,
+            refetchOnReconnect: true,
             retry: 1,
           },
         },
@@ -38,7 +37,7 @@ export function PersistQueryClientProvider({ children }: { children: React.React
       persistQueryClient({
         queryClient,
         persister: localStoragePersister,
-        maxAge: 1000 * 60 * 60 * 24, // 1 day
+        maxAge: 1000 * 60 * 60,
         buster: '1.0',
       });
     }

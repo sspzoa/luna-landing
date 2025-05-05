@@ -1,4 +1,3 @@
-// src/app/api/awards/route.ts
 import { NextResponse } from 'next/server';
 import { NOTION_CONFIG } from '../config';
 import { fetchNotionDatabase, transformAwards } from '../utils';

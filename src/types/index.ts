@@ -1,4 +1,3 @@
-// src/types/index.ts
 export interface NotionSortOption {
   property: string;
   direction: 'ascending' | 'descending';

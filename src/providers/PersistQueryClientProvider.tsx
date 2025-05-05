@@ -16,11 +16,11 @@ export function PersistQueryClientProvider({ children }: { children: React.React
       new QueryClient({
         defaultOptions: {
           queries: {
-            staleTime: 1000 * 60 * 60 * 24,
-            gcTime: 1000 * 60 * 60 * 24,
+            staleTime: 1000 * 60 * 60, // 1 hour
+            gcTime: 1000 * 60 * 60 * 2, // 2 hours
             refetchOnWindowFocus: false,
-            refetchOnMount: false,
-            refetchOnReconnect: false,
+            refetchOnMount: true, // Changed to true to get fresh data
+            refetchOnReconnect: true, // Changed to true to get fresh data after reconnection
             retry: 1,
           },
         },
@@ -28,18 +28,20 @@ export function PersistQueryClientProvider({ children }: { children: React.React
   );
 
   useEffect(() => {
-    const localStoragePersister = createSyncStoragePersister({
-      storage: window.localStorage,
-      key: 'luna-data-cache',
-      throttleTime: 1000,
-    });
+    if (typeof window !== 'undefined') {
+      const localStoragePersister = createSyncStoragePersister({
+        storage: window.localStorage,
+        key: 'luna-data-cache',
+        throttleTime: 1000,
+      });
 
-    persistQueryClient({
-      queryClient,
-      persister: localStoragePersister,
-      maxAge: 1000 * 60 * 60 * 24 * 7,
-      buster: '1.0',
-    });
+      persistQueryClient({
+        queryClient,
+        persister: localStoragePersister,
+        maxAge: 1000 * 60 * 60 * 24, // 1 day
+        buster: '1.0',
+      });
+    }
   }, [queryClient]);
 
   return (

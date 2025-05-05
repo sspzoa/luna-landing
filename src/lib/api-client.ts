@@ -1,7 +1,8 @@
 // src/lib/api-client.ts
 import type { Award, Information, Member, Project, QnA } from '@/types';
 
-const API_BASE_URL = 'https://api.luna.codes';
+// Set the base URL to our local API routes
+const API_BASE_URL = '/api';
 
 export async function fetchAwards(): Promise<Award[]> {
   const response = await fetch(`${API_BASE_URL}/awards`);

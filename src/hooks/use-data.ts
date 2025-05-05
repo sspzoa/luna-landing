@@ -8,7 +8,6 @@ import {
   qnaAtom,
 } from '@/store';
 import type { Award, Information, Member, Project, QnA } from '@/types';
-// src/hooks/use-data.ts
 import { useAtomValue } from 'jotai';
 
 export function useAwardsData(): Award[] {

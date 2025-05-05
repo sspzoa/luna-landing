@@ -1,5 +1,4 @@
 import type { Award, Information, Member, Project, QnA } from '@/types';
-// src/store/index.ts
 import { atom } from 'jotai';
 
 export const awardsAtom = atom<Award[]>([]);

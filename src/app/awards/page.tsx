@@ -134,7 +134,7 @@ const AwardsList: React.FC<AwardsProps> = ({ awards }) => {
             <div className="p-5 flex flex-col gap-5">
               <div className="flex flex-col gap-1.5">
                 <p className="text-14 font-semibold">{award.name}</p>
-                <p className="text-24 font-bold text-luna-bright">{award.prize}</p>
+                <p className="text-24 font-bold text-luna-bright">{award.prizemoney}</p>
               </div>
               <div className="flex flex-col gap-1.5">
                 <div className="flex flex-row justify-between items-center gap-2">

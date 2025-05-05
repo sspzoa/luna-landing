@@ -1,5 +1,4 @@
 import { fetchAllData, fetchAwards, fetchInformation, fetchMembers, fetchProjects, fetchQnA } from '@/lib/api-client';
-// src/hooks/use-queries.ts
 import { useQuery } from '@tanstack/react-query';
 
 export function useAwardsQuery() {

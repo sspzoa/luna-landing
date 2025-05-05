@@ -1,4 +1,3 @@
-// src/components/DataProvider.tsx
 'use client';
 
 import {
@@ -49,7 +48,6 @@ const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
     }
   }, [data, setAwards, setMembers, setProjects, setQnA, setInformation, setIsDataInitialized]);
 
-  // Show loading state if needed
   if (isLoading) {
     return (
       <div className="min-h-[100dvh] flex flex-col items-center justify-center gap-8">
@@ -61,7 +59,6 @@ const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
     );
   }
 
-  // Show error state if needed
   if (isError) {
     return (
       <div className="min-h-[100dvh] flex flex-col items-center justify-center gap-8 bg-[#ffe2e2]">
@@ -71,6 +68,7 @@ const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
             페이지를 새로고침해 주세요.
           </p>
           <button
+            type="button"
             onClick={() => window.location.reload()}
             className="mt-4 px-4 py-2 bg-[#82181a] text-white rounded hover:bg-[#6a1315] transition-colors">
             새로고침

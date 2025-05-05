@@ -1,7 +1,5 @@
-// src/lib/api-client.ts
 import type { Award, Information, Member, Project, QnA } from '@/types';
 
-// Set the base URL to our local API routes
 const API_BASE_URL = '/api';
 
 export async function fetchAwards(): Promise<Award[]> {

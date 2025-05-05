@@ -1,4 +1,3 @@
-// src/app/api/utils.ts
 import { NOTION_CONFIG } from './config';
 import type { Award, Information, Member, Project, QnA, NotionResponse, NotionSortOption } from '@/types';
 
@@ -26,7 +25,7 @@ export async function fetchNotionDatabase(databaseId: string, sorts: NotionSortO
         Authorization: `Bearer ${process.env.NOTION_API_KEY}`,
       },
       body: JSON.stringify({ sorts }),
-      cache: 'no-store', // Disable caching to always fetch fresh data
+      cache: 'no-store',
     });
 
     if (!res.ok) {
@@ -40,7 +39,6 @@ export async function fetchNotionDatabase(databaseId: string, sorts: NotionSortO
   }
 }
 
-// Data transformation functions
 export function transformMembers(data: NotionResponse): Member[] {
   const currentYear = new Date().getFullYear();
   const thresholdGeneration = currentYear - 2004;

@@ -55,7 +55,7 @@ const Intro: React.FC<IntroProps> = ({ information }) => {
               2018년부터 동아리 내에서 팀을 이루어 {information[0]?.contests}개의 대회 등, 다양한 외부 활동에 참여
             </strong>
             하였습니다. 그 결과 LUNA는 능력을 인정받고{' '}
-            <strong>지금까지 총 {information[0]?.prizemoney}만원의 상금 및 지원금</strong>을 받았습니다.
+            <strong>지금까지 총 {information[0]?.prize}만원의 상금 및 지원금</strong>을 받았습니다.
           </p>
         </div>
       </div>

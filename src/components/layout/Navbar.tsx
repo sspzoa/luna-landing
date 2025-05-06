@@ -41,7 +41,7 @@ export default function Navbar() {
   return (
     <div className="fixed top-0 left-0 w-full z-50">
       <div
-        className={`${backgroundColor} w-full flex justify-center items-center p-9 transition-colors duration-300 backdrop-blur-sm`}>
+        className={`${backgroundColor} w-full flex justify-center items-center p-5 md:p-9 transition-colors duration-300 backdrop-blur-sm`}>
         <div className="max-w-[1200px] w-full flex flex-row gap-5 justify-between items-center">
           <Link href="/" className="flex flex-row justify-center items-center gap-2.5">
             <Image
@@ -63,7 +63,7 @@ export default function Navbar() {
           </button>
 
           <div
-            className={`absolute right-0 top-[56px] w-48 bg-luna-white rounded-md overflow-hidden md:hidden ${isMenuOpen ? 'block' : 'hidden'}`}>
+            className={`absolute right-0 top-[56px] w-48 bg-luna-white shadow-sm rounded-md overflow-hidden md:hidden ${isMenuOpen ? 'block' : 'hidden'}`}>
             <div className="flex flex-col">
               <Link
                 className={`px-4 py-3 ${

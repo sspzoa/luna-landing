@@ -3,26 +3,15 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Menu } from 'lucide-react';
 
 const TRANSPARENT_PAGES = ['/members', '/projects'];
 
 export default function Navbar() {
   const pathname = usePathname();
   const [isAtTop, setIsAtTop] = useState(true);
-  const [scale, setScale] = useState(1);
-
-  const calculateScale = useCallback((width: number): number => {
-    const minWidth = 768;
-    const scaleStep = 0.01;
-
-    if (width < minWidth) {
-      const newScale = Math.max(width / minWidth, 0.1);
-      return Math.round(newScale / scaleStep) * scaleStep;
-    }
-
-    return 1;
-  }, []);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,24 +19,13 @@ export default function Navbar() {
       setIsAtTop(scrollPosition === 0);
     };
 
-    const handleResize = () => {
-      if (typeof window !== 'undefined') {
-        const width = window.innerWidth;
-        setScale(calculateScale(width));
-      }
-    };
-
     handleScroll();
-    handleResize();
-
     window.addEventListener('scroll', handleScroll);
-    window.addEventListener('resize', handleResize);
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleResize);
     };
-  }, [calculateScale]);
+  }, []);
 
   const isTransparentPage = TRANSPARENT_PAGES.includes(pathname);
   const shouldBeTransparent = isAtTop && isTransparentPage;
@@ -56,14 +34,13 @@ export default function Navbar() {
   const textColor = shouldBeTransparent ? 'text-luna-white' : 'text-luna-dark';
   const logoTextColor = shouldBeTransparent ? 'text-luna-white' : 'text-luna-purple';
 
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
-    <div className="fixed top-0 left-0 w-full z-50" style={{ height: `${56 * scale}px` }}>
+    <div className="fixed top-0 left-0 w-full z-50">
       <div
-        style={{
-          transform: `scale(${scale})`,
-          transformOrigin: 'left top',
-          width: `${(1 / scale) * 100}%`,
-        }}
         className={`${backgroundColor} w-full flex justify-center items-center p-9 transition-colors duration-300 backdrop-blur-sm`}>
         <div className="max-w-[1200px] w-full flex flex-row gap-5 justify-between items-center">
           <Link href="/" className="flex flex-row justify-center items-center gap-2.5">
@@ -76,29 +53,94 @@ export default function Navbar() {
             />
             <p className={`${logoTextColor} text-16 font-extrabold transition-colors duration-300`}>LUNA</p>
           </Link>
-          <div className="flex flex-row justify-center items-center gap-10">
+
+          <button
+            type="button"
+            onClick={toggleMenu}
+            aria-label="메뉴 열기"
+            className={`${textColor} p-2 transition-colors duration-300 md:hidden block`}>
+            <Menu size={24} />
+          </button>
+
+          <div
+            className={`absolute right-0 top-[56px] w-48 bg-luna-white rounded-md overflow-hidden md:hidden ${isMenuOpen ? 'block' : 'hidden'}`}>
+            <div className="flex flex-col">
+              <Link
+                className={`px-4 py-3 ${
+                  pathname === '/' ? 'font-bold' : 'font-normal'
+                } hover:opacity-50 transition-all duration-300 text-luna-dark`}
+                href="/"
+                onClick={() => setIsMenuOpen(false)}>
+                홈
+              </Link>
+              <Link
+                className={`px-4 py-3 ${
+                  pathname === '/members' ? 'font-bold' : 'font-normal'
+                } hover:opacity-50 transition-all duration-300 text-luna-dark`}
+                href="/members"
+                onClick={() => setIsMenuOpen(false)}>
+                멤버
+              </Link>
+              <Link
+                className={`px-4 py-3 ${
+                  pathname === '/awards' ? 'font-bold' : 'font-normal'
+                } hover:opacity-50 transition-all duration-300 text-luna-dark`}
+                href="/awards"
+                onClick={() => setIsMenuOpen(false)}>
+                업적
+              </Link>
+              <Link
+                className={`px-4 py-3 ${
+                  pathname === '/projects' ? 'font-bold' : 'font-normal'
+                } hover:opacity-50 transition-all duration-300 text-luna-dark`}
+                href="/projects"
+                onClick={() => setIsMenuOpen(false)}>
+                프로젝트
+              </Link>
+              <Link
+                className={`px-4 py-3 ${
+                  pathname === '/qna' ? 'font-bold' : 'font-normal'
+                } hover:opacity-50 transition-all duration-300 text-luna-dark`}
+                href="/qna"
+                onClick={() => setIsMenuOpen(false)}>
+                Q&A
+              </Link>
+            </div>
+          </div>
+
+          <div className="hidden md:flex flex-row justify-center items-center gap-10">
             <Link
-              className={`${textColor} text-15 ${pathname === '/' ? 'hover:opacity-50 font-semibold' : 'hover:opacity-30 opacity-60'} transition-all duration-300`}
+              className={`${textColor} text-15 ${
+                pathname === '/' ? 'hover:opacity-50 font-bold' : 'hover:opacity-30 opacity-60 font-normal'
+              } transition-all duration-300`}
               href="/">
               홈
             </Link>
             <Link
-              className={`${textColor} text-15 ${pathname === '/members' ? 'hover:opacity-50 font-semibold' : 'hover:opacity-30 opacity-60'} transition-all duration-300`}
+              className={`${textColor} text-15 ${
+                pathname === '/members' ? 'hover:opacity-50 font-bold' : 'hover:opacity-30 opacity-60 font-normal'
+              } transition-all duration-300`}
               href="/members">
               멤버
             </Link>
             <Link
-              className={`${textColor} text-15 ${pathname === '/awards' ? 'hover:opacity-50 font-semibold' : 'hover:opacity-30 opacity-60'} transition-all duration-300`}
+              className={`${textColor} text-15 ${
+                pathname === '/awards' ? 'hover:opacity-50 font-bold' : 'hover:opacity-30 opacity-60 font-normal'
+              } transition-all duration-300`}
               href="/awards">
               업적
             </Link>
             <Link
-              className={`${textColor} text-15 ${pathname === '/projects' ? 'hover:opacity-50 font-semibold' : 'hover:opacity-30 opacity-60'} transition-all duration-300`}
+              className={`${textColor} text-15 ${
+                pathname === '/projects' ? 'hover:opacity-50 font-bold' : 'hover:opacity-30 opacity-60 font-normal'
+              } transition-all duration-300`}
               href="/projects">
               프로젝트
             </Link>
             <Link
-              className={`${textColor} text-15 ${pathname === '/qna' ? 'hover:opacity-50 font-semibold' : 'hover:opacity-30 opacity-60'} transition-all duration-300`}
+              className={`${textColor} text-15 ${
+                pathname === '/qna' ? 'hover:opacity-50 font-bold' : 'hover:opacity-30 opacity-60 font-normal'
+              } transition-all duration-300`}
               href="/qna">
               Q&A
             </Link>

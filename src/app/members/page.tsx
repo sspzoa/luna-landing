@@ -1,6 +1,7 @@
 'use client';
 
 import { LightScroller } from '@/components/common/Scroller';
+import { useScaling } from '@/components/layout/ScalingLayout';
 import { isDataInitializedAtom, membersAtom } from '@/store';
 import type { Member } from '@/types';
 import { useAtomValue } from 'jotai';
@@ -29,6 +30,8 @@ interface IntroProps {
 }
 
 const Intro: React.FC<IntroProps> = ({ members }) => {
+  const { scaledVh } = useScaling();
+
   const highestGeneration = useMemo(() => {
     if (!members || members.length === 0) return 0;
 
@@ -49,7 +52,7 @@ const Intro: React.FC<IntroProps> = ({ members }) => {
   }, [members]);
 
   return (
-    <div className="relative h-[100dvh] flex justify-center items-center w-full p-9">
+    <div style={{ height: scaledVh(100) }} className="relative flex justify-center items-center w-full p-9">
       <div className="absolute inset-0 overflow-hidden">
         <Image
           src="/images/members/background.png"

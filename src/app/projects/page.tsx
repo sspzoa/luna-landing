@@ -1,6 +1,7 @@
 'use client';
 
 import { LightScroller } from '@/components/common/Scroller';
+import { useScaling } from '@/components/layout/ScalingLayout';
 import { isDataInitializedAtom, projectsAtom } from '@/store';
 import type { Award, Member, Project } from '@/types';
 import { useAtomValue } from 'jotai';
@@ -30,9 +31,10 @@ interface IntroProps {
 
 const Intro: React.FC<IntroProps> = ({ projects }) => {
   const currentYear = new Date().getFullYear();
+  const { scaledVh } = useScaling();
 
   return (
-    <div className="relative h-[100dvh] flex justify-center items-center w-full p-9">
+    <div style={{ height: scaledVh(100) }} className="relative flex justify-center items-center w-full p-9">
       <div className="absolute inset-0 overflow-hidden">
         <Image
           src="/images/projects/background.png"

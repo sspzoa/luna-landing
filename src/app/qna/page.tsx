@@ -4,7 +4,7 @@ import { isDataInitializedAtom, qnaAtom } from '@/store';
 import type { QnA } from '@/types';
 import { useAtomValue } from 'jotai';
 import type React from 'react';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 
 export default function Qna() {
   const qna = useAtomValue(qnaAtom);

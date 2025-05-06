@@ -1,7 +1,6 @@
 'use client';
 
 import { DarkScroller } from '@/components/common/Scroller';
-import { useScaling } from '@/components/layout/ScalingLayout';
 import { awardsAtom, informationAtom, isDataInitializedAtom } from '@/store';
 import type { Award, Information } from '@/types';
 import { useAtomValue } from 'jotai';
@@ -31,9 +30,8 @@ interface IntroProps {
 }
 
 const Intro: React.FC<IntroProps> = ({ information }) => {
-  const { scaledVh } = useScaling();
   return (
-    <div style={{ height: scaledVh(100) }} className="relative flex justify-center items-center w-full p-9">
+    <div className="relative h-[100dvh] flex justify-center items-center w-full p-9">
       <div className="relative flex flex-col-reverse md:flex-row-reverse justify-between items-center w-full max-w-[1200px] gap-9">
         <Image
           className="self-start  md:self-center md:absolute md:left-0"

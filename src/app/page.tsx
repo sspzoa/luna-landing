@@ -1,13 +1,12 @@
 'use client';
 
 import { DarkScroller } from '@/components/common/Scroller';
-import { useScaling } from '@/components/layout/ScalingLayout';
 import { informationAtom, isDataInitializedAtom, projectsAtom } from '@/store';
 import type { Information, Project } from '@/types';
 import { useAtomValue } from 'jotai';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 export default function Home() {
   const information = useAtomValue(informationAtom);
@@ -34,9 +33,8 @@ interface IntroProps {
 }
 
 const Intro: React.FC<IntroProps> = ({ information }) => {
-  const { scaledVh } = useScaling();
   return (
-    <div style={{ height: scaledVh(100) }} className="relative flex justify-center items-center w-full p-9">
+    <div className="relative h-[100dvh] flex justify-center items-center w-full p-9">
       <div className="md:relative flex flex-col md:flex-row justify-between items-center w-full max-w-[1200px] gap-9">
         <div className="flex flex-col gap-7 shrink-0 self-start md:self-center z-10">
           <div className="flex flex-col gap-4">

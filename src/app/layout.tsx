@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import Footer from '@/components/layout/Footer';
 import Navbar from '@/components/layout/Navbar';
+import ScalingLayout from '@/components/layout/ScalingLayout';
 import { PersistQueryClientProvider } from '@/providers/PersistQueryClientProvider';
 import type React from 'react';
 import { Analytics } from '@vercel/analytics/react';

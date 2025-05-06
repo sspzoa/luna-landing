@@ -27,10 +27,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <Analytics />
         <PersistQueryClientProvider>
           <Navbar />
-          <ScalingLayout>
-            {children}
-            <Footer />
-          </ScalingLayout>
+          {children}
+          <Footer />
         </PersistQueryClientProvider>
       </body>
     </html>

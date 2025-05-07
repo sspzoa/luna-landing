@@ -1,6 +1,6 @@
 'use client';
 
-import { useAllData } from '@/hooks/useApi';
+import { useAwards, useInformation, useMembers, useProjects, useQnA } from '@/hooks/useApi';
 import {
   awardsAtom,
   informationAtom,
@@ -13,6 +13,7 @@ import {
 import { useSetAtom } from 'jotai';
 import type { ReactNode } from 'react';
 import { useEffect } from 'react';
+import Image from 'next/image';
 
 interface DataProviderProps {
   children: ReactNode;
@@ -27,7 +28,25 @@ const DataProvider = ({ children }: DataProviderProps) => {
   const setIsDataLoading = useSetAtom(isDataLoadingAtom);
   const setIsDataInitialized = useSetAtom(isDataInitializedAtom);
 
-  const { data, isLoading, isError, isSuccess } = useAllData();
+  const awards = useAwards();
+  const members = useMembers();
+  const projects = useProjects();
+  const qna = useQnA();
+  const information = useInformation();
+
+  const isLoading =
+    awards.isLoading || members.isLoading || projects.isLoading || qna.isLoading || information.isLoading;
+  const isError = awards.isError || members.isError || projects.isError || qna.isError || information.isError;
+  const isSuccess =
+    awards.isSuccess && members.isSuccess && projects.isSuccess && qna.isSuccess && information.isSuccess;
+
+  const data = {
+    awards: awards.data || [],
+    members: members.data || [],
+    projects: projects.data || [],
+    qna: qna.data || [],
+    information: information.data || [],
+  };
 
   useEffect(() => {
     setIsDataLoading(isLoading);
@@ -58,7 +77,15 @@ const DataProvider = ({ children }: DataProviderProps) => {
   ]);
 
   if (isLoading) {
-    return <LoadingScreen />;
+    return (
+      <LoadingScreen
+        awardsLoaded={!awards.isLoading}
+        membersLoaded={!members.isLoading}
+        projectsLoaded={!projects.isLoading}
+        qnaLoaded={!qna.isLoading}
+        informationLoaded={!information.isLoading}
+      />
+    );
   }
 
   if (isError) {
@@ -68,13 +95,41 @@ const DataProvider = ({ children }: DataProviderProps) => {
   return <>{children}</>;
 };
 
-const LoadingScreen = () => (
-  <div className="min-h-[100dvh] flex flex-col items-center justify-center gap-8">
-    <div className="flex items-center justify-center h-full">
-      <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-luna-purple" />
+interface LoadingScreenProps {
+  awardsLoaded: boolean;
+  membersLoaded: boolean;
+  projectsLoaded: boolean;
+  qnaLoaded: boolean;
+  informationLoaded: boolean;
+}
+
+const LoadingScreen = ({
+  awardsLoaded,
+  membersLoaded,
+  projectsLoaded,
+  qnaLoaded,
+  informationLoaded,
+}: LoadingScreenProps) => {
+  const loadedCount = [awardsLoaded, membersLoaded, projectsLoaded, qnaLoaded, informationLoaded].filter(
+    Boolean,
+  ).length;
+  const totalCount = 5;
+
+  return (
+    <div className="min-h-[100dvh] flex flex-col items-center justify-center gap-8">
+      <div className="flex flex-col items-center justify-center h-full gap-6">
+        <Image className="opacity-50" alt="luna_logo" src="/icons/logo.svg" width={72} height={72} draggable={false} />
+        <div className="w-48 h-1.5 bg-gray-300 rounded-full mt-2 relative overflow-hidden">
+          <div className="absolute inset-0 bg-luna-dark opacity-50 w-full h-full" />
+          <div
+            className="absolute inset-0 h-full bg-luna-purple rounded-full transition-all duration-300 ease-out"
+            style={{ width: `${(loadedCount / totalCount) * 100}%` }}
+          />
+        </div>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 const ErrorScreen = () => (
   <div className="min-h-[100dvh] flex flex-col items-center justify-center gap-8 bg-[#ffe2e2]">

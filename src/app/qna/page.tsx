@@ -47,7 +47,7 @@ const QnaSection: React.FC<QnaProps> = ({ qna }) => {
   };
 
   return (
-    <div className="relative flex flex-col gap-30 justify-center items-center w-full pt-40 pb-30 px-9">
+    <div className="relative flex flex-col gap-30 justify-center items-center w-full pt-48 pb-30 px-9">
       <div className="relative flex flex-col md:flex-row justify-between items-center w-full max-w-[1200px] min-h-[315px] gap-9">
         <div className="flex flex-col gap-4 shrink-0 self-start md:self-center z-10">
           <p className="text-36 text-luna-dark font-semibold">자주 묻는 질문</p>

@@ -9,15 +9,6 @@ interface OptimizedImageProps extends Omit<ImageProps, 'src'> {
   index?: number;
 }
 
-/**
- * 최적화된 이미지 컴포넌트
- *
- * Next.js Image 컴포넌트를 확장하여 다음 기능을 제공합니다:
- * - 이미지가 없거나 로드 실패 시 대체 이미지 표시
- * - 외부 URL 이미지 지원
- * - 첫 번째 이미지에 우선순위 부여
- * - 이미지 드래그 방지 (선택적)
- */
 const OptimizedImage = ({
   src,
   fallbackSrc = '/images/placeholder.png',

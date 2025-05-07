@@ -1,18 +1,17 @@
 'use client';
 
-import type React from 'react';
-import { type ReactNode, createContext, useCallback, useContext, useEffect, useState } from 'react';
+import { type ReactNode, createContext, useContext, useEffect, useState, useMemo } from 'react';
 
 interface ScalingContextType {
-  windowWidth: number | null;
-  windowHeight: number | null;
+  windowWidth: number;
+  windowHeight: number;
   scale: number;
   scaledVh: (vh: number) => number;
 }
 
 const ScalingContext = createContext<ScalingContextType>({
-  windowWidth: null,
-  windowHeight: null,
+  windowWidth: 0,
+  windowHeight: 0,
   scale: 1,
   scaledVh: (vh) => vh,
 });
@@ -35,74 +34,88 @@ export default function ScalingLayout({
   disableScalingAboveMinWidth = true,
   maxScale = 1,
   scaleStep = 0.01,
-}: ScalingLayoutProps): React.JSX.Element | null {
-  const [scale, setScale] = useState<number>(1);
-  const [mounted, setMounted] = useState<boolean>(false);
-  const [windowWidth, setWindowWidth] = useState<number | null>(null);
-  const [windowHeight, setWindowHeight] = useState<number | null>(null);
+}: ScalingLayoutProps) {
+  const [dimensions, setDimensions] = useState({
+    width: 0,
+    height: 0,
+  });
 
-  const calculateScale = useCallback(
-    (width: number): number => {
-      let newScale: number;
-
-      if (width < minWidth) {
-        newScale = Math.max(width / minWidth, 0.1);
-      } else if (disableScalingAboveMinWidth) {
-        newScale = 1;
-      } else {
-        newScale = Math.min(width / minWidth, maxScale);
-      }
-
-      return Math.round(newScale / scaleStep) * scaleStep;
-    },
-    [minWidth, disableScalingAboveMinWidth, maxScale, scaleStep],
-  );
-
-  const handleResize = useCallback(() => {
-    if (typeof window !== 'undefined') {
-      const width = window.innerWidth;
-      const height = window.innerHeight;
-      setWindowWidth(width);
-      setWindowHeight(height);
-      setScale(calculateScale(width));
-    }
-  }, [calculateScale]);
-
-  const scaledVh = useCallback(
-    (vh: number) => {
-      if (windowHeight === null) return vh;
-      const pixelValue = (windowHeight * vh) / 100;
-      return pixelValue / scale;
-    },
-    [windowHeight, scale],
-  );
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-    handleResize();
 
-    window.addEventListener('resize', handleResize);
+    const updateDimensions = () => {
+      setDimensions({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+
+    updateDimensions();
+
+    const resizeObserver = new ResizeObserver(updateDimensions);
+    resizeObserver.observe(document.documentElement);
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      resizeObserver.disconnect();
     };
-  }, [handleResize]);
+  }, []);
+
+  const scale = useMemo(() => {
+    if (dimensions.width === 0) return 1;
+
+    let newScale: number;
+
+    if (dimensions.width < minWidth) {
+      newScale = Math.max(dimensions.width / minWidth, 0.1);
+    } else if (disableScalingAboveMinWidth) {
+      newScale = 1;
+    } else {
+      newScale = Math.min(dimensions.width / minWidth, maxScale);
+    }
+
+    return Math.round(newScale / scaleStep) * scaleStep;
+  }, [dimensions.width, minWidth, disableScalingAboveMinWidth, maxScale, scaleStep]);
+
+  const scaledVh = useMemo(() => {
+    return (vh: number) => {
+      const pixelValue = (dimensions.height * vh) / 100;
+      return pixelValue / scale;
+    };
+  }, [dimensions.height, scale]);
+
+  const contextValue = useMemo(
+    () => ({
+      windowWidth: dimensions.width,
+      windowHeight: dimensions.height,
+      scale,
+      scaledVh,
+    }),
+    [dimensions.width, dimensions.height, scale, scaledVh],
+  );
 
   if (!mounted) {
     return null;
   }
 
+  const scaleStyle = {
+    '--scale': scale,
+    '--inverse-scale': 1 / scale,
+  } as React.CSSProperties;
+
   return (
-    <ScalingContext.Provider value={{ windowWidth, windowHeight, scale, scaledVh }}>
+    <ScalingContext.Provider value={contextValue}>
       <div
         style={{
+          ...scaleStyle,
           transformOrigin: 'left top',
-          transform: `scale(${scale})`,
-          width: `${(1 / scale) * 100}%`,
+          transform: 'scale(var(--scale))',
+          width: 'calc(100% * var(--inverse-scale))',
           height: '0px',
           position: 'relative',
         }}
-        className={`${className}`}>
+        className={className}>
         {children}
       </div>
     </ScalingContext.Provider>

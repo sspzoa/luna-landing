@@ -1,7 +1,7 @@
 'use client';
 
 import { useScaling } from '@/components/layout/ScalingLayout';
-import { Information } from '@/types';
+import type { Information } from '@/types';
 import Image from 'next/image';
 import { DarkScroller } from '../common/Scroller';
 
@@ -44,4 +44,4 @@ const Intro = ({ information }: IntroProps) => {
   );
 };
 
-export default Intro; 
+export default Intro;

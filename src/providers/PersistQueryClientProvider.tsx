@@ -2,21 +2,29 @@
 
 import DataProvider from '@/components/DataProvider';
 import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister';
-import { QueryClient, QueryClientProvider as ReactQueryClientProvider } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { persistQueryClient } from '@tanstack/react-query-persist-client';
 import { Provider as JotaiProvider } from 'jotai';
-import type React from 'react';
+import type { ReactNode } from 'react';
 import { useEffect, useState } from 'react';
 
-export function PersistQueryClientProvider({ children }: { children: React.ReactNode }) {
+const CACHE_TIME = 1000 * 60 * 30;
+const CACHE_KEY = 'luna-data-cache';
+const CACHE_VERSION = '1.1';
+
+interface PersistQueryClientProviderProps {
+  children: ReactNode;
+}
+
+export function PersistQueryClientProvider({ children }: PersistQueryClientProviderProps) {
   const [queryClient] = useState(
     () =>
       new QueryClient({
         defaultOptions: {
           queries: {
-            staleTime: 1000 * 60 * 30,
-            gcTime: 1000 * 60 * 30,
+            staleTime: CACHE_TIME,
+            gcTime: CACHE_TIME,
             refetchOnWindowFocus: false,
             refetchOnMount: true,
             refetchOnReconnect: true,
@@ -27,28 +35,32 @@ export function PersistQueryClientProvider({ children }: { children: React.React
   );
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const localStoragePersister = createSyncStoragePersister({
-        storage: window.localStorage,
-        key: 'luna-data-cache',
-        throttleTime: 1000,
-      });
+    try {
+      if (typeof window !== 'undefined') {
+        const localStoragePersister = createSyncStoragePersister({
+          storage: window.localStorage,
+          key: CACHE_KEY,
+          throttleTime: 1000,
+        });
 
-      persistQueryClient({
-        queryClient,
-        persister: localStoragePersister,
-        maxAge: 1000 * 60 * 30,
-        buster: '1.0',
-      });
+        persistQueryClient({
+          queryClient,
+          persister: localStoragePersister,
+          maxAge: CACHE_TIME,
+          buster: CACHE_VERSION,
+        });
+      }
+    } catch (error) {
+      console.error('캐시 저장소 초기화 중 오류 발생:', error);
     }
   }, [queryClient]);
 
   return (
-    <ReactQueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient}>
       <JotaiProvider>
         <DataProvider>{children}</DataProvider>
       </JotaiProvider>
       {process.env.NODE_ENV === 'development' && <ReactQueryDevtools initialIsOpen={false} />}
-    </ReactQueryClientProvider>
+    </QueryClientProvider>
   );
 }

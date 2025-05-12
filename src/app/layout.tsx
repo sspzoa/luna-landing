@@ -5,7 +5,8 @@ import Navbar from '@/components/layout/Navbar';
 import ScalingLayout from '@/components/layout/ScalingLayout';
 import { PersistQueryClientProvider } from '@/providers/PersistQueryClientProvider';
 import type { ReactNode } from 'react';
-import { Analytics } from '@vercel/analytics/react';
+import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 export const metadata: Metadata = {
   title: 'IT 소셜벤처 동아리, LUNA',
@@ -57,6 +58,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       </head>
       <body className="antialiased">
         <Analytics />
+        <SpeedInsights />
         <PersistQueryClientProvider>
           <Navbar />
           <ScalingLayout>

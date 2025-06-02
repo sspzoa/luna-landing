@@ -3,7 +3,7 @@
 import type { Information, Project } from '@/types';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 interface ProjectsProps {
   information: Information[];

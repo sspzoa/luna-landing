@@ -1,5 +1,5 @@
-import { NextResponse } from 'next/server';
 import { GoogleGenAI } from '@google/genai';
+import { NextResponse } from 'next/server';
 
 export async function GET() {
   try {

@@ -1,10 +1,10 @@
 'use client';
 
-import Intro from '@/components/home/Intro';
-import Projects from '@/components/home/Projects';
 import Contests from '@/components/home/Contests';
 import Future from '@/components/home/Future';
+import Intro from '@/components/home/Intro';
 import MadeBy from '@/components/home/MadeBy';
+import Projects from '@/components/home/Projects';
 import { informationAtom, isDataInitializedAtom, projectsAtom } from '@/store';
 import { useAtomValue } from 'jotai';
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { Information } from '@/types';
+import type { Information } from '@/types';
 import Image from 'next/image';
 import Link from 'next/link';
 

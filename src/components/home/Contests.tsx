@@ -47,4 +47,4 @@ const Contests = ({ information }: ContestsProps) => {
   );
 };
 
-export default Contests; 
+export default Contests;

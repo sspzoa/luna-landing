@@ -11,9 +11,9 @@ import {
   qnaAtom,
 } from '@/store';
 import { useSetAtom } from 'jotai';
+import Image from 'next/image';
 import type { ReactNode } from 'react';
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
 
 interface DataProviderProps {
   children: ReactNode;

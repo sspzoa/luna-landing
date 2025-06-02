@@ -1,5 +1,5 @@
+import type { Award, Information, Member, NotionResponse, NotionSortOption, Project, QnA } from '@/types';
 import { NOTION_CONFIG } from './config';
-import type { Award, Information, Member, Project, QnA, NotionResponse, NotionSortOption } from '@/types';
 
 export class NotionApiError extends Error {
   constructor(

@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server';
 import { NOTION_CONFIG } from '../config';
 import {
-  fetchNotionDatabase,
-  transformInformation,
-  transformAwards,
-  transformProjects,
   calculateTotalPrizeMoney,
+  fetchNotionDatabase,
+  transformAwards,
+  transformInformation,
+  transformProjects,
 } from '../utils';
 
 export async function GET() {

@@ -157,8 +157,7 @@ const LoadingScreen = ({
             className={`mt-2 text-sm font-semibold max-w-[320px] ${isTriviaLoading ? 'animate-pulse text-gray-500' : 'cursor-pointer hover:text-luna-purple'}`}
             onClick={!isTriviaLoading ? fetchTrivia : undefined}
             onKeyDown={!isTriviaLoading ? fetchTrivia : undefined}
-            title="클릭해서 다른 사실 보기"
-          >
+            title="클릭해서 다른 사실 보기">
             {isTriviaLoading && !trivia ? '재미있는 사실을 불러오는 중...' : trivia}
           </p>
         </div>

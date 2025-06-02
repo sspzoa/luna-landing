@@ -19,4 +19,4 @@ const MadeBy = () => {
   );
 };
 
-export default MadeBy; 
+export default MadeBy;

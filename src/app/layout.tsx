@@ -53,6 +53,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <html lang="ko" className="scroll-smooth">
       <head>
         <meta name="google-site-verification" content="w_nnQriETB8E6N6G5_VmiJNX9KEXKxaqCigLRsVmi4g" />
+        <meta name="google-adsense-account" content="ca-pub-2186209581588169"/>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
       </head>

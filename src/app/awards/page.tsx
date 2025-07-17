@@ -1,11 +1,5 @@
 'use client';
 
-import type { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: '루나 :: 업적',
-};
-
 import { DarkScroller } from '@/components/common/Scroller';
 import { useScaling } from '@/components/layout/ScalingLayout';
 import { awardsAtom, informationAtom, isDataInitializedAtom } from '@/store';

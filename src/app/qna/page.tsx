@@ -1,11 +1,5 @@
 'use client';
 
-import type { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: '루나 :: Q&A',
-};
-
 import { isDataInitializedAtom, qnaAtom } from '@/store';
 import type { QnA } from '@/types';
 import { useAtomValue } from 'jotai';

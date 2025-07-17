@@ -1,5 +1,11 @@
 'use client';
 
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: '루나 :: 프로젝트',
+};
+
 import { LightScroller } from '@/components/common/Scroller';
 import { useScaling } from '@/components/layout/ScalingLayout';
 import { isDataInitializedAtom, projectsAtom } from '@/store';

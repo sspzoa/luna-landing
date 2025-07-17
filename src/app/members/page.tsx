@@ -1,5 +1,11 @@
 'use client';
 
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: '루나 :: 멤버',
+};
+
 import { LightScroller } from '@/components/common/Scroller';
 import { useScaling } from '@/components/layout/ScalingLayout';
 import { isDataInitializedAtom, membersAtom } from '@/store';

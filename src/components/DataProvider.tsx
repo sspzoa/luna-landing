@@ -114,29 +114,6 @@ const LoadingScreen = ({
     Boolean,
   ).length;
   const totalCount = 5;
-  const [trivia, setTrivia] = useState<string | null>(null);
-  const [isTriviaLoading, setIsTriviaLoading] = useState(false);
-
-  const fetchTrivia = async () => {
-    setIsTriviaLoading(true);
-    try {
-      const response = await fetch('/api/trivia');
-      if (!response.ok) {
-        throw new Error('Failed to fetch trivia');
-      }
-      const data = await response.json();
-      setTrivia(data.fact);
-    } catch (error) {
-      console.error('Error fetching trivia:', error);
-      setTrivia('재미있는 사실을 불러오는 데 실패했어요. 🥲');
-    } finally {
-      setIsTriviaLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchTrivia();
-  }, []);
 
   return (
     <div className="min-h-[100dvh] flex flex-col items-center justify-center gap-8">
@@ -150,18 +127,6 @@ const LoadingScreen = ({
           />
         </div>
       </div>
-      {trivia && (
-        <div className="text-center mt-4 p-4 max-w-md">
-          <p className="text-sm font-semibold text-gray-600 dark:text-gray-400">알고 계셨나요?</p>
-          <p
-            className={`mt-2 text-sm font-semibold max-w-[320px] ${isTriviaLoading ? 'animate-pulse text-gray-500' : 'cursor-pointer hover:text-luna-purple'}`}
-            onClick={!isTriviaLoading ? fetchTrivia : undefined}
-            onKeyDown={!isTriviaLoading ? fetchTrivia : undefined}
-            title="클릭해서 다른 사실 보기">
-            {isTriviaLoading && !trivia ? '재미있는 사실을 불러오는 중...' : trivia}
-          </p>
-        </div>
-      )}
     </div>
   );
 };

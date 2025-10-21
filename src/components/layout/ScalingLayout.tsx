@@ -112,7 +112,7 @@ export default function ScalingLayout({
           transformOrigin: 'left top',
           transform: 'scale(var(--scale))',
           width: 'calc(100% * var(--inverse-scale))',
-          height: '0px',
+          height: '100dvh',
           position: 'relative',
         }}
         className={className}>

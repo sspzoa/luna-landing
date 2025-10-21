@@ -2,6 +2,7 @@ import {
   S3Client,
   PutObjectCommand,
   DeleteObjectCommand,
+  DeleteObjectsCommand,
   ListObjectsV2Command,
 } from "@aws-sdk/client-s3"
 
@@ -115,14 +116,24 @@ export async function deleteAllLunaImages(): Promise<number> {
       return 0
     }
 
-    const deletePromises = listResult.Contents
+    const objectsToDelete = listResult.Contents
       .filter((object) => object.Key)
-      .map((object) => deleteS3Object(object.Key!))
+      .map((object) => ({ Key: object.Key! }))
 
-    await Promise.all(deletePromises)
+    if (objectsToDelete.length === 0) {
+      return 0
+    }
 
-    const deletedCount = deletePromises.length
-    return deletedCount
+    const deleteCommand = new DeleteObjectsCommand({
+      Bucket: process.env.S3_BUCKET_NAME,
+      Delete: {
+        Objects: objectsToDelete,
+        Quiet: true,
+      },
+    })
+
+    await s3Client.send(deleteCommand)
+    return objectsToDelete.length
   } catch (error) {
     throw error
   }

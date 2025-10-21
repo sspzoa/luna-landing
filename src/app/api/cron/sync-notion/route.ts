@@ -176,7 +176,7 @@ async function processImages(
                           ...file,
                           file: {
                             ...fileObj,
-                            url: s3Url,
+                            url: encodeURI(s3Url),
                             expiry_time: undefined,
                           },
                         }
@@ -234,7 +234,7 @@ async function processImages(
                 ...cover,
                 file: {
                   ...fileObj,
-                  url: s3Url,
+                  url: encodeURI(s3Url),
                   expiry_time: undefined,
                 },
               }
@@ -279,7 +279,7 @@ async function processImages(
                 ...icon,
                 file: {
                   ...fileObj,
-                  url: s3Url,
+                  url: encodeURI(s3Url),
                   expiry_time: undefined,
                 },
               }

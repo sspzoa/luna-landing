@@ -1,3 +1,5 @@
+import { getCachedData } from '@/lib/cache';
+import type { Award, Information, Project } from '@/types';
 import { NextResponse } from 'next/server';
 import { NOTION_CONFIG } from '../config';
 import {
@@ -10,6 +12,22 @@ import {
 
 export async function GET() {
   try {
+    const cachedInfo = await getCachedData<Information>('information');
+    const cachedAwards = await getCachedData<Award>('awards');
+    const cachedProjects = await getCachedData<Project>('projects');
+
+    if (cachedInfo && cachedAwards && cachedProjects) {
+      const totalPrizeMoney = calculateTotalPrizeMoney(cachedAwards);
+
+      const updatedInfo = cachedInfo.map((info) => ({
+        ...info,
+        contests: (cachedAwards.length + 40).toString(),
+        projects: (cachedProjects.length + 23).toString(),
+        prizemoney: `${(totalPrizeMoney + 75000000).toString().slice(0, -6)}00`,
+      }));
+
+      return NextResponse.json(updatedInfo);
+    }
     const infoResponse = await fetchNotionDatabase(NOTION_CONFIG.DATABASE_IDS.INFORMATION);
     const baseInfo = transformInformation(infoResponse);
 

@@ -1,9 +1,14 @@
+import { getCachedData } from '@/lib/cache';
 import { NextResponse } from 'next/server';
 import { NOTION_CONFIG } from '../config';
 import { fetchNotionDatabase, transformProjects } from '../utils';
 
 export async function GET() {
   try {
+    const cachedData = await getCachedData('projects');
+    if (cachedData) {
+      return NextResponse.json(cachedData);
+    }
     const response = await fetchNotionDatabase(NOTION_CONFIG.DATABASE_IDS.PROJECTS, [
       { property: 'year', direction: 'descending' },
       { property: 'name', direction: 'ascending' },

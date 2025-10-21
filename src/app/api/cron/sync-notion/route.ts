@@ -17,7 +17,6 @@ import {
 
 export async function GET() {
   try {
-    // 기존 S3 파일들 삭제
     console.log("Deleting existing S3 luna images...")
     const deletedCount = await deleteAllLunaImages()
     console.log(`Deleted ${deletedCount} existing images from S3`)
@@ -45,7 +44,6 @@ export async function GET() {
       console.error('Error syncing members:', error);
     }
 
-    // Sync Awards
     try {
       const awardsResponse = await fetchNotionDatabase(NOTION_CONFIG.DATABASE_IDS.AWARDS, [
         { property: 'date', direction: 'descending' },
@@ -60,7 +58,6 @@ export async function GET() {
       console.error('Error syncing awards:', error);
     }
 
-    // Sync Projects
     try {
       const projectsResponse = await fetchNotionDatabase(NOTION_CONFIG.DATABASE_IDS.PROJECTS, [
         { property: 'year', direction: 'descending' },
@@ -75,7 +72,6 @@ export async function GET() {
       console.error('Error syncing projects:', error);
     }
 
-    // Sync QnA
     try {
       const qnaResponse = await fetchNotionDatabase(NOTION_CONFIG.DATABASE_IDS.QNA, [
         { property: 'order', direction: 'ascending' },
@@ -88,7 +84,6 @@ export async function GET() {
       console.error('Error syncing qna:', error);
     }
 
-    // Sync Information
     try {
       const informationResponse = await fetchNotionDatabase(NOTION_CONFIG.DATABASE_IDS.INFORMATION);
       const informationData = transformInformation(informationResponse);
@@ -132,7 +127,6 @@ async function processImages(
     items.map(async (item: Record<string, unknown>) => {
       const updatedItem = { ...item }
 
-      // properties 처리
       if (item.properties && typeof item.properties === "object") {
         const properties = item.properties as Record<string, unknown>
 
@@ -203,7 +197,6 @@ async function processImages(
         }
       }
 
-      // cover 이미지 처리 (프로젝트의 커버 이미지)
       if (item.cover && typeof item.cover === "object") {
         const cover = item.cover as Record<string, unknown>
 
@@ -248,7 +241,6 @@ async function processImages(
         }
       }
 
-      // icon 이미지 처리 (페이지 아이콘)
       if (item.icon && typeof item.icon === "object") {
         const icon = item.icon as Record<string, unknown>
 

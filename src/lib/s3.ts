@@ -45,11 +45,9 @@ export async function uploadImageToS3(
   })
 
   try {
-    const result = await s3Client.send(command)
-    console.log("S3 upload success:", result)
+    await s3Client.send(command)
     return `https://${process.env.S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${key}`
   } catch (error) {
-    console.error("S3 upload error details:", error)
     throw new Error(
       `Failed to upload image to S3: ${error instanceof Error ? error.message : "Unknown error"}`
     )
@@ -99,9 +97,7 @@ export async function deleteS3Object(key: string): Promise<void> {
 
   try {
     await s3Client.send(command)
-    console.log(`S3 file deleted: ${key}`)
   } catch (error) {
-    console.error(`Failed to delete S3 file ${key}:`, error)
     throw error
   }
 }
@@ -116,22 +112,18 @@ export async function deleteAllLunaImages(): Promise<number> {
     const listResult = await s3Client.send(listCommand)
 
     if (!listResult.Contents || listResult.Contents.length === 0) {
-      console.log("No luna images found to delete")
       return 0
     }
 
-    let deletedCount = 0
-    for (const object of listResult.Contents) {
-      if (object.Key) {
-        await deleteS3Object(object.Key)
-        deletedCount++
-      }
-    }
+    const deletePromises = listResult.Contents
+      .filter((object) => object.Key)
+      .map((object) => deleteS3Object(object.Key!))
 
-    console.log(`Deleted ${deletedCount} luna images from S3`)
+    await Promise.all(deletePromises)
+
+    const deletedCount = deletePromises.length
     return deletedCount
   } catch (error) {
-    console.error("Failed to delete luna images:", error)
     throw error
   }
 }

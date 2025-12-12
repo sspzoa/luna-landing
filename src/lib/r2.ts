@@ -37,9 +37,10 @@ const s3Client = new S3Client({
 
 export async function uploadImageToR2(
   imageBuffer: Buffer,
+  filename: string,
   contentType: string = "image/png"
 ): Promise<string> {
-  const key = `luna-images/${Date.now()}`
+  const key = `luna-images/${Date.now()}-${filename}`
 
   const command = new PutObjectCommand({
     Bucket: process.env.R2_BUCKET_NAME,
@@ -60,6 +61,7 @@ export async function uploadImageToR2(
 
 export async function fetchImageFromNotion(url: string): Promise<{
   buffer: Buffer
+  filename: string
   contentType: string
 }> {
   const response = await fetch(url, {
@@ -75,10 +77,19 @@ export async function fetchImageFromNotion(url: string): Promise<{
   }
 
   const buffer = await response.arrayBuffer()
+
+  const urlParts = url.split("/").pop()?.split("?")[0] || "image"
+  let filename = urlParts
+
   const contentType = response.headers.get("content-type") || "image/png"
+  if (!filename.includes(".")) {
+    const extension = contentType.split("/")[1]?.split(";")[0] || "png"
+    filename = `${filename}.${extension}`
+  }
 
   return {
     buffer: Buffer.from(buffer),
+    filename,
     contentType,
   }
 }

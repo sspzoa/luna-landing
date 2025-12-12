@@ -10,10 +10,10 @@ import {
   transformQnA,
 } from '../../utils';
 import {
-  uploadImageToR2,
+  uploadImageToS3,
   fetchImageFromNotion,
   deleteAllLunaImages,
-} from "@/lib/r2";
+} from "@/lib/s3";
 
 export async function GET() {
   const startTime = Date.now()
@@ -185,7 +185,7 @@ async function processImages(
                       typeof fileObj.url === "string" &&
                       (fileObj.url.includes("prod-files-secure.s3") ||
                         fileObj.url.includes("notion.so")) &&
-                      !fileObj.url.includes(process.env.R2_PUBLIC_URL || "")
+                      !fileObj.url.includes(`${process.env.S3_BUCKET_NAME}.s3`)
                     ) {
                       try {
                         const {
@@ -193,7 +193,7 @@ async function processImages(
                           filename,
                           contentType: mimeType,
                         } = await fetchImageFromNotion(fileObj.url)
-                        const r2Url = await uploadImageToR2(
+                        const s3Url = await uploadImageToS3(
                           buffer,
                           filename,
                           mimeType
@@ -204,7 +204,7 @@ async function processImages(
                           ...file,
                           file: {
                             ...fileObj,
-                            url: encodeURI(r2Url),
+                            url: encodeURI(s3Url),
                             expiry_time: undefined,
                           },
                         }
@@ -241,7 +241,7 @@ async function processImages(
             typeof fileObj.url === "string" &&
             (fileObj.url.includes("prod-files-secure.s3") ||
               fileObj.url.includes("notion.so")) &&
-            !fileObj.url.includes(process.env.R2_PUBLIC_URL || "")
+            !fileObj.url.includes(`${process.env.S3_BUCKET_NAME}.s3`)
           ) {
             try {
               const {
@@ -249,14 +249,14 @@ async function processImages(
                 filename,
                 contentType: mimeType,
               } = await fetchImageFromNotion(fileObj.url)
-              const r2Url = await uploadImageToR2(buffer, filename, mimeType)
+              const s3Url = await uploadImageToS3(buffer, filename, mimeType)
 
 
               updatedItem.cover = {
                 ...cover,
                 file: {
                   ...fileObj,
-                  url: encodeURI(r2Url),
+                  url: encodeURI(s3Url),
                   expiry_time: undefined,
                 },
               }
@@ -280,7 +280,7 @@ async function processImages(
             typeof fileObj.url === "string" &&
             (fileObj.url.includes("prod-files-secure.s3") ||
               fileObj.url.includes("notion.so")) &&
-            !fileObj.url.includes(process.env.R2_PUBLIC_URL || "")
+            !fileObj.url.includes(`${process.env.S3_BUCKET_NAME}.s3`)
           ) {
             try {
               const {
@@ -288,14 +288,14 @@ async function processImages(
                 filename,
                 contentType: mimeType,
               } = await fetchImageFromNotion(fileObj.url)
-              const r2Url = await uploadImageToR2(buffer, filename, mimeType)
+              const s3Url = await uploadImageToS3(buffer, filename, mimeType)
 
 
               updatedItem.icon = {
                 ...icon,
                 file: {
                   ...fileObj,
-                  url: encodeURI(r2Url),
+                  url: encodeURI(s3Url),
                   expiry_time: undefined,
                 },
               }

@@ -6,36 +6,31 @@ import {
   ListObjectsV2Command,
 } from "@aws-sdk/client-s3"
 
-if (!process.env.R2_ACCESS_KEY_ID) {
-  throw new Error("R2_ACCESS_KEY_ID environment variable is not defined")
+if (!process.env.AWS_ACCESS_KEY_ID) {
+  throw new Error("AWS_ACCESS_KEY_ID environment variable is not defined")
 }
 
-if (!process.env.R2_SECRET_ACCESS_KEY) {
-  throw new Error("R2_SECRET_ACCESS_KEY environment variable is not defined")
+if (!process.env.AWS_SECRET_ACCESS_KEY) {
+  throw new Error("AWS_SECRET_ACCESS_KEY environment variable is not defined")
 }
 
-if (!process.env.R2_ACCOUNT_ID) {
-  throw new Error("R2_ACCOUNT_ID environment variable is not defined")
+if (!process.env.AWS_REGION) {
+  throw new Error("AWS_REGION environment variable is not defined")
 }
 
-if (!process.env.R2_BUCKET_NAME) {
-  throw new Error("R2_BUCKET_NAME environment variable is not defined")
-}
-
-if (!process.env.R2_PUBLIC_URL) {
-  throw new Error("R2_PUBLIC_URL environment variable is not defined")
+if (!process.env.S3_BUCKET_NAME) {
+  throw new Error("S3_BUCKET_NAME environment variable is not defined")
 }
 
 const s3Client = new S3Client({
-  region: "auto",
-  endpoint: `https://${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
+  region: process.env.AWS_REGION,
   credentials: {
-    accessKeyId: process.env.R2_ACCESS_KEY_ID,
-    secretAccessKey: process.env.R2_SECRET_ACCESS_KEY,
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   },
 })
 
-export async function uploadImageToR2(
+export async function uploadImageToS3(
   imageBuffer: Buffer,
   filename: string,
   contentType: string = "image/png"
@@ -43,18 +38,19 @@ export async function uploadImageToR2(
   const key = `luna-images/${Date.now()}-${filename}`
 
   const command = new PutObjectCommand({
-    Bucket: process.env.R2_BUCKET_NAME,
+    Bucket: process.env.S3_BUCKET_NAME,
     Key: key,
     Body: imageBuffer,
     ContentType: contentType,
+    ACL: "public-read",
   })
 
   try {
     await s3Client.send(command)
-    return `${process.env.R2_PUBLIC_URL}/${key}`
+    return `https://${process.env.S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${key}`
   } catch (error) {
     throw new Error(
-      `Failed to upload image to R2: ${error instanceof Error ? error.message : "Unknown error"}`
+      `Failed to upload image to S3: ${error instanceof Error ? error.message : "Unknown error"}`
     )
   }
 }
@@ -94,9 +90,9 @@ export async function fetchImageFromNotion(url: string): Promise<{
   }
 }
 
-export async function deleteR2Object(key: string): Promise<void> {
+export async function deleteS3Object(key: string): Promise<void> {
   const command = new DeleteObjectCommand({
-    Bucket: process.env.R2_BUCKET_NAME,
+    Bucket: process.env.S3_BUCKET_NAME,
     Key: key,
   })
 
@@ -109,7 +105,7 @@ export async function deleteR2Object(key: string): Promise<void> {
 
 export async function deleteAllLunaImages(): Promise<number> {
   const listCommand = new ListObjectsV2Command({
-    Bucket: process.env.R2_BUCKET_NAME,
+    Bucket: process.env.S3_BUCKET_NAME,
     Prefix: "luna-images/",
   })
 
@@ -129,7 +125,7 @@ export async function deleteAllLunaImages(): Promise<number> {
     }
 
     const deleteCommand = new DeleteObjectsCommand({
-      Bucket: process.env.R2_BUCKET_NAME,
+      Bucket: process.env.S3_BUCKET_NAME,
       Delete: {
         Objects: objectsToDelete,
         Quiet: true,
@@ -143,8 +139,8 @@ export async function deleteAllLunaImages(): Promise<number> {
   }
 }
 
-export function extractR2KeyFromUrl(url: string): string | null {
-  if (!url.includes(process.env.R2_PUBLIC_URL || "")) {
+export function extractS3KeyFromUrl(url: string): string | null {
+  if (!url.includes(`${process.env.S3_BUCKET_NAME}.s3`)) {
     return null
   }
 

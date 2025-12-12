@@ -29,6 +29,7 @@ export async function GET() {
     };
 
     const syncTasks = await Promise.allSettled([
+      // Members sync
       (async () => {
         try {
           const membersResponse = await fetchNotionDatabase(NOTION_CONFIG.DATABASE_IDS.MEMBERS, [
@@ -36,7 +37,7 @@ export async function GET() {
             { property: 'generation', direction: 'descending' },
             { property: 'name', direction: 'ascending' },
           ]);
-          const processedMembersResponse = { ...membersResponse, results: await processImages(membersResponse.results, 'members') };
+          const processedMembersResponse = { ...membersResponse, results: await processImages(membersResponse.results) };
           const membersData = transformMembers(processedMembersResponse);
           await setCachedData('members', membersData);
           syncResults.members = { success: true, error: null, count: membersData.length };
@@ -45,6 +46,7 @@ export async function GET() {
         }
       })(),
 
+      // Awards sync
       (async () => {
         try {
           const awardsResponse = await fetchNotionDatabase(NOTION_CONFIG.DATABASE_IDS.AWARDS, [
@@ -60,6 +62,7 @@ export async function GET() {
         }
       })(),
 
+      // Projects sync
       (async () => {
         try {
           const projectsResponse = await fetchNotionDatabase(NOTION_CONFIG.DATABASE_IDS.PROJECTS, [
@@ -75,6 +78,7 @@ export async function GET() {
         }
       })(),
 
+      // QnA sync
       (async () => {
         try {
           const qnaResponse = await fetchNotionDatabase(NOTION_CONFIG.DATABASE_IDS.QNA, [
@@ -88,6 +92,7 @@ export async function GET() {
         }
       })(),
 
+      // Information sync
       (async () => {
         try {
           const informationResponse = await fetchNotionDatabase(NOTION_CONFIG.DATABASE_IDS.INFORMATION);
@@ -132,39 +137,14 @@ export async function GET() {
   }
 }
 
-function shouldProcessMemberImage(item: Record<string, unknown>): boolean {
-  if (!item.properties || typeof item.properties !== "object") {
-    return true;
-  }
-
-  const properties = item.properties as Record<string, unknown>;
-  const generation = (properties.generation as any)?.select?.name || null;
-
-  if (!generation) return true;
-
-  const currentYear = new Date().getFullYear();
-  const thresholdGeneration = currentYear - 2004;
-  const match = generation.match(/^(\d+)기$/);
-
-  if (match?.[1]) {
-    const generationNumber = Number.parseInt(match[1], 10);
-    return generationNumber > thresholdGeneration;
-  }
-
-  return true;
-}
-
 async function processImages(
-  items: Record<string, unknown>[],
-  dataType?: string
+  items: Record<string, unknown>[]
 ): Promise<Record<string, unknown>[]> {
   return await Promise.all(
     items.map(async (item: Record<string, unknown>) => {
       const updatedItem = { ...item }
 
-      const shouldProcessImages = dataType !== 'members' || shouldProcessMemberImage(item);
-
-      if (item.properties && typeof item.properties === "object" && shouldProcessImages) {
+      if (item.properties && typeof item.properties === "object") {
         const properties = item.properties as Record<string, unknown>
 
         for (const [key, property] of Object.entries(properties)) {
@@ -227,7 +207,7 @@ async function processImages(
         }
       }
 
-      if (item.cover && typeof item.cover === "object" && shouldProcessImages) {
+      if (item.cover && typeof item.cover === "object") {
         const cover = item.cover as Record<string, unknown>
 
         if (
@@ -266,7 +246,7 @@ async function processImages(
         }
       }
 
-      if (item.icon && typeof item.icon === "object" && shouldProcessImages) {
+      if (item.icon && typeof item.icon === "object") {
         const icon = item.icon as Record<string, unknown>
 
         if (

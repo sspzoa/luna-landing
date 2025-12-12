@@ -1,5 +1,5 @@
 import { setCachedData } from '@/lib/cache';
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { NOTION_CONFIG } from '../../config';
 import {
   fetchNotionDatabase,
@@ -15,14 +15,7 @@ import {
   deleteAllLunaImages,
 } from "@/lib/r2";
 
-export async function GET(request: NextRequest) {
-  const authHeader = request.headers.get('authorization');
-  const cronSecret = process.env.CRON_SECRET;
-
-  if (cronSecret && authHeader !== `Bearer ${cronSecret}`) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
-
+export async function GET() {
   const startTime = Date.now()
   try {
     const deletedCount = await deleteAllLunaImages()

@@ -1,14 +1,9 @@
-import { getCachedData } from '@/lib/cache';
 import { NextResponse } from 'next/server';
 import { NOTION_CONFIG } from '../config';
 import { fetchNotionDatabase, transformMembers } from '../utils';
 
 export async function GET() {
   try {
-    const cachedData = await getCachedData('members');
-    if (cachedData) {
-      return NextResponse.json(cachedData);
-    }
     const response = await fetchNotionDatabase(NOTION_CONFIG.DATABASE_IDS.MEMBERS, [
       { property: 'lunaGeneration', direction: 'descending' },
       { property: 'generation', direction: 'descending' },

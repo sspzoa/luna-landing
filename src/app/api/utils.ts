@@ -1,4 +1,4 @@
-import type { Award, Information, Member, NotionResponse, NotionSortOption, Project, QnA } from '@/types';
+import type { Award, Information, Member, NotionResponse, NotionSortOption, Project, QnA } from '@/shared/types';
 import { NOTION_CONFIG } from './config';
 
 export class NotionApiError extends Error {

@@ -1,9 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
-import Footer from '@/components/layout/Footer';
-import Navbar from '@/components/layout/Navbar';
-import ScalingLayout from '@/components/layout/ScalingLayout';
-import { PersistQueryClientProvider } from '@/providers/PersistQueryClientProvider';
+import { Footer, Navbar, ScalingLayout } from '@/shared/components/layout';
+import { QueryProvider } from '@/shared/lib/provider';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { ReactNode } from 'react';
@@ -51,24 +49,27 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="ko" className="scroll-smooth">
-    <head>
-      <meta name="google-site-verification" content="w_nnQriETB8E6N6G5_VmiJNX9KEXKxaqCigLRsVmi4g"/>
-      <meta name="google-adsense-account" content="ca-pub-2186209581588169"/>
-      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2186209581588169"
-              crossOrigin="anonymous" />
-      <link rel="preconnect" href="https://fonts.googleapis.com"/>
-      <link rel="dns-prefetch" href="https://fonts.googleapis.com"/>
-    </head>
-    <body className="antialiased">
-    <Analytics/>
-    <SpeedInsights/>
-    <PersistQueryClientProvider>
-      <Navbar/>
-      <ScalingLayout>
+      <head>
+        <meta name="google-site-verification" content="w_nnQriETB8E6N6G5_VmiJNX9KEXKxaqCigLRsVmi4g" />
+        <meta name="google-adsense-account" content="ca-pub-2186209581588169" />
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2186209581588169"
+          crossOrigin="anonymous"
+        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+      </head>
+      <body className="antialiased">
+        <Analytics />
+        <SpeedInsights />
+        <QueryProvider>
+          <Navbar />
+          <ScalingLayout>
             {children}
             <Footer />
           </ScalingLayout>
-        </PersistQueryClientProvider>
+        </QueryProvider>
       </body>
     </html>
   );

@@ -113,16 +113,3 @@ export function transformInformation(data: NotionResponse): Information[] {
     moto: item.properties.moto?.title[0]?.plain_text || null,
   }));
 }
-
-export function calculateTotalPrizeMoney(awards: Award[]): number {
-  let total = 0;
-  for (const award of awards) {
-    if (award.prizemoney) {
-      const prizeValue = Number(award.prizemoney);
-      if (!Number.isNaN(prizeValue)) {
-        total += prizeValue;
-      }
-    }
-  }
-  return total;
-}

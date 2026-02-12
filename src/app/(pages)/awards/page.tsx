@@ -4,7 +4,7 @@ import { DarkScroller } from '@/shared/components/common';
 import { useScaling } from '@/shared/components/layout';
 import { Skeleton, SkeletonText } from '@/shared/components/ui';
 import { useAwards, useInformation } from '@/shared/hooks/useApi';
-import { formatPrizeMoney } from '@/shared/lib/format';
+import { enrichInformationWithStats, formatPrizeMoney } from '@/shared/lib/format';
 import type { Award, Information } from '@/shared/types';
 import Image from 'next/image';
 import type React from 'react';
@@ -14,9 +14,13 @@ export default function Awards() {
   const { data: information = [], isLoading: informationLoading } = useInformation();
   const { data: awards = [], isLoading: awardsLoading } = useAwards();
 
+  const enrichedInformation = useMemo(() => enrichInformationWithStats(information, awards, []), [information, awards]);
+
+  const isLoading = informationLoading || awardsLoading;
+
   return (
     <div className="flex flex-col justify-center items-center w-full">
-      <Intro information={information} isLoading={informationLoading} />
+      <Intro information={enrichedInformation} isLoading={isLoading} />
       <AwardsList awards={awards} isLoading={awardsLoading} />
     </div>
   );

@@ -25,7 +25,7 @@ export async function fetchNotionDatabase(databaseId: string, sorts: NotionSortO
         Authorization: `Bearer ${process.env.NOTION_API_KEY}`,
       },
       body: JSON.stringify({ sorts }),
-      cache: 'no-store',
+      next: { revalidate: 86400 },
     });
 
     if (!res.ok) {

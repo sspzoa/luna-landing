@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { NOTION_CONFIG } from '../config';
 import { fetchNotionDatabase, transformAwards } from '../utils';
-export const revalidate = 86400;
+export const revalidate = 1800;
 
 export async function GET() {
   try {

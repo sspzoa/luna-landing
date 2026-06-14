@@ -1,7 +1,5 @@
-'use client';
-
 import { formatPrizeMoney } from '@/lib/format';
-import type { Information } from '@/types';
+import type { Information } from '@/lib/types';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -22,7 +20,8 @@ const Contests = ({ information }: ContestsProps) => {
             <p className="text-32 font-medium">
               <strong className="text-luna-purple">{information[0].contests}개</strong>의 대회,
               <br />
-              <strong className="text-luna-purple">{formatPrizeMoney(information[0].prizemoney || 0)}</strong>의 상금 및 지원금
+              <strong className="text-luna-purple">{formatPrizeMoney(information[0].prizemoney || 0)}</strong>의 상금 및
+              지원금
             </p>
             <p className="text-wrap text-20 max-w-[500px]">
               루나는 사회 문제 해결 의지와 능력을 인정받고자 하였고, 그 결과 지금까지{' '}

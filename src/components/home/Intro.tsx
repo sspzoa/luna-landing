@@ -1,7 +1,7 @@
 'use client';
 
 import { useScaling } from '@/components/layout/ScalingLayout';
-import type { Information } from '@/types';
+import type { Information } from '@/lib/types';
 import Image from 'next/image';
 import { DarkScroller } from '../common/Scroller';
 

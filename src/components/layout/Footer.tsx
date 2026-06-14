@@ -1,19 +1,13 @@
-'use client';
-
-import { informationAtom, isDataInitializedAtom } from '@/store';
-import { useAtomValue } from 'jotai/index';
+import type { Information } from '@/lib/types';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function Footer() {
+interface FooterProps {
+  information?: Information[];
+}
+
+export default function Footer({ information }: FooterProps) {
   const currentYear = new Date().getFullYear();
-
-  const information = useAtomValue(informationAtom);
-  const isDataInitialized = useAtomValue(isDataInitializedAtom);
-
-  if (!isDataInitialized || !information.length) {
-    return null;
-  }
 
   return (
     <div className="w-full flex justify-center items-center p-[54px] bg-[#E2E0EC]">
@@ -21,7 +15,7 @@ export default function Footer() {
         <div className="flex flex-row justify-center items-center gap-6 self-start">
           <Image src="/icons/logo.svg" alt="logo" width={54} height={54} draggable={false} />
           <div className="flex-col flex gap-2">
-            <p className="text-16">{information[0]?.moto},</p>
+            <p className="text-16">{information?.[0]?.moto},</p>
             <p className="text-24 font-semibold">LUNA</p>
           </div>
         </div>

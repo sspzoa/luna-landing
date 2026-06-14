@@ -1,6 +1,6 @@
 'use client';
 
-import type { Information, Project } from '@/types';
+import type { Information, Project } from '@/lib/types';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';

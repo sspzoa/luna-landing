@@ -1,20 +1,30 @@
-'use client';
-
 import Contests from '@/components/home/Contests';
 import Future from '@/components/home/Future';
 import Intro from '@/components/home/Intro';
 import MadeBy from '@/components/home/MadeBy';
 import Projects from '@/components/home/Projects';
-import { informationAtom, isDataInitializedAtom, projectsAtom } from '@/store';
-import { useAtomValue } from 'jotai';
+import { fetchInformation, fetchProjects } from '@/lib/luna-data';
+import type { Information, Project } from '@/lib/types';
 
-export default function Home() {
-  const information = useAtomValue(informationAtom);
-  const projects = useAtomValue(projectsAtom);
-  const isDataInitialized = useAtomValue(isDataInitializedAtom);
+export const dynamic = 'force-dynamic';
 
-  if (!isDataInitialized) {
-    return null;
+export default async function Home() {
+  let information: Information[] = [];
+  let projects: Project[] = [];
+  let hasError = false;
+
+  try {
+    [information, projects] = await Promise.all([fetchInformation(), fetchProjects()]);
+  } catch {
+    hasError = true;
+  }
+
+  if (hasError) {
+    return (
+      <div className="flex flex-col justify-center items-center w-full min-h-screen px-9">
+        <p className="text-24 text-luna-white/70">데이터를 불러오지 못했습니다.</p>
+      </div>
+    );
   }
 
   return (

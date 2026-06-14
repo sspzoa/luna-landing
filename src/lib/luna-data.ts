@@ -1,4 +1,3 @@
-import { env } from '@/lib/env';
 import { notionRequest } from '@/lib/notion';
 import type {
   NotionAwardPage,
@@ -11,6 +10,14 @@ import { awardSchema, informationSchema, memberSchema, projectSchema, qnaSchema 
 import type { Award, Information, Member, Project, QnA } from '@/lib/types';
 import { calculateTotalPrizeMoney } from '@/lib/utils';
 
+const DATABASE_IDS = {
+  AWARDS: '5c6c5d4aa4e24a1ba18aee280fcfc39a',
+  QNA: '5153a7c657844eebaa62b737c726447d',
+  MEMBERS: '3d3cae4b3b50481497a6c52f61413921',
+  INFORMATION: '564bbb8126ca46a69e44288548d99fa2',
+  PROJECTS: 'f73e99abb9ea4817b2d6c6333d152242',
+};
+
 export interface LunaData {
   awards: Award[];
   qna: QnA[];
@@ -20,7 +27,7 @@ export interface LunaData {
 }
 
 export async function fetchAwards(): Promise<Award[]> {
-  const response = await notionRequest<{ results: NotionAwardPage[] }>(`/databases/${env.AWARDS_DATABASE_ID}/query`, {
+  const response = await notionRequest<{ results: NotionAwardPage[] }>(`/databases/${DATABASE_IDS.AWARDS}/query`, {
     method: 'POST',
     body: {
       sorts: [
@@ -51,7 +58,7 @@ export async function fetchAwards(): Promise<Award[]> {
 }
 
 export async function fetchQnA(): Promise<QnA[]> {
-  const response = await notionRequest<{ results: NotionQnAPage[] }>(`/databases/${env.QNA_DATABASE_ID}/query`, {
+  const response = await notionRequest<{ results: NotionQnAPage[] }>(`/databases/${DATABASE_IDS.QNA}/query`, {
     method: 'POST',
     body: {
       sorts: [{ property: 'order', direction: 'ascending' }],
@@ -72,7 +79,7 @@ export async function fetchMembers(): Promise<Member[]> {
   const currentYear = new Date().getFullYear();
   const thresholdGeneration = currentYear - 2004;
 
-  const response = await notionRequest<{ results: NotionMemberPage[] }>(`/databases/${env.MEMBERS_DATABASE_ID}/query`, {
+  const response = await notionRequest<{ results: NotionMemberPage[] }>(`/databases/${DATABASE_IDS.MEMBERS}/query`, {
     method: 'POST',
     body: {
       sorts: [
@@ -113,18 +120,15 @@ export async function fetchMembers(): Promise<Member[]> {
 }
 
 export async function fetchProjects(): Promise<Project[]> {
-  const response = await notionRequest<{ results: NotionProjectPage[] }>(
-    `/databases/${env.PROJECTS_DATABASE_ID}/query`,
-    {
-      method: 'POST',
-      body: {
-        sorts: [
-          { property: 'year', direction: 'descending' },
-          { property: 'name', direction: 'ascending' },
-        ],
-      },
+  const response = await notionRequest<{ results: NotionProjectPage[] }>(`/databases/${DATABASE_IDS.PROJECTS}/query`, {
+    method: 'POST',
+    body: {
+      sorts: [
+        { property: 'year', direction: 'descending' },
+        { property: 'name', direction: 'ascending' },
+      ],
     },
-  );
+  });
 
   const projects = response.results.map((result) => ({
     id: result.id,
@@ -145,7 +149,7 @@ export async function fetchProjects(): Promise<Project[]> {
 
 export async function fetchInformation(): Promise<Information[]> {
   const [infoResponse, awards, projects] = await Promise.all([
-    notionRequest<{ results: NotionInformationPage[] }>(`/databases/${env.INFORMATION_DATABASE_ID}/query`, {
+    notionRequest<{ results: NotionInformationPage[] }>(`/databases/${DATABASE_IDS.INFORMATION}/query`, {
       method: 'POST',
     }),
     fetchAwards(),

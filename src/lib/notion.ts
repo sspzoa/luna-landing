@@ -22,7 +22,7 @@ export async function notionRequest<T>(endpoint: string, options?: NotionRequest
   const fetchOptions: RequestInit = {
     method: options?.method || 'GET',
     headers: {
-      Authorization: `Bearer ${env.NOTION_TOKEN}`,
+      Authorization: `Bearer ${env.NOTION_API_KEY}`,
       'Notion-Version': NOTION_API_VERSION,
       'Content-Type': 'application/json',
     },

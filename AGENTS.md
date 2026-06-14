@@ -94,14 +94,9 @@ Removed from earlier versions:
 
 ### Required environment variables
 
-- `NOTION_TOKEN` — Notion integration token.
-- `AWARDS_DATABASE_ID`
-- `QNA_DATABASE_ID`
-- `MEMBERS_DATABASE_ID`
-- `INFORMATION_DATABASE_ID`
-- `PROJECTS_DATABASE_ID`
+- `NOTION_API_KEY` — Notion integration token.
 
-These are read by server-side code only. Database IDs fall back to the existing hard-coded values if env vars are not set, but prefer setting them explicitly.
+Notion database IDs are hard-coded in `src/lib/luna-data.ts`.
 
 ---
 

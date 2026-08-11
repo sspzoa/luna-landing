@@ -15,8 +15,8 @@ const ProjectsList: React.FC<ProjectsListProps> = ({ projects }) => {
     return uniqueYears.sort((a, b) => Number.parseInt(b) - Number.parseInt(a));
   }, [projects]);
 
-  const lastYear = String(new Date().getFullYear() - 1);
-  const defaultYear = years.includes(lastYear) ? lastYear : years[0];
+  const thisYear = String(new Date().getFullYear());
+  const defaultYear = years.includes(thisYear) ? thisYear : years[0];
   const [selectedYear, setSelectedYear] = useState<string>(defaultYear);
 
   const filteredProjects = useMemo(() => {

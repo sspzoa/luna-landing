@@ -36,7 +36,7 @@ export default async function ProjectsPage() {
 
   return (
     <div className="flex w-full flex-col items-center justify-center">
-      <Intro year={currentYear - 1} />
+      <Intro year={currentYear} />
       <ProjectsList projects={projects} />
     </div>
   );

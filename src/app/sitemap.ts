@@ -1,34 +1,37 @@
+import { SITE_URL } from '@/lib/seo';
 import type { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const lastModified = new Date();
+
   return [
     {
-      url: 'https://luna.codes',
-      lastModified: new Date(),
-      changeFrequency: 'daily',
+      url: SITE_URL,
+      lastModified,
+      changeFrequency: 'weekly',
       priority: 1,
     },
     {
-      url: 'https://luna.codes/awards',
-      lastModified: new Date(),
+      url: `${SITE_URL}/awards`,
+      lastModified,
       changeFrequency: 'weekly',
       priority: 0.8,
     },
     {
-      url: 'https://luna.codes/members',
-      lastModified: new Date(),
+      url: `${SITE_URL}/members`,
+      lastModified,
       changeFrequency: 'weekly',
       priority: 0.8,
     },
     {
-      url: 'https://luna.codes/projects',
-      lastModified: new Date(),
+      url: `${SITE_URL}/projects`,
+      lastModified,
       changeFrequency: 'weekly',
       priority: 0.8,
     },
     {
-      url: 'https://luna.codes/qna',
-      lastModified: new Date(),
+      url: `${SITE_URL}/qna`,
+      lastModified,
       changeFrequency: 'monthly',
       priority: 0.6,
     },

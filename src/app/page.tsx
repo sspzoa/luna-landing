@@ -4,9 +4,22 @@ import Intro from '@/components/home/Intro';
 import MadeBy from '@/components/home/MadeBy';
 import Projects from '@/components/home/Projects';
 import { fetchInformation, fetchProjects } from '@/lib/luna-data';
+import { SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from '@/lib/seo';
 import type { Information, Project } from '@/lib/types';
+import type { Metadata } from 'next';
 
 export const dynamic = 'force-dynamic';
+
+export const metadata: Metadata = {
+  title: { absolute: SITE_TITLE },
+  description: SITE_DESCRIPTION,
+  alternates: { canonical: '/' },
+  openGraph: {
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    url: SITE_URL,
+  },
+};
 
 export default async function Home() {
   let information: Information[] = [];
@@ -21,14 +34,14 @@ export default async function Home() {
 
   if (hasError) {
     return (
-      <div className="flex flex-col justify-center items-center w-full min-h-screen px-9">
-        <p className="text-24 text-luna-white/70">데이터를 불러오지 못했습니다.</p>
+      <div className="flex min-h-dvh w-full flex-col items-center justify-center px-5">
+        <p className="text-20 text-luna-dark/70 sm:text-24">데이터를 불러오지 못했습니다.</p>
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col justify-center items-center w-full">
+    <div className="flex w-full flex-col items-center justify-center">
       <Intro information={information} />
       <Projects information={information} projects={projects} />
       <Contests information={information} />

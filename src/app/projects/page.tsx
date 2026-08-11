@@ -1,20 +1,33 @@
 import { fetchProjects } from '@/lib/luna-data';
 import type { Project } from '@/lib/types';
+import type { Metadata } from 'next';
 import Intro from './intro';
 import ProjectsList from './list';
 
 export const dynamic = 'force-dynamic';
+
+export const metadata: Metadata = {
+  title: '프로젝트',
+  description:
+    'LUNA 크루원들이 진행한 IT·소셜벤처 프로젝트를 연도별로 살펴보세요. 기술로 사회 문제를 해결한 루나의 활동 기록입니다.',
+  alternates: { canonical: '/projects' },
+  openGraph: {
+    title: '프로젝트 | LUNA',
+    description: 'LUNA가 진행한 IT·소셜벤처 프로젝트를 연도별로 소개합니다.',
+    url: '/projects',
+  },
+};
 
 export default async function ProjectsPage() {
   let projects: Project[];
 
   try {
     projects = await fetchProjects();
-  } catch (error) {
+  } catch {
     return (
-      <div className="flex flex-col justify-center items-center w-full min-h-screen px-9">
-        <p className="text-20 font-medium opacity-70">프로젝트 데이터를 불러오지 못했습니다.</p>
-        <p className="text-16 opacity-50">잠시 후 다시 시도해주세요.</p>
+      <div className="flex min-h-dvh w-full flex-col items-center justify-center px-5">
+        <p className="text-16 font-medium opacity-70 sm:text-20">프로젝트 데이터를 불러오지 못했습니다.</p>
+        <p className="text-14 opacity-50 sm:text-16">잠시 후 다시 시도해주세요.</p>
       </div>
     );
   }
@@ -22,7 +35,7 @@ export default async function ProjectsPage() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <div className="flex flex-col justify-center items-center w-full">
+    <div className="flex w-full flex-col items-center justify-center">
       <Intro year={currentYear - 1} />
       <ProjectsList projects={projects} />
     </div>

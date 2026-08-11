@@ -6,9 +6,21 @@ import type {
   NotionProjectPage,
   NotionQnAPage,
 } from '@/lib/notion-types';
+import {
+  dateRange,
+  fileUrl,
+  multiSelectNames,
+  multiSelectOptions,
+  numberAsString,
+  richText,
+  selectName,
+  titleText,
+} from '@/lib/notion/mappers';
 import { awardSchema, informationSchema, memberSchema, projectSchema, qnaSchema } from '@/lib/schemas';
 import type { Award, Information, Member, Project, QnA } from '@/lib/types';
 import { calculateTotalPrizeMoney } from '@/lib/utils';
+import { unstable_cache } from 'next/cache';
+import { cache } from 'react';
 
 const DATABASE_IDS = {
   AWARDS: '5c6c5d4aa4e24a1ba18aee280fcfc39a',
@@ -16,7 +28,9 @@ const DATABASE_IDS = {
   MEMBERS: '3d3cae4b3b50481497a6c52f61413921',
   INFORMATION: '564bbb8126ca46a69e44288548d99fa2',
   PROJECTS: 'f73e99abb9ea4817b2d6c6333d152242',
-};
+} as const;
+
+const REVALIDATE_SECONDS = 60 * 5;
 
 export interface LunaData {
   awards: Award[];
@@ -26,72 +40,65 @@ export interface LunaData {
   information: Information[];
 }
 
-export async function fetchAwards(): Promise<Award[]> {
-  const response = await notionRequest<{ results: NotionAwardPage[] }>(`/databases/${DATABASE_IDS.AWARDS}/query`, {
+async function queryDatabase<T>(databaseId: string, body?: Record<string, unknown>) {
+  return notionRequest<{ results: T[] }>(`/databases/${databaseId}/query`, {
     method: 'POST',
-    body: {
-      sorts: [
-        { property: 'date', direction: 'descending' },
-        { property: 'name', direction: 'ascending' },
-      ],
-    },
+    body,
+  });
+}
+
+async function loadAwards(): Promise<Award[]> {
+  const response = await queryDatabase<NotionAwardPage>(DATABASE_IDS.AWARDS, {
+    sorts: [
+      { property: 'date', direction: 'descending' },
+      { property: 'name', direction: 'ascending' },
+    ],
   });
 
   const awards = response.results.map((result) => ({
     id: result.id,
-    year: result.properties.year?.select?.name ?? null,
-    image: result.properties.image?.files?.[0]?.file?.url ?? result.properties.image?.files?.[0]?.external?.url ?? null,
-    name: result.properties.name?.title?.[0]?.plain_text ?? null,
-    prize: result.properties.prize?.rich_text?.[0]?.plain_text ?? null,
-    team: result.properties.team?.rich_text?.[0]?.plain_text ?? null,
-    members: result.properties.members?.multi_select?.map((member) => member.name) ?? [],
-    date: result.properties.date?.date
-      ? {
-          start: result.properties.date.date.start ?? null,
-          end: result.properties.date.date.end ?? null,
-        }
-      : null,
-    prizemoney: result.properties.prizemoney?.number?.toString() ?? null,
+    year: selectName(result.properties.year),
+    image: fileUrl(result.properties.image),
+    name: titleText(result.properties.name),
+    prize: richText(result.properties.prize),
+    team: richText(result.properties.team),
+    members: multiSelectNames(result.properties.members),
+    date: dateRange(result.properties.date),
+    prizemoney: numberAsString(result.properties.prizemoney),
   }));
 
   return awardSchema.array().parse(awards);
 }
 
-export async function fetchQnA(): Promise<QnA[]> {
-  const response = await notionRequest<{ results: NotionQnAPage[] }>(`/databases/${DATABASE_IDS.QNA}/query`, {
-    method: 'POST',
-    body: {
-      sorts: [{ property: 'order', direction: 'ascending' }],
-    },
+async function loadQnA(): Promise<QnA[]> {
+  const response = await queryDatabase<NotionQnAPage>(DATABASE_IDS.QNA, {
+    sorts: [{ property: 'order', direction: 'ascending' }],
   });
 
   const qna = response.results.map((result) => ({
     id: result.id,
-    question: result.properties.question?.title?.[0]?.plain_text ?? null,
+    question: titleText(result.properties.question),
     order: result.properties.order?.number ?? null,
-    answer: result.properties.answer?.rich_text?.[0]?.plain_text ?? null,
+    answer: richText(result.properties.answer),
   }));
 
   return qnaSchema.array().parse(qna);
 }
 
-export async function fetchMembers(): Promise<Member[]> {
+async function loadMembers(): Promise<Member[]> {
   const currentYear = new Date().getFullYear();
   const thresholdGeneration = currentYear - 2004;
 
-  const response = await notionRequest<{ results: NotionMemberPage[] }>(`/databases/${DATABASE_IDS.MEMBERS}/query`, {
-    method: 'POST',
-    body: {
-      sorts: [
-        { property: 'lunaGeneration', direction: 'descending' },
-        { property: 'generation', direction: 'descending' },
-        { property: 'name', direction: 'ascending' },
-      ],
-    },
+  const response = await queryDatabase<NotionMemberPage>(DATABASE_IDS.MEMBERS, {
+    sorts: [
+      { property: 'lunaGeneration', direction: 'descending' },
+      { property: 'generation', direction: 'descending' },
+      { property: 'name', direction: 'ascending' },
+    ],
   });
 
   const members = response.results.map((result) => {
-    const generation = result.properties.generation?.select?.name ?? null;
+    const generation = selectName(result.properties.generation);
     let returnImage = false;
 
     if (generation) {
@@ -104,62 +111,81 @@ export async function fetchMembers(): Promise<Member[]> {
 
     return {
       id: result.id,
-      position: result.properties.position?.select?.name ?? null,
-      image: returnImage
-        ? (result.properties.image?.files?.[0]?.file?.url ?? result.properties.image?.files?.[0]?.external?.url ?? null)
-        : null,
-      name: result.properties.name?.title?.[0]?.plain_text ?? null,
+      position: selectName(result.properties.position),
+      image: returnImage ? fileUrl(result.properties.image) : null,
+      name: titleText(result.properties.name),
       generation,
-      class: result.properties.class?.select?.name ?? null,
-      description: result.properties.description?.rich_text?.[0]?.plain_text ?? null,
-      lunaGeneration: result.properties.lunaGeneration?.select?.name ?? null,
+      class: selectName(result.properties.class),
+      description: richText(result.properties.description),
+      lunaGeneration: selectName(result.properties.lunaGeneration),
     };
   });
 
   return memberSchema.array().parse(members);
 }
 
-export async function fetchProjects(): Promise<Project[]> {
-  const response = await notionRequest<{ results: NotionProjectPage[] }>(`/databases/${DATABASE_IDS.PROJECTS}/query`, {
-    method: 'POST',
-    body: {
-      sorts: [
-        { property: 'year', direction: 'descending' },
-        { property: 'name', direction: 'ascending' },
-      ],
-    },
+async function loadProjects(): Promise<Project[]> {
+  const response = await queryDatabase<NotionProjectPage>(DATABASE_IDS.PROJECTS, {
+    sorts: [
+      { property: 'year', direction: 'descending' },
+      { property: 'name', direction: 'ascending' },
+    ],
   });
 
   const projects = response.results.map((result) => ({
     id: result.id,
     public_url: result.public_url ?? null,
-    year: result.properties.year?.select?.name ?? null,
-    image: result.properties.image?.files?.[0]?.file?.url ?? result.properties.image?.files?.[0]?.external?.url ?? null,
-    name: result.properties.name?.title?.[0]?.plain_text ?? null,
-    description: result.properties.description?.rich_text?.[0]?.plain_text ?? null,
-    awards:
-      result.properties.awards?.multi_select?.map((award) => ({
-        id: award.id,
-        name: award.name,
-      })) ?? [],
+    year: selectName(result.properties.year),
+    image: fileUrl(result.properties.image),
+    name: titleText(result.properties.name),
+    description: richText(result.properties.description),
+    awards: multiSelectOptions(result.properties.awards),
   }));
 
   return projectSchema.array().parse(projects);
 }
 
-export async function fetchInformation(): Promise<Information[]> {
-  const [infoResponse, awards, projects] = await Promise.all([
-    notionRequest<{ results: NotionInformationPage[] }>(`/databases/${DATABASE_IDS.INFORMATION}/query`, {
-      method: 'POST',
-    }),
-    fetchAwards(),
-    fetchProjects(),
-  ]);
-
-  const baseInfo = infoResponse.results.map((result) => ({
+async function loadInformationBase(): Promise<Array<{ id: string; moto: string | null }>> {
+  const response = await queryDatabase<NotionInformationPage>(DATABASE_IDS.INFORMATION);
+  return response.results.map((result) => ({
     id: result.id,
-    moto: result.properties.moto?.title?.[0]?.plain_text ?? null,
+    moto: titleText(result.properties.moto),
   }));
+}
+
+const getAwardsCached = unstable_cache(loadAwards, ['luna-awards'], {
+  revalidate: REVALIDATE_SECONDS,
+  tags: ['awards'],
+});
+
+const getQnACached = unstable_cache(loadQnA, ['luna-qna'], {
+  revalidate: REVALIDATE_SECONDS,
+  tags: ['qna'],
+});
+
+const getMembersCached = unstable_cache(loadMembers, ['luna-members'], {
+  revalidate: REVALIDATE_SECONDS,
+  tags: ['members'],
+});
+
+const getProjectsCached = unstable_cache(loadProjects, ['luna-projects'], {
+  revalidate: REVALIDATE_SECONDS,
+  tags: ['projects'],
+});
+
+const getInformationBaseCached = unstable_cache(loadInformationBase, ['luna-information-base'], {
+  revalidate: REVALIDATE_SECONDS,
+  tags: ['information'],
+});
+
+/** Request-level dedupe + 5m cross-request cache */
+export const fetchAwards = cache(() => getAwardsCached());
+export const fetchQnA = cache(() => getQnACached());
+export const fetchMembers = cache(() => getMembersCached());
+export const fetchProjects = cache(() => getProjectsCached());
+
+export const fetchInformation = cache(async (): Promise<Information[]> => {
+  const [baseInfo, awards, projects] = await Promise.all([getInformationBaseCached(), fetchAwards(), fetchProjects()]);
 
   const totalPrizeMoney = calculateTotalPrizeMoney(awards);
 
@@ -171,9 +197,9 @@ export async function fetchInformation(): Promise<Information[]> {
   }));
 
   return informationSchema.array().parse(information);
-}
+});
 
-export async function getLunaData(): Promise<LunaData> {
+export const getLunaData = cache(async (): Promise<LunaData> => {
   const [awards, qna, members, projects, information] = await Promise.all([
     fetchAwards(),
     fetchQnA(),
@@ -182,11 +208,15 @@ export async function getLunaData(): Promise<LunaData> {
     fetchInformation(),
   ]);
 
-  return {
-    awards,
-    qna,
-    members,
-    projects,
-    information,
-  };
+  return { awards, qna, members, projects, information };
+});
+
+export async function getHomeData() {
+  const [information, projects] = await Promise.all([fetchInformation(), fetchProjects()]);
+  return { information, projects };
+}
+
+export async function getAwardsPageData() {
+  const [information, awards] = await Promise.all([fetchInformation(), fetchAwards()]);
+  return { information, awards };
 }

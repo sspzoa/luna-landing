@@ -1,7 +1,6 @@
 'use client';
 
 import Container from '@/components/common/Container';
-import FadeIn from '@/components/common/FadeIn';
 import HeroSection from '@/components/common/HeroSection';
 import { DarkScroller } from '@/components/common/Scroller';
 import { formatPrizeMoney } from '@/lib/format';
@@ -16,10 +15,16 @@ export default function Intro({ information }: IntroProps) {
   return (
     <HeroSection scroller={<DarkScroller />}>
       <Container className="relative flex flex-col-reverse items-center justify-between gap-9 md:flex-row-reverse">
-        <FadeIn delayMs={100} className="self-start md:absolute md:left-0 md:self-center">
-          <Image src="/images/awards/main.webp" alt="LUNA 업적" width={397} height={301} draggable={false} priority />
-        </FadeIn>
-        <FadeIn className="z-10 flex shrink-0 flex-col gap-7 self-end md:self-center">
+        <Image
+          className="self-start md:absolute md:left-0 md:self-center"
+          src="/images/awards/main.webp"
+          alt="LUNA 업적"
+          width={397}
+          height={301}
+          draggable={false}
+          priority
+        />
+        <div className="z-10 flex shrink-0 flex-col gap-7 self-end md:self-center">
           <div className="flex flex-col gap-4">
             <p className="text-right text-36 font-medium text-luna-bright">{information[0]?.moto},</p>
             <p className="text-right text-84 font-extrabold text-luna-purple">루나의 업적</p>
@@ -33,7 +38,7 @@ export default function Intro({ information }: IntroProps) {
             <strong>지금까지 총 {formatPrizeMoney(information[0]?.prizemoney || 0)}의 상금 및 지원금</strong>을
             받았습니다.
           </p>
-        </FadeIn>
+        </div>
       </Container>
     </HeroSection>
   );

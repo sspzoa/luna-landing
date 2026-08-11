@@ -1,7 +1,6 @@
 'use client';
 
 import Container from '@/components/common/Container';
-import FadeIn from '@/components/common/FadeIn';
 import FilterChips from '@/components/common/FilterChips';
 import Section from '@/components/common/Section';
 import type { Member } from '@/lib/types';
@@ -70,48 +69,42 @@ export default function MemberList({ members }: MemberListProps) {
   return (
     <Section className="gap-25">
       <div className="flex flex-col items-center justify-center gap-7">
-        <FadeIn>
-          <p className="text-48 font-bold">{activeGeneration}</p>
-        </FadeIn>
-        <FadeIn delayMs={80}>
-          <FilterChips
-            options={generations}
-            value={activeGeneration}
-            onChange={setSelectedGeneration}
-            align="center"
-            className="max-w-[1200px]"
-          />
-        </FadeIn>
+        <p className="text-48 font-bold">{activeGeneration}</p>
+        <FilterChips
+          options={generations}
+          value={activeGeneration}
+          onChange={setSelectedGeneration}
+          align="center"
+          className="max-w-[1200px]"
+        />
       </div>
 
       <Container className="grid grid-cols-2 gap-20 md:grid-cols-3">
-        {visibleMembers.map((member, index) => (
-          <FadeIn key={member.id} delayMs={Math.min(index * 35, 280)}>
-            <article className="flex flex-col items-center justify-center gap-5">
-              <p className="text-16 font-semibold opacity-50">{member.position || 'Member'}</p>
-              <Image
-                className="aspect-square rounded-full object-cover"
-                src={
-                  shouldUseDefaultImage(member)
-                    ? '/images/members/default.svg'
-                    : member.image || '/images/members/default.svg'
-                }
-                alt={`${member.name} profile`}
-                width={140}
-                height={140}
-                draggable={false}
-              />
-              <div className="flex flex-col items-center justify-center gap-1.5">
-                <p className="text-24 font-semibold">{member.name}</p>
-                <p className="text-16 font-medium opacity-50">
-                  {member.generation} {member.class}
-                </p>
-              </div>
-              <div className="flex min-h-[54px] min-w-[220px] items-center justify-center rounded-full border border-luna-dark-10 px-4 py-3">
-                <p className="text-center text-16 font-medium text-luna-dark opacity-50">{member.description || ''}</p>
-              </div>
-            </article>
-          </FadeIn>
+        {visibleMembers.map((member) => (
+          <article key={member.id} className="flex flex-col items-center justify-center gap-5">
+            <p className="text-16 font-semibold opacity-50">{member.position || 'Member'}</p>
+            <Image
+              className="aspect-square rounded-full object-cover"
+              src={
+                shouldUseDefaultImage(member)
+                  ? '/images/members/default.svg'
+                  : member.image || '/images/members/default.svg'
+              }
+              alt={`${member.name} profile`}
+              width={140}
+              height={140}
+              draggable={false}
+            />
+            <div className="flex flex-col items-center justify-center gap-1.5">
+              <p className="text-24 font-semibold">{member.name}</p>
+              <p className="text-16 font-medium opacity-50">
+                {member.generation} {member.class}
+              </p>
+            </div>
+            <div className="flex min-h-[54px] min-w-[220px] items-center justify-center rounded-full border border-luna-dark-10 px-4 py-3">
+              <p className="text-center text-16 font-medium text-luna-dark opacity-50">{member.description || ''}</p>
+            </div>
+          </article>
         ))}
       </Container>
     </Section>

@@ -1,6 +1,5 @@
 'use client';
 
-import FadeIn from '@/components/common/FadeIn';
 import HeroSection from '@/components/common/HeroSection';
 import { LightScroller } from '@/components/common/Scroller';
 import type { Member } from '@/lib/types';
@@ -40,7 +39,7 @@ export default function Intro({ members }: IntroProps) {
         <div className="absolute inset-0 bg-[#000] opacity-50" />
       </div>
 
-      <FadeIn className="relative z-10 flex w-full max-w-[1200px] flex-col items-center justify-center gap-7">
+      <div className="relative z-10 flex w-full max-w-[1200px] flex-col items-center justify-center gap-7">
         <p className="text-center text-64 font-extrabold text-luna-white">Members of LUNA</p>
         <p className="text-center text-20 text-luna-white opacity-80">
           2018년부터 지금의 LUNA가 있기까지,
@@ -49,7 +48,7 @@ export default function Intro({ members }: IntroProps) {
           <br />
           1기부터 {highestGeneration}기까지의 멤버들과 명예 동아리원들입니다.
         </p>
-      </FadeIn>
+      </div>
     </HeroSection>
   );
 }

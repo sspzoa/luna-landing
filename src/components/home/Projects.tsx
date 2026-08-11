@@ -1,6 +1,5 @@
 'use client';
 
-import FadeIn from '@/components/common/FadeIn';
 import type { Information, Project } from '@/lib/types';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -38,9 +37,9 @@ export default function Projects({ information, projects }: ProjectsProps) {
 
   return (
     <div className="flex w-full flex-col items-center justify-center gap-20 py-50">
-      <FadeIn className="w-full max-w-[1272px] items-start justify-start px-9">
+      <div className="w-full max-w-[1272px] items-start justify-start px-9">
         <p className="text-left text-32 font-medium">루나의 크루원들은 지금까지 자발적으로</p>
-      </FadeIn>
+      </div>
       <div className="flex w-full flex-col items-center justify-center gap-3 overflow-hidden">
         {projectChunks.map((chunk, rowIndex) => (
           <div
@@ -63,7 +62,7 @@ export default function Projects({ information, projects }: ProjectsProps) {
           </div>
         ))}
       </div>
-      <FadeIn delayMs={80} className="flex w-full max-w-[1272px] flex-col items-end justify-end gap-4 px-9">
+      <div className="flex w-full max-w-[1272px] flex-col items-end justify-end gap-4 px-9">
         <p className="text-right text-32 font-medium">
           <strong className="text-luna-purple">{information[0].projects}개의 프로젝트</strong>를 진행하며
           <br />
@@ -75,7 +74,7 @@ export default function Projects({ information, projects }: ProjectsProps) {
           <p className="text-right text-14 font-semibold">루나가 진행한 프로젝트 보러가기</p>
           <Image src="/icons/arrow_forward_ios.svg" alt="arrow_forward_ios" width={16} height={16} />
         </Link>
-      </FadeIn>
+      </div>
     </div>
   );
 }

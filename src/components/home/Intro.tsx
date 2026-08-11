@@ -1,7 +1,6 @@
 'use client';
 
 import Container from '@/components/common/Container';
-import FadeIn from '@/components/common/FadeIn';
 import HeroSection from '@/components/common/HeroSection';
 import { DarkScroller } from '@/components/common/Scroller';
 import type { Information } from '@/lib/types';
@@ -19,7 +18,7 @@ export default function Intro({ information }: IntroProps) {
   return (
     <HeroSection scroller={<DarkScroller />}>
       <Container className="relative flex flex-col items-center justify-between gap-9 md:flex-row">
-        <FadeIn className="z-10 flex shrink-0 flex-col gap-7 self-start md:self-center">
+        <div className="z-10 flex shrink-0 flex-col gap-7 self-start md:self-center">
           <div className="flex flex-col gap-4">
             <p className="text-40 font-medium text-luna-bright">{information[0].moto},</p>
             <p className="text-96 font-extrabold text-luna-purple">LUNA</p>
@@ -28,10 +27,10 @@ export default function Intro({ information }: IntroProps) {
             <strong>LUNA</strong>는 한국디지털미디어고등학교의 <strong>유일한 IT 소셜벤처 동아리</strong>로 다양한
             사회적 문제들을 해결하고 <strong>모두가 함께 살 수 있는 세상을 만들기 위해 노력하고 있습니다.</strong>
           </p>
-        </FadeIn>
-        <FadeIn delayMs={120} className="self-end md:absolute md:right-0 md:self-center">
+        </div>
+        <div className="self-end md:absolute md:right-0 md:self-center">
           <LunaSpline />
-        </FadeIn>
+        </div>
       </Container>
     </HeroSection>
   );

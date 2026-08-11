@@ -1,9 +1,8 @@
-import FadeIn from '@/components/common/FadeIn';
 import Link from 'next/link';
 
 export default function MadeBy() {
   return (
-    <FadeIn className="flex w-full flex-col items-center justify-center pt-50 pb-100">
+    <div className="flex w-full flex-col items-center justify-center pt-50 pb-100">
       <p className="text-40 opacity-10">
         Refreshed by{' '}
         <Link
@@ -14,6 +13,6 @@ export default function MadeBy() {
           sspzoa
         </Link>
       </p>
-    </FadeIn>
+    </div>
   );
 }

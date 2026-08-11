@@ -1,5 +1,4 @@
 import Container from '@/components/common/Container';
-import FadeIn from '@/components/common/FadeIn';
 import Section from '@/components/common/Section';
 import { formatPrizeMoney } from '@/lib/format';
 import type { Information } from '@/lib/types';
@@ -18,7 +17,7 @@ export default function Contests({ information }: ContestsProps) {
   return (
     <Section className="py-50">
       <Container className="relative flex flex-col items-center justify-between gap-9 md:flex-row">
-        <FadeIn className="z-10 flex shrink-0 flex-col gap-4 self-start">
+        <div className="z-10 flex shrink-0 flex-col gap-4 self-start">
           <div className="flex flex-col gap-3">
             <p className="text-32 font-medium">
               <strong className="text-luna-purple">{information[0].contests}개</strong>의 대회,
@@ -36,17 +35,15 @@ export default function Contests({ information }: ContestsProps) {
             <p className="text-14 font-semibold">루나의 업적 알아보기</p>
             <Image src="/icons/arrow_forward_ios.svg" alt="arrow_forward_ios" width={16} height={16} />
           </Link>
-        </FadeIn>
-        <FadeIn delayMs={100}>
-          <Image
-            alt="award"
-            width={500}
-            height={418}
-            draggable={false}
-            className="aspect-[1.5] self-end rounded-3xl object-cover md:absolute md:right-0 md:self-center"
-            src="/images/home/award.webp"
-          />
-        </FadeIn>
+        </div>
+        <Image
+          alt="award"
+          width={500}
+          height={418}
+          draggable={false}
+          className="aspect-[1.5] self-end rounded-3xl object-cover md:absolute md:right-0 md:self-center"
+          src="/images/home/award.webp"
+        />
       </Container>
     </Section>
   );

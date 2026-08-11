@@ -1,6 +1,5 @@
 'use client';
 
-import FadeIn from '@/components/common/FadeIn';
 import OptimizedImage from '@/components/common/OptimizedImage';
 import Section from '@/components/common/Section';
 import { useMemo } from 'react';
@@ -69,7 +68,7 @@ export default function Future() {
 
   return (
     <Section className="overflow-hidden py-50">
-      <FadeIn className="relative isolate">
+      <div className="relative isolate">
         <div className="relative z-20 rounded-[50px] border-2 border-[#fff6] bg-[#C7C7C71A] px-20 py-25 backdrop-blur-sm">
           <p className="text-center text-28 font-medium">
             루나는 앞으로도 여러분들과 함께
@@ -80,7 +79,7 @@ export default function Future() {
           </p>
         </div>
         {animationElements}
-      </FadeIn>
+      </div>
     </Section>
   );
 }

@@ -47,38 +47,27 @@ Removed from earlier versions:
 
 ```
 .
-├── public/                    # Static assets (images, icons)
+├── public/
 ├── src/
-│   ├── app/                   # App Router pages
-│   │   ├── (routes)/
-│   │   │   ├── page.tsx
-│   │   │   ├── awards/page.tsx
-│   │   │   ├── members/page.tsx
-│   │   │   ├── projects/page.tsx
-│   │   │   └── qna/page.tsx
+│   ├── app/                   # Routes + metadata only
+│   │   ├── page.tsx
+│   │   ├── awards|members|projects|qna/page.tsx
 │   │   ├── globals.css
 │   │   ├── layout.tsx
-│   │   ├── robots.ts
-│   │   └── sitemap.ts
-│   ├── components/            # React components
-│   │   ├── common/
-│   │   ├── home/
-│   │   ├── layout/
-│   │   └── awards/ / members/ / projects/ / qna/
-│   └── lib/                   # Server-side data layer
-│       ├── env.ts             # Runtime env validation
-│       ├── notion.ts          # Notion API client
-│       ├── notion-types.ts    # Notion response type helpers
-│       ├── schemas.ts         # Zod schemas & inferred types
-│       ├── types.ts           # Re-export of schema types
-│       ├── utils.ts           # Shared utilities
-│       ├── format.ts          # Display format helpers
-│       ├── image-utils.ts     # Image helpers
-│       └── luna-data.ts       # Server data fetching from Notion
-├── biome.json                 # Biome lint/format configuration
-├── next.config.ts             # Next.js config + security headers
-├── package.json
-└── tsconfig.json
+│   │   ├── manifest.ts / robots.ts / sitemap.ts
+│   ├── components/
+│   │   ├── common/            # Container, Section, Hero, FilterChips, FadeIn…
+│   │   ├── layout/            # Navbar, Footer, ScalingLayout
+│   │   ├── home/ awards/ members/ projects/ qna/
+│   ├── constants/             # nav config
+│   └── lib/                   # data + utils
+│       ├── luna-data.ts       # cached Notion fetchers
+│       ├── notion.ts + notion/mappers.ts
+│       ├── schemas.ts / types.ts / seo.ts / format.ts
+│       └── cn.ts / collection.ts / utils.ts
+├── biome.json
+├── next.config.ts
+└── package.json
 ```
 
 ---
@@ -86,11 +75,11 @@ Removed from earlier versions:
 ## Data flow
 
 1. **Environment validation** — `src/lib/env.ts` validates required env vars with Zod at startup.
-2. **Notion client** — `src/lib/notion.ts` provides `notionRequest<T>`, a typed wrapper around `fetch`.
+2. **Notion client** — `src/lib/notion.ts` + property mappers in `src/lib/notion/mappers.ts`.
 3. **Schema validation** — `src/lib/schemas.ts` defines Zod schemas for every content type.
-4. **Server data fetching** — `src/lib/luna-data.ts` defines `fetchAwards`, `fetchQnA`, `fetchMembers`, `fetchProjects`, `fetchInformation`, and `getLunaData`.
-5. **Server components** — Pages fetch data directly from `src/lib/luna-data` and render sections. Client components receive data via props.
-6. **Error handling** — Pages wrap fetches in `try/catch` and render a fallback UI when data cannot be loaded.
+4. **Server data fetching** — `src/lib/luna-data.ts` uses React `cache` (request dedupe) and `unstable_cache` (5m revalidate). Helpers: `getHomeData`, `getAwardsPageData`, `getLunaData`.
+5. **Server components** — Pages fetch via `luna-data` and pass props to section components under `src/components/*`.
+6. **Error handling** — Pages wrap fetches in `try/catch` and render `ErrorState`.
 
 ### Required environment variables
 

@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 const envSchema = z.object({
-  NOTION_API_KEY: z.string().min(1, 'NOTION_API_KEY is required'),
+  NOTION_TOKEN: z.string().min(1, 'NOTION_TOKEN is required'),
 });
 
 const parsed = envSchema.safeParse(process.env);

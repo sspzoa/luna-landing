@@ -94,7 +94,7 @@ Removed from earlier versions:
 
 ### Required environment variables
 
-- `NOTION_API_KEY` — Notion integration token.
+- `NOTION_TOKEN` — Notion integration token.
 
 Notion database IDs are hard-coded in `src/lib/luna-data.ts`.
 

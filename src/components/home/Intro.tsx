@@ -1,41 +1,38 @@
 'use client';
 
-import { useScaling } from '@/components/layout/ScalingLayout';
+import Container from '@/components/common/Container';
+import FadeIn from '@/components/common/FadeIn';
+import HeroSection from '@/components/common/HeroSection';
+import { DarkScroller } from '@/components/common/Scroller';
 import type { Information } from '@/lib/types';
-import { DarkScroller } from '../common/Scroller';
 import LunaSpline from './LunaSpline';
 
 interface IntroProps {
   information: Information[];
 }
 
-const Intro = ({ information }: IntroProps) => {
-  const { scaledVh } = useScaling();
-
+export default function Intro({ information }: IntroProps) {
   if (!information || information.length === 0) {
     return null;
   }
 
   return (
-    <div style={{ height: scaledVh(100) }} className="relative flex justify-center items-center w-full p-9">
-      <div className="md:relative flex flex-col md:flex-row justify-between items-center w-full max-w-[1200px] gap-9">
-        <div className="flex flex-col gap-7 shrink-0 self-start md:self-center z-10">
+    <HeroSection scroller={<DarkScroller />}>
+      <Container className="relative flex flex-col items-center justify-between gap-9 md:flex-row">
+        <FadeIn className="z-10 flex shrink-0 flex-col gap-7 self-start md:self-center">
           <div className="flex flex-col gap-4">
-            <p className="text-40 text-luna-bright font-medium">{information[0].moto},</p>
-            <p className="text-96 text-luna-purple font-extrabold">LUNA</p>
+            <p className="text-40 font-medium text-luna-bright">{information[0].moto},</p>
+            <p className="text-96 font-extrabold text-luna-purple">LUNA</p>
           </div>
-          <p className="text-wrap text-20 max-w-[500px]">
+          <p className="max-w-[500px] text-wrap text-20">
             <strong>LUNA</strong>는 한국디지털미디어고등학교의 <strong>유일한 IT 소셜벤처 동아리</strong>로 다양한
             사회적 문제들을 해결하고 <strong>모두가 함께 살 수 있는 세상을 만들기 위해 노력하고 있습니다.</strong>
           </p>
-        </div>
-        <div className="self-end md:self-center md:absolute md:right-0">
+        </FadeIn>
+        <FadeIn delayMs={120} className="self-end md:absolute md:right-0 md:self-center">
           <LunaSpline />
-        </div>
-      </div>
-      <DarkScroller />
-    </div>
+        </FadeIn>
+      </Container>
+    </HeroSection>
   );
-};
-
-export default Intro;
+}

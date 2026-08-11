@@ -1,7 +1,7 @@
+import ErrorState from '@/components/common/ErrorState';
+import QnaSection from '@/components/qna/QnaSection';
 import { fetchQnA } from '@/lib/luna-data';
-import type { QnA } from '@/lib/types';
 import type { Metadata } from 'next';
-import QnaSection from './section';
 
 export const dynamic = 'force-dynamic';
 
@@ -18,22 +18,15 @@ export const metadata: Metadata = {
 };
 
 export default async function QnaPage() {
-  let qna: QnA[];
-
   try {
-    qna = await fetchQnA();
-  } catch {
+    const qna = await fetchQnA();
+
     return (
-      <div className="flex min-h-dvh w-full flex-col items-center justify-center px-5">
-        <p className="text-16 font-medium opacity-70 sm:text-20">질문 데이터를 불러오지 못했습니다.</p>
-        <p className="text-14 opacity-50 sm:text-16">잠시 후 다시 시도해주세요.</p>
+      <div className="flex w-full flex-col items-center justify-center">
+        <QnaSection qna={qna} />
       </div>
     );
+  } catch {
+    return <ErrorState message="질문 데이터를 불러오지 못했습니다." />;
   }
-
-  return (
-    <div className="flex w-full flex-col items-center justify-center">
-      <QnaSection qna={qna} />
-    </div>
-  );
 }

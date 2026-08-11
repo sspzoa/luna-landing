@@ -1,6 +1,7 @@
 import AwardsList from '@/components/awards/AwardsList';
 import Intro from '@/components/awards/Intro';
-import { fetchAwards, fetchInformation } from '@/lib/luna-data';
+import ErrorState from '@/components/common/ErrorState';
+import { getAwardsPageData } from '@/lib/luna-data';
 import type { Metadata } from 'next';
 
 export const dynamic = 'force-dynamic';
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
 
 export default async function Awards() {
   try {
-    const [information, awards] = await Promise.all([fetchInformation(), fetchAwards()]);
+    const { information, awards } = await getAwardsPageData();
 
     return (
       <div className="flex w-full flex-col items-center justify-center">
@@ -29,14 +30,11 @@ export default async function Awards() {
     );
   } catch {
     return (
-      <div className="flex min-h-dvh flex-col items-center justify-center gap-8 bg-[#ffe2e2] px-5">
-        <div className="flex flex-col items-center justify-center gap-2">
-          <p className="text-center text-lg font-bold text-[#82181a]">
-            필요한 데이터를 불러오는 중 문제가 발생했습니다. <br />
-            페이지를 새로고침해 주세요.
-          </p>
-        </div>
-      </div>
+      <ErrorState
+        className="bg-[#ffe2e2]"
+        message="필요한 데이터를 불러오는 중 문제가 발생했습니다."
+        detail="페이지를 새로고침해 주세요."
+      />
     );
   }
 }

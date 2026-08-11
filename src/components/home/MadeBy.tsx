@@ -1,20 +1,19 @@
+import FadeIn from '@/components/common/FadeIn';
 import Link from 'next/link';
 
-const MadeBy = () => {
+export default function MadeBy() {
   return (
-    <div className="flex flex-col justify-center items-center w-full pt-50 pb-100 animate-pulse">
+    <FadeIn className="flex w-full flex-col items-center justify-center pt-50 pb-100">
       <p className="text-40 opacity-10">
         Refreshed by{' '}
         <Link
-          className="hover:opacity-50 duration-300 font-bold text-luna-purple"
+          className="font-bold text-luna-purple duration-300 hover:opacity-50"
           href="https://github.com/sspzoa"
           target="_blank"
           rel="noreferrer noopener">
           sspzoa
         </Link>
       </p>
-    </div>
+    </FadeIn>
   );
-};
-
-export default MadeBy;
+}

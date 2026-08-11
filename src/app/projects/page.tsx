@@ -1,8 +1,8 @@
+import ErrorState from '@/components/common/ErrorState';
+import Intro from '@/components/projects/Intro';
+import ProjectsList from '@/components/projects/ProjectsList';
 import { fetchProjects } from '@/lib/luna-data';
-import type { Project } from '@/lib/types';
 import type { Metadata } from 'next';
-import Intro from './intro';
-import ProjectsList from './list';
 
 export const dynamic = 'force-dynamic';
 
@@ -19,25 +19,17 @@ export const metadata: Metadata = {
 };
 
 export default async function ProjectsPage() {
-  let projects: Project[];
-
   try {
-    projects = await fetchProjects();
-  } catch {
+    const projects = await fetchProjects();
+    const currentYear = new Date().getFullYear();
+
     return (
-      <div className="flex min-h-dvh w-full flex-col items-center justify-center px-5">
-        <p className="text-16 font-medium opacity-70 sm:text-20">프로젝트 데이터를 불러오지 못했습니다.</p>
-        <p className="text-14 opacity-50 sm:text-16">잠시 후 다시 시도해주세요.</p>
+      <div className="flex w-full flex-col items-center justify-center">
+        <Intro year={currentYear} />
+        <ProjectsList projects={projects} />
       </div>
     );
+  } catch {
+    return <ErrorState message="프로젝트 데이터를 불러오지 못했습니다." />;
   }
-
-  const currentYear = new Date().getFullYear();
-
-  return (
-    <div className="flex w-full flex-col items-center justify-center">
-      <Intro year={currentYear} />
-      <ProjectsList projects={projects} />
-    </div>
-  );
 }

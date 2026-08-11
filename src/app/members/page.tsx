@@ -1,7 +1,7 @@
+import ErrorState from '@/components/common/ErrorState';
 import Intro from '@/components/members/Intro';
 import MemberList from '@/components/members/MemberList';
 import { fetchMembers } from '@/lib/luna-data';
-import type { Member } from '@/lib/types';
 import type { Metadata } from 'next';
 
 export const dynamic = 'force-dynamic';
@@ -19,24 +19,16 @@ export const metadata: Metadata = {
 };
 
 export default async function MembersPage() {
-  let members: Member[];
-
   try {
-    members = await fetchMembers();
-  } catch (error) {
-    console.error('Failed to fetch members:', error);
+    const members = await fetchMembers();
+
     return (
-      <div className="flex min-h-dvh w-full flex-col items-center justify-center px-5 py-16">
-        <p className="text-20 font-bold text-luna-dark sm:text-24">멤버 정보를 불러오지 못했어요.</p>
-        <p className="mt-2 text-16 text-luna-dark opacity-50">잠시 후 다시 시도해 주세요.</p>
+      <div className="flex w-full flex-col items-center justify-center">
+        <Intro members={members} />
+        <MemberList members={members} />
       </div>
     );
+  } catch {
+    return <ErrorState message="멤버 정보를 불러오지 못했어요." />;
   }
-
-  return (
-    <div className="flex w-full flex-col items-center justify-center">
-      <Intro members={members} />
-      <MemberList members={members} />
-    </div>
-  );
 }

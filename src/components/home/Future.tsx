@@ -1,6 +1,8 @@
 'use client';
 
+import FadeIn from '@/components/common/FadeIn';
 import OptimizedImage from '@/components/common/OptimizedImage';
+import Section from '@/components/common/Section';
 import { useMemo } from 'react';
 
 const animationItems = [
@@ -9,65 +11,67 @@ const animationItems = [
     alt: 'circle1',
     width: 70,
     height: 70,
-    className: 'absolute bottom-[-80px] left-[-70px] z-40 translate-y-[10px]',
-    style: { animation: 'bounce 4s infinite', animationDelay: '0.2s' },
+    className: 'absolute z-40 translate-y-[10px]',
+    style: { animation: 'bounce 4s infinite', animationDelay: '0.2s', bottom: -80, left: -70 },
   },
   {
     src: '/images/home/future/circle2.png',
     alt: 'circle2',
     width: 180,
     height: 180,
-    className: 'absolute bottom-[-90px] left-[-40px] z-30 translate-y-[10px]',
-    style: { animation: 'bounce 4s infinite', animationDelay: '0.1s' },
+    className: 'absolute z-30 translate-y-[10px]',
+    style: { animation: 'bounce 4s infinite', animationDelay: '0.1s', bottom: -90, left: -40 },
   },
   {
     src: '/images/home/future/circle3.png',
     alt: 'circle3',
     width: 280,
     height: 280,
-    className: 'absolute top-[-70px] right-[-120px] z-10 translate-y-[10px]',
-    style: { animation: 'bounce 4s infinite', animationDelay: '0.3s' },
+    className: 'absolute z-10 translate-y-[10px]',
+    style: { animation: 'bounce 4s infinite', animationDelay: '0.3s', top: -70, right: -120 },
   },
   {
     src: '/images/home/future/luna.png',
     alt: 'luna',
     width: 160,
     height: 160,
-    className: 'absolute top-[-100px] left-[-50px] z-10 translate-y-[10px]',
-    style: { animation: 'bounce 4s infinite', animationDelay: '0.4s' },
+    className: 'absolute z-10 translate-y-[10px]',
+    style: { animation: 'bounce 4s infinite', animationDelay: '0.4s', top: -100, left: -50 },
   },
   {
     src: '/images/home/future/hand.png',
     alt: 'hand',
     width: 430,
     height: 430,
-    className: 'absolute bottom-[-240px] right-[-240px] z-10 translate-y-[10px]',
-    style: { animation: 'bounce 4s infinite', animationDelay: '0s' },
+    className: 'absolute z-10 translate-y-[10px]',
+    style: { animation: 'bounce 4s infinite', animationDelay: '0s', bottom: -240, right: -240 },
   },
 ];
 
-const Future = () => {
-  const animationElements = useMemo(() => {
-    return animationItems.map((item, index) => (
-      <OptimizedImage
-        key={item.alt}
-        src={item.src}
-        alt={item.alt}
-        width={item.width}
-        height={item.height}
-        className={item.className}
-        style={item.style}
-        draggable={false}
-        index={index}
-      />
-    ));
-  }, []);
+export default function Future() {
+  const animationElements = useMemo(
+    () =>
+      animationItems.map((item, index) => (
+        <OptimizedImage
+          key={item.alt}
+          src={item.src}
+          alt={item.alt}
+          width={item.width}
+          height={item.height}
+          className={item.className}
+          style={item.style}
+          draggable={false}
+          index={index}
+        />
+      )),
+    [],
+  );
 
   return (
-    <div className="flex flex-col justify-center items-center w-full py-50 overflow-hidden">
-      <div className="relative isolate">
-        <div className="relative px-20 py-25 bg-[#C7C7C71A] border-2 border-[#fff6] backdrop-blur-sm rounded-[50px] z-20">
-          <p className="text-28 text-center font-medium">
+    <Section className="overflow-hidden py-50">
+      <FadeIn className="relative isolate">
+        <div className="relative z-20 rounded-[50px] border-2 border-[#fff6] bg-[#C7C7C71A] px-20 py-25 backdrop-blur-sm">
+          <p className="text-center text-28 font-medium">
             루나는 앞으로도 여러분들과 함께
             <br />
             <strong>IT기술을 바탕으로 평등한 세상을 만들자는</strong>
@@ -76,9 +80,7 @@ const Future = () => {
           </p>
         </div>
         {animationElements}
-      </div>
-    </div>
+      </FadeIn>
+    </Section>
   );
-};
-
-export default Future;
+}

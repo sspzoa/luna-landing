@@ -2,8 +2,8 @@
 
 import { useScaling } from '@/components/layout/ScalingLayout';
 import type { Information } from '@/lib/types';
-import Image from 'next/image';
 import { DarkScroller } from '../common/Scroller';
+import LunaSpline from './LunaSpline';
 
 interface IntroProps {
   information: Information[];
@@ -29,15 +29,9 @@ const Intro = ({ information }: IntroProps) => {
             사회적 문제들을 해결하고 <strong>모두가 함께 살 수 있는 세상을 만들기 위해 노력하고 있습니다.</strong>
           </p>
         </div>
-        <Image
-          className="self-end md:self-center md:absolute md:right-0"
-          src="/images/home/luna_model.png"
-          alt="luna_model"
-          width={500}
-          height={418}
-          draggable={false}
-          priority={true}
-        />
+        <div className="self-end md:self-center md:absolute md:right-0">
+          <LunaSpline />
+        </div>
       </div>
       <DarkScroller />
     </div>

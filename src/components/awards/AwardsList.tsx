@@ -28,11 +28,11 @@ export default function AwardsList({ awards }: AwardsListProps) {
         <FilterChips options={years} value={selectedYear} onChange={setSelectedYear} formatLabel={(y) => `${y}년`} />
       </Container>
 
-      <Container className="grid grid-cols-2 gap-x-8 gap-y-7 md:grid-cols-3">
+      <Container className="grid grid-cols-1 gap-x-8 gap-y-7 sm:grid-cols-2 md:grid-cols-3">
         {filteredAwards.map((award) => (
           <article key={award.id} className="flex w-full flex-col rounded-[20px] border-2 border-luna-dark-10">
             <NotionImage
-              className="h-[180px] w-full rounded-t-[20px]"
+              className="h-[160px] w-full rounded-t-[20px] sm:h-[180px]"
               pageId={award.id}
               image={award.image}
               fallback="/images/awards/default.svg"
@@ -41,12 +41,12 @@ export default function AwardsList({ awards }: AwardsListProps) {
               height={180}
               objectFit="cover"
             />
-            <div className="flex flex-col gap-5 p-5">
+            <div className="flex flex-col gap-4 p-4 sm:gap-5 sm:p-5">
               <div className="flex flex-col gap-1.5">
                 <p className="text-14 font-semibold">{award.name}</p>
                 <p className="text-24 font-bold text-luna-bright">{award.prize}</p>
               </div>
-              <div className="flex flex-row items-center justify-between gap-2">
+              <div className="flex flex-col items-start justify-between gap-1 sm:flex-row sm:items-center sm:gap-2">
                 <p className="text-wrap text-14 font-medium text-luna-dark opacity-50">
                   {award.team} - {award.members?.join(', ')}
                 </p>

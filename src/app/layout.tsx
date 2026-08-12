@@ -3,10 +3,7 @@ import './globals.css';
 import JsonLd from '@/components/common/JsonLd';
 import Footer from '@/components/layout/Footer';
 import Navbar from '@/components/layout/Navbar';
-import ScalingLayout from '@/components/layout/ScalingLayout';
-import { fetchInformation } from '@/lib/luna-data';
 import { OG_IMAGE, SITE_DESCRIPTION, SITE_KEYWORDS, SITE_NAME, SITE_TITLE, SITE_URL } from '@/lib/seo';
-import type { Information } from '@/lib/types';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { ReactNode } from 'react';
@@ -76,15 +73,7 @@ interface RootLayoutProps {
   children: ReactNode;
 }
 
-export default async function RootLayout({ children }: RootLayoutProps) {
-  let information: Information[] = [];
-
-  try {
-    information = await fetchInformation();
-  } catch {
-    information = [];
-  }
-
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="ko" className="scroll-smooth">
       <head>
@@ -101,10 +90,8 @@ export default async function RootLayout({ children }: RootLayoutProps) {
         <Analytics />
         <SpeedInsights />
         <Navbar />
-        <ScalingLayout>
-          <main>{children}</main>
-          <Footer information={information} />
-        </ScalingLayout>
+        <main className="min-h-dvh">{children}</main>
+        <Footer />
       </body>
     </html>
   );

@@ -57,7 +57,7 @@ Removed from earlier versions:
 │   │   ├── manifest.ts / robots.ts / sitemap.ts
 │   ├── components/
 │   │   ├── common/            # Container, Section, Hero, FilterChips, FadeIn…
-│   │   ├── layout/            # Navbar, Footer, ScalingLayout
+│   │   ├── layout/            # Navbar, Footer
 │   │   ├── home/ awards/ members/ projects/ qna/
 │   ├── constants/             # nav config
 │   └── lib/                   # data + utils

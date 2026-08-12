@@ -35,9 +35,9 @@ export default function ProjectsList({ projects }: ProjectsListProps) {
         {filteredProjects.map((project) => (
           <article
             key={project.id}
-            className="flex w-full flex-row items-center gap-7 rounded-[20px] border-2 border-luna-dark-10 p-7">
+            className="flex w-full flex-col items-start gap-5 rounded-[20px] border-2 border-luna-dark-10 p-5 sm:flex-row sm:items-center sm:gap-7 sm:p-7">
             <NotionImage
-              className="size-[140px] shrink-0"
+              className="size-[100px] shrink-0 sm:size-[140px]"
               pageId={project.id}
               image={project.image}
               fallback="/images/projects/default.svg"

@@ -8,11 +8,16 @@
   font-family: "Pretendard Variable", sans-serif;
 }
 
-html,
-body {
+html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
   background-color: var(--luna-white);
   color: var(--luna-black);
+  overflow-x: clip;
 }
 
 :root {

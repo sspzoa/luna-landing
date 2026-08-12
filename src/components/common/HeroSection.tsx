@@ -1,6 +1,3 @@
-'use client';
-
-import { useScaling } from '@/components/layout/ScalingLayout';
 import { cn } from '@/lib/cn';
 import type { ReactNode } from 'react';
 
@@ -11,12 +8,12 @@ interface HeroSectionProps {
 }
 
 export default function HeroSection({ children, className, scroller }: HeroSectionProps) {
-  const { scaledVh } = useScaling();
-
   return (
     <section
-      style={{ height: scaledVh(100) }}
-      className={cn('relative flex w-full items-center justify-center p-9', className)}>
+      className={cn(
+        'relative flex h-dvh w-full items-center justify-center overflow-hidden px-5 py-8 sm:px-9 sm:py-9',
+        className,
+      )}>
       {children}
       {scroller}
     </section>

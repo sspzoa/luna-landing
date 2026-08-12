@@ -12,7 +12,7 @@ const scroll = () => {
 export function DarkScroller() {
   return (
     <div
-      className="absolute bottom-20 flex flex-col items-center gap-2 cursor-pointer hover:opacity-50 duration-300"
+      className="absolute bottom-6 flex cursor-pointer flex-col items-center gap-2 duration-300 hover:opacity-50 sm:bottom-20"
       onClick={scroll}
       onKeyDown={scroll}
       aria-label="Scroll down">
@@ -27,7 +27,7 @@ export function DarkScroller() {
 export function LightScroller() {
   return (
     <div
-      className="absolute bottom-20 flex flex-col items-center gap-2 cursor-pointer hover:opacity-50 duration-300"
+      className="absolute bottom-6 flex cursor-pointer flex-col items-center gap-2 duration-300 hover:opacity-50 sm:bottom-20"
       onClick={scroll}
       onKeyDown={scroll}
       aria-label="Scroll down">

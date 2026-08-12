@@ -1,11 +1,5 @@
 import { notionRequest } from '@/lib/notion';
-import type {
-  NotionAwardPage,
-  NotionInformationPage,
-  NotionMemberPage,
-  NotionProjectPage,
-  NotionQnAPage,
-} from '@/lib/notion-types';
+import type { NotionAwardPage, NotionMemberPage, NotionProjectPage, NotionQnAPage } from '@/lib/notion-types';
 import {
   dateRange,
   fileUrl,
@@ -26,7 +20,6 @@ const DATABASE_IDS = {
   AWARDS: '5c6c5d4aa4e24a1ba18aee280fcfc39a',
   QNA: '5153a7c657844eebaa62b737c726447d',
   MEMBERS: '3d3cae4b3b50481497a6c52f61413921',
-  INFORMATION: '564bbb8126ca46a69e44288548d99fa2',
   PROJECTS: 'f73e99abb9ea4817b2d6c6333d152242',
 } as const;
 
@@ -138,14 +131,6 @@ async function loadProjects(): Promise<Project[]> {
   return projectSchema.array().parse(projects);
 }
 
-async function loadInformationBase(): Promise<Array<{ id: string; moto: string | null }>> {
-  const response = await queryDatabase<NotionInformationPage>(DATABASE_IDS.INFORMATION);
-  return response.results.map((result) => ({
-    id: result.id,
-    moto: titleText(result.properties.moto),
-  }));
-}
-
 const getAwardsCached = unstable_cache(loadAwards, ['luna-awards'], {
   revalidate: REVALIDATE_SECONDS,
   tags: ['awards'],
@@ -166,29 +151,20 @@ const getProjectsCached = unstable_cache(loadProjects, ['luna-projects'], {
   tags: ['projects'],
 });
 
-const getInformationBaseCached = unstable_cache(loadInformationBase, ['luna-information-base'], {
-  revalidate: REVALIDATE_SECONDS,
-  tags: ['information'],
-});
-
 export const fetchAwards = cache(() => getAwardsCached());
 export const fetchQnA = cache(() => getQnACached());
 export const fetchMembers = cache(() => getMembersCached());
 export const fetchProjects = cache(() => getProjectsCached());
 
-export const fetchInformation = cache(async (): Promise<Information[]> => {
-  const [baseInfo, awards, projects] = await Promise.all([getInformationBaseCached(), fetchAwards(), fetchProjects()]);
-
+export const fetchInformation = cache(async (): Promise<Information> => {
+  const [awards, projects] = await Promise.all([fetchAwards(), fetchProjects()]);
   const totalPrizeMoney = calculateTotalPrizeMoney(awards);
 
-  const information = baseInfo.map((info) => ({
-    ...info,
+  return informationSchema.parse({
     contests: (awards.length + 40).toString(),
     projects: (projects.length + 23).toString(),
     prizemoney: `${(totalPrizeMoney + 75000000).toString().slice(0, -6)}00`,
-  }));
-
-  return informationSchema.array().parse(information);
+  });
 });
 
 export async function getHomeData() {

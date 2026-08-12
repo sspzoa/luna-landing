@@ -33,9 +33,9 @@ export default function QnaSection({ qna }: QnaSectionProps) {
   };
 
   return (
-    <div className="relative flex w-full flex-col items-center justify-center gap-30 px-9 pt-48 pb-30">
-      <Container className="relative flex min-h-[315px] flex-col items-center justify-between gap-9 md:flex-row">
-        <div className="z-10 flex shrink-0 flex-col gap-4 self-start md:self-center">
+    <div className="relative flex w-full flex-col items-center justify-center gap-16 px-5 pt-28 pb-16 sm:gap-30 sm:px-9 sm:pt-48 sm:pb-30">
+      <Container className="relative flex min-h-0 flex-col items-center justify-between gap-9 md:min-h-[315px] md:flex-row">
+        <div className="z-10 flex w-full shrink-0 flex-col gap-4 self-start md:self-center">
           <p className="text-36 font-semibold text-luna-dark">자주 묻는 질문</p>
           <p className="max-w-[435px] text-wrap text-20">
             루나에 대해서 자주 묻는 질문을 정리했습니다.
@@ -67,7 +67,7 @@ export default function QnaSection({ qna }: QnaSectionProps) {
               )}>
               <button
                 type="button"
-                className="flex cursor-pointer flex-row items-center gap-4 px-9 py-7 text-left"
+                className="flex cursor-pointer flex-row items-center gap-3 px-5 py-5 text-left sm:gap-4 sm:px-9 sm:py-7"
                 onClick={() => toggleExpand(item.id)}
                 aria-expanded={expanded}
                 aria-controls={`answer-${item.id}`}>
@@ -80,8 +80,10 @@ export default function QnaSection({ qna }: QnaSectionProps) {
                   'overflow-hidden transition-all duration-300 ease-in-out',
                   expanded ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0',
                 )}>
-                <hr className="mx-9 text-luna-dark-10" />
-                <div className="flex flex-row justify-start gap-4 px-9 py-7" id={`answer-${item.id}`}>
+                <hr className="mx-5 text-luna-dark-10 sm:mx-9" />
+                <div
+                  className="flex flex-row justify-start gap-3 px-5 py-5 sm:gap-4 sm:px-9 sm:py-7"
+                  id={`answer-${item.id}`}>
                   <p className="text-20 font-bold text-luna-dark">A</p>
                   <p className="text-20 font-medium text-luna-dark">{item.answer}</p>
                 </div>

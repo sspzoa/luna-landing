@@ -46,11 +46,9 @@ export const projectSchema = z.object({
 });
 
 export const informationSchema = z.object({
-  id: z.string(),
-  moto: z.string().nullable(),
-  contests: z.string().nullable(),
-  projects: z.string().nullable(),
-  prizemoney: z.string().nullable(),
+  contests: z.string(),
+  projects: z.string(),
+  prizemoney: z.string(),
 });
 
 export type Award = z.infer<typeof awardSchema>;

@@ -63,7 +63,7 @@ export default function LunaModel() {
         height={418}
         draggable={false}
         priority
-        className="h-auto w-[min(500px,70vw)] select-none"
+        className="h-auto w-[min(500px,55vw)] max-w-[280px] select-none sm:max-w-none sm:w-[min(500px,42vw)]"
       />
     </div>
   );

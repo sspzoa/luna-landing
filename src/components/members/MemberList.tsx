@@ -68,7 +68,7 @@ export default function MemberList({ members }: MemberListProps) {
         />
       </div>
 
-      <Container className="grid grid-cols-2 gap-20 md:grid-cols-3">
+      <Container className="grid grid-cols-2 gap-8 sm:gap-12 md:grid-cols-3 md:gap-20">
         {visibleMembers.map((member) => (
           <article key={member.id} className="flex flex-col items-center justify-center gap-5">
             <p className="text-16 font-semibold opacity-50">{member.position || 'Member'}</p>
@@ -88,7 +88,7 @@ export default function MemberList({ members }: MemberListProps) {
                 {member.generation} {member.class}
               </p>
             </div>
-            <div className="flex min-h-[54px] min-w-[220px] items-center justify-center rounded-full border border-luna-dark-10 px-4 py-3">
+            <div className="flex min-h-[54px] w-full max-w-[220px] items-center justify-center rounded-full border border-luna-dark-10 px-3 py-3 sm:px-4">
               <p className="text-center text-16 font-medium text-luna-dark opacity-50">{member.description || ''}</p>
             </div>
           </article>

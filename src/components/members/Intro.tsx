@@ -39,9 +39,9 @@ export default function Intro({ members }: IntroProps) {
         <div className="absolute inset-0 bg-[#000] opacity-50" />
       </div>
 
-      <div className="relative z-10 flex w-full max-w-[1200px] flex-col items-center justify-center gap-7">
+      <div className="relative z-10 flex w-full max-w-[1200px] flex-col items-center justify-center gap-4 px-1 sm:gap-7">
         <p className="text-center text-64 font-extrabold text-luna-white">Members of LUNA</p>
-        <p className="text-center text-20 text-luna-white opacity-80">
+        <p className="max-w-[40rem] text-center text-20 text-luna-white opacity-80">
           2018년부터 지금의 LUNA가 있기까지,
           <br />
           <strong className="font-semibold">LUNA의 목표를 향해 함께 달려가고 있는</strong>

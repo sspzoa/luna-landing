@@ -1,5 +1,12 @@
 import type { Config } from 'tailwindcss';
 
+/** Fluid type: scales between 360px–1200px viewports (replaces transform page-scale). */
+function fluid(minPx: number, maxPx: number, minVp = 360, maxVp = 1200) {
+  const slope = (maxPx - minPx) / (maxVp - minVp);
+  const intercept = minPx - slope * minVp;
+  return `clamp(${minPx / 16}rem, ${intercept.toFixed(4)}px + ${(slope * 100).toFixed(4)}vw, ${maxPx / 16}rem)`;
+}
+
 const config: Config = {
   future: {
     oxide: false,
@@ -21,22 +28,24 @@ const config: Config = {
       'luna-white-50': 'var(--luna-white-50)',
     },
     fontSize: {
-      96: ['96px', { lineHeight: 'normal', letterSpacing: '-2.88px' }],
-      84: ['84px', { lineHeight: 'normal', letterSpacing: '-2.52px' }],
-      64: ['64px', { lineHeight: 'normal', letterSpacing: '-1.92px' }],
-      48: ['48px', { lineHeight: 'normal', letterSpacing: '-1.44px' }],
-      40: ['40px', { lineHeight: 'normal', letterSpacing: '-1.2px' }],
-      36: ['36px', { lineHeight: 'normal', letterSpacing: '-1.08px' }],
-      32: ['32px', { lineHeight: 1.8, letterSpacing: '-0.96px' }],
-      28: ['28px', { lineHeight: '40px' }],
-      24: ['24px', { lineHeight: 'normal', letterSpacing: '-0.72px' }],
-      20: ['20px', { lineHeight: 1.8, letterSpacing: '-0.6px' }],
-      16: ['16px', { letterSpacing: '-0.48px' }],
-      15: ['15px'],
-      14: ['14px', { lineHeight: 'normal', letterSpacing: '-0.42px' }],
-      12: ['12px', { lineHeight: 'normal', letterSpacing: '-0.36px' }],
+      96: [fluid(48, 96), { lineHeight: '1.05', letterSpacing: '-0.03em' }],
+      84: [fluid(40, 84), { lineHeight: '1.05', letterSpacing: '-0.03em' }],
+      64: [fluid(36, 64), { lineHeight: '1.1', letterSpacing: '-0.03em' }],
+      48: [fluid(28, 48), { lineHeight: '1.15', letterSpacing: '-0.03em' }],
+      40: [fluid(24, 40), { lineHeight: '1.2', letterSpacing: '-0.03em' }],
+      36: [fluid(22, 36), { lineHeight: '1.25', letterSpacing: '-0.03em' }],
+      32: [fluid(20, 32), { lineHeight: '1.5', letterSpacing: '-0.03em' }],
+      28: [fluid(18, 28), { lineHeight: '1.4', letterSpacing: '-0.02em' }],
+      24: [fluid(17, 24), { lineHeight: '1.35', letterSpacing: '-0.02em' }],
+      20: [fluid(15, 20), { lineHeight: '1.7', letterSpacing: '-0.02em' }],
+      18: [fluid(14, 18), { lineHeight: '1.5', letterSpacing: '-0.02em' }],
+      16: [fluid(14, 16), { letterSpacing: '-0.02em' }],
+      15: [fluid(13, 15), { letterSpacing: '-0.02em' }],
+      14: [fluid(12, 14), { lineHeight: 'normal', letterSpacing: '-0.02em' }],
+      12: [fluid(11, 12), { lineHeight: 'normal', letterSpacing: '-0.02em' }],
     },
   },
   plugins: [],
 };
+
 export default config;

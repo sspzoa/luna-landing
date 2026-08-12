@@ -67,9 +67,9 @@ export default function Future() {
   );
 
   return (
-    <Section className="overflow-hidden py-50">
-      <div className="relative isolate">
-        <div className="relative z-20 rounded-[50px] border-2 border-[#fff6] bg-[#C7C7C71A] px-20 py-25 backdrop-blur-sm">
+    <Section className="overflow-hidden py-20 sm:py-50">
+      <div className="relative isolate w-full max-w-[900px]">
+        <div className="relative z-20 rounded-[28px] border-2 border-[#fff6] bg-[#C7C7C71A] px-6 py-12 backdrop-blur-sm sm:rounded-[50px] sm:px-20 sm:py-25">
           <p className="text-center text-28 font-medium">
             루나는 앞으로도 여러분들과 함께
             <br />

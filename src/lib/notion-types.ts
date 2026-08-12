@@ -64,12 +64,6 @@ export interface NotionMemberPage extends NotionPage {
   };
 }
 
-export interface NotionInformationPage extends NotionPage {
-  properties: {
-    moto?: NotionTitleProperty;
-  };
-}
-
 export interface NotionProjectPage extends NotionPage {
   properties: {
     year?: NotionSelectProperty;

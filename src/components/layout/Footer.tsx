@@ -1,49 +1,52 @@
-import type { Information } from '@/lib/types';
+import Container from '@/components/common/Container';
 import Image from 'next/image';
 import Link from 'next/link';
 
-interface FooterProps {
-  information?: Information[];
-}
-
-export default function Footer({ information }: FooterProps) {
+export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <div className="w-full flex justify-center items-center p-[54px] bg-[#E2E0EC]">
-      <div className="max-w-[1200px] w-full flex flex-row justify-between items-center opacity-40 gap-5">
-        <div className="flex flex-row justify-center items-center gap-6 self-start">
-          <Image src="/icons/logo.svg" alt="logo" width={54} height={54} draggable={false} />
-          <div className="flex-col flex gap-2">
-            <p className="text-16">{information?.[0]?.moto},</p>
+    <footer className="flex w-full items-center justify-center bg-[#E2E0EC] px-5 py-10 sm:px-9 sm:py-[54px]">
+      <Container className="flex flex-col items-start justify-between gap-8 opacity-40 sm:flex-row sm:items-center sm:gap-5">
+        <div className="flex flex-row items-center justify-center gap-4 self-start sm:gap-6">
+          <Image
+            src="/icons/logo.svg"
+            alt="logo"
+            width={54}
+            height={54}
+            draggable={false}
+            className="size-10 sm:size-[54px]"
+          />
+          <div className="flex flex-col gap-2">
+            <p className="text-16">세상을 비추는 달,</p>
             <p className="text-24 font-semibold">LUNA</p>
           </div>
         </div>
-        <div className="flex flex-col items-end justify-center gap-5 self-end">
-          <div className="flex flex-row gap-4 items-end justify-center">
+        <div className="flex flex-col items-start justify-center gap-4 self-start sm:items-end sm:gap-5 sm:self-end">
+          <div className="flex flex-row items-center justify-center gap-4">
             <Link
-              className="hover:opacity-50 duration-300"
+              className="duration-300 hover:opacity-50"
               href="https://www.instagram.com/dimigo_luna/"
               target="_blank"
               rel="noreferrer noopener">
               <Image src="/icons/instagram.svg" alt="instagram" width={24} height={24} draggable={false} />
             </Link>
             <Link
-              className="hover:opacity-50 duration-300"
+              className="duration-300 hover:opacity-50"
               href="https://github.com/LUNA-coding"
               target="_blank"
               rel="noreferrer noopener">
               <Image src="/icons/github.svg" alt="github" width={24} height={24} draggable={false} />
             </Link>
             <Link
-              className="hover:opacity-50 duration-300"
+              className="duration-300 hover:opacity-50"
               href="https://www.youtube.com/channel/UCWfvTEUzP9b2pPTDBSi9IMg"
               target="_blank"
               rel="noreferrer noopener">
               <Image src="/icons/youtube.svg" alt="youtube" width={24} height={24} draggable={false} />
             </Link>
             <Link
-              className="hover:opacity-50 duration-300"
+              className="duration-300 hover:opacity-50"
               href="https://www.facebook.com/lunacoding/"
               target="_blank"
               rel="noreferrer noopener">
@@ -53,7 +56,7 @@ export default function Footer({ information }: FooterProps) {
           <p className="text-12 font-semibold">
             © 2018-{currentYear}{' '}
             <Link
-              className="hover:opacity-50 duration-300"
+              className="duration-300 hover:opacity-50"
               href="https://github.com/LUNA-coding"
               target="_blank"
               rel="noreferrer noopener">
@@ -62,7 +65,7 @@ export default function Footer({ information }: FooterProps) {
             All rights reserved.
           </p>
         </div>
-      </div>
-    </div>
+      </Container>
+    </footer>
   );
 }

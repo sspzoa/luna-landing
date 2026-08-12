@@ -10,7 +10,7 @@ This document is written for AI coding agents working on this project.
 
 Routes:
 
-- `/` — Home page (intro, projects ticker, contests, future, made-by)
+- `/` — Home page (intro, projects ticker, contests, future)
 - `/awards` — Award records by year
 - `/members` — Members by generation
 - `/projects` — Projects by year

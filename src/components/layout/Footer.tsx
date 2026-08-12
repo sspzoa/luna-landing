@@ -2,12 +2,27 @@ import Container from '@/components/common/Container';
 import Image from 'next/image';
 import Link from 'next/link';
 
+function RefreshedBy({ className }: { className?: string }) {
+  return (
+    <p className={className}>
+      Maintained by{' '}
+      <Link
+        className="font-bold text-luna-purple duration-300 hover:opacity-50"
+        href="https://github.com/sspzoa"
+        target="_blank"
+        rel="noreferrer noopener">
+        sspzoa
+      </Link>
+    </p>
+  );
+}
+
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="flex w-full items-center justify-center bg-[#E2E0EC] px-5 py-10 sm:px-9 sm:py-[54px]">
-      <Container className="flex flex-col items-start justify-between gap-8 opacity-40 sm:flex-row sm:items-center sm:gap-5">
+    <footer className="relative flex w-full items-center justify-center bg-[#E2E0EC] px-5 py-10 sm:px-9 sm:py-[54px]">
+      <Container className="relative z-10 flex flex-col items-start justify-between gap-8 opacity-40 sm:flex-row sm:items-center sm:gap-5">
         <div className="flex flex-row items-center justify-center gap-4 self-start sm:gap-6">
           <Image
             src="/icons/logo.svg"
@@ -64,8 +79,11 @@ export default function Footer() {
             </Link>{' '}
             All rights reserved.
           </p>
+          <RefreshedBy className="text-12 font-semibold sm:hidden" />
         </div>
       </Container>
+
+      <RefreshedBy className="absolute top-1/2 left-1/2 z-20 hidden -translate-x-1/2 -translate-y-1/2 text-center text-12 font-semibold opacity-40 sm:block" />
     </footer>
   );
 }

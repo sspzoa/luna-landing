@@ -2,7 +2,6 @@ import ErrorState from '@/components/common/ErrorState';
 import Contests from '@/components/home/Contests';
 import Future from '@/components/home/Future';
 import Intro from '@/components/home/Intro';
-import MadeBy from '@/components/home/MadeBy';
 import Projects from '@/components/home/Projects';
 import { getHomeData } from '@/lib/luna-data';
 import { SITE_DESCRIPTION, SITE_URL } from '@/lib/seo';
@@ -33,7 +32,6 @@ export default async function Home() {
         <Projects information={information} projects={projects} />
         <Contests information={information} />
         <Future />
-        <MadeBy />
       </div>
     );
   } catch {

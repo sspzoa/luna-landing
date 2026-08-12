@@ -90,7 +90,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <Analytics />
         <SpeedInsights />
         <Navbar />
-        <main className="min-h-dvh">{children}</main>
+        <main className="min-h-dvh pb-20 sm:pb-32 md:pb-40">{children}</main>
         <Footer />
       </body>
     </html>

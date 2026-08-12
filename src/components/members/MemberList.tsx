@@ -2,10 +2,9 @@
 
 import Container from '@/components/common/Container';
 import FilterChips from '@/components/common/FilterChips';
+import NotionImage from '@/components/common/NotionImage';
 import Section from '@/components/common/Section';
-import { notionImageSrc } from '@/lib/image-utils';
 import type { Member } from '@/lib/types';
-import Image from 'next/image';
 import { useMemo, useState } from 'react';
 
 interface MemberListProps {
@@ -73,14 +72,15 @@ export default function MemberList({ members }: MemberListProps) {
         {visibleMembers.map((member) => (
           <article key={member.id} className="flex flex-col items-center justify-center gap-5">
             <p className="text-16 font-semibold opacity-50">{member.position || 'Member'}</p>
-            <Image
-              className="aspect-square rounded-full object-cover"
-              src={notionImageSrc(member.id, member.image, '/images/members/default.svg')}
+            <NotionImage
+              className="size-[140px] shrink-0 rounded-full"
+              pageId={member.id}
+              image={member.image}
+              fallback="/images/members/default.svg"
               alt={`${member.name} profile`}
               width={140}
               height={140}
-              draggable={false}
-              unoptimized
+              objectFit="cover"
             />
             <div className="flex flex-col items-center justify-center gap-1.5">
               <p className="text-24 font-semibold">{member.name}</p>

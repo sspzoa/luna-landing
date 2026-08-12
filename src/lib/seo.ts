@@ -16,10 +16,3 @@ export const SITE_KEYWORDS = [
   '고등학생 창업',
   '사회문제 해결',
 ];
-
-export const OG_IMAGE = {
-  url: `${SITE_URL}/images/og-image.png`,
-  width: 1200,
-  height: 630,
-  alt: 'LUNA - IT 소셜벤처 동아리',
-} as const;

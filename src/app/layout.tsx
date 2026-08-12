@@ -3,7 +3,7 @@ import './globals.css';
 import JsonLd from '@/components/common/JsonLd';
 import Footer from '@/components/layout/Footer';
 import Navbar from '@/components/layout/Navbar';
-import { OG_IMAGE, SITE_DESCRIPTION, SITE_KEYWORDS, SITE_NAME, SITE_TITLE, SITE_URL } from '@/lib/seo';
+import { SITE_DESCRIPTION, SITE_KEYWORDS, SITE_NAME, SITE_TITLE, SITE_URL } from '@/lib/seo';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { ReactNode } from 'react';
@@ -31,13 +31,11 @@ export const metadata: Metadata = {
     siteName: SITE_NAME,
     locale: 'ko_KR',
     type: 'website',
-    images: [OG_IMAGE],
   },
   twitter: {
     card: 'summary_large_image',
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
-    images: [OG_IMAGE.url],
   },
   robots: {
     index: true,

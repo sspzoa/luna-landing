@@ -3,24 +3,24 @@
 import Container from '@/components/common/Container';
 import EmptyState from '@/components/common/EmptyState';
 import { cn } from '@/lib/cn';
-import type { QnA } from '@/lib/types';
+import type { Faq } from '@/lib/types';
 import { useMemo, useState } from 'react';
 
-interface QnaSectionProps {
-  qna: QnA[];
+interface FaqSectionProps {
+  faqs: Faq[];
 }
 
-export default function QnaSection({ qna }: QnaSectionProps) {
+export default function FaqSection({ faqs }: FaqSectionProps) {
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
 
-  const sortedQna = useMemo(
+  const sortedFaqs = useMemo(
     () =>
-      [...qna].sort((a, b) => {
+      [...faqs].sort((a, b) => {
         const aOrder = a.order ?? Number.POSITIVE_INFINITY;
         const bOrder = b.order ?? Number.POSITIVE_INFINITY;
         return aOrder - bOrder;
       }),
-    [qna],
+    [faqs],
   );
 
   const toggleExpand = (id: string) => {
@@ -43,20 +43,20 @@ export default function QnaSection({ qna }: QnaSectionProps) {
             아래 질문들에 답변한 유튜브 영상이 있으니, <strong>궁금하시다면 영상을 시청해주세요!</strong>
           </p>
         </div>
-        <iframe
-          className="self-end rounded-3xl border-2 border-luna-dark-10 md:absolute md:right-0 md:self-center"
-          width="560"
-          height="315"
-          src="https://www.youtube-nocookie.com/embed/hIX8CQHqW-M?si=MjRFgxRxhsyvhzuc"
-          title="YouTube video player"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerPolicy="strict-origin-when-cross-origin"
-          allowFullScreen
-        />
+        <div className="relative aspect-video w-full max-w-[560px] overflow-hidden rounded-3xl border-2 border-luna-dark-10 self-end md:absolute md:right-0 md:self-center">
+          <iframe
+            className="absolute inset-0 h-full w-full"
+            src="https://www.youtube-nocookie.com/embed/hIX8CQHqW-M?si=MjRFgxRxhsyvhzuc"
+            title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+          />
+        </div>
       </Container>
 
       <Container className="flex flex-col gap-7">
-        {sortedQna.map((item) => {
+        {sortedFaqs.map((item) => {
           const expanded = expandedIds.has(item.id);
           return (
             <div
@@ -92,7 +92,7 @@ export default function QnaSection({ qna }: QnaSectionProps) {
           );
         })}
 
-        {sortedQna.length === 0 && (
+        {sortedFaqs.length === 0 && (
           <EmptyState className="rounded-3xl border-2 border-luna-dark-10" message="현재 등록된 질문이 없습니다." />
         )}
       </Container>

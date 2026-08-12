@@ -30,7 +30,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
-      url: `${SITE_URL}/qna`,
+      url: `${SITE_URL}/faq`,
       lastModified,
       changeFrequency: 'monthly',
       priority: 0.6,

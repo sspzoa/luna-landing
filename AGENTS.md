@@ -14,7 +14,7 @@ Routes:
 - `/awards` — Award records by year
 - `/members` — Members by generation
 - `/projects` — Projects by year
-- `/qna` — Frequently asked questions accordion
+- `/faq` — Frequently asked questions accordion
 
 All dynamic content is fetched from Notion data sources at request time on the server.
 
@@ -51,14 +51,14 @@ Removed from earlier versions:
 ├── src/
 │   ├── app/                   # Routes + metadata only
 │   │   ├── page.tsx
-│   │   ├── awards|members|projects|qna/page.tsx
+│   │   ├── awards|members|projects|faq/page.tsx
 │   │   ├── globals.css
 │   │   ├── layout.tsx
 │   │   ├── manifest.ts / robots.ts / sitemap.ts
 │   ├── components/
 │   │   ├── common/            # Container, Section, Hero, FilterChips, FadeIn…
 │   │   ├── layout/            # Navbar, Footer
-│   │   ├── home/ awards/ members/ projects/ qna/
+│   │   ├── home/ awards/ members/ projects/ faq/
 │   ├── constants/             # nav config
 │   └── lib/                   # data + utils
 │       ├── luna-data.ts       # cached Notion fetchers

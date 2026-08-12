@@ -44,7 +44,7 @@ export interface NotionAwardPage extends NotionPage {
   };
 }
 
-export interface NotionQnAPage extends NotionPage {
+export interface NotionFaqPage extends NotionPage {
   properties: {
     question?: NotionTitleProperty;
     order?: NotionNumberProperty;

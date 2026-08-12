@@ -17,7 +17,7 @@ export const awardSchema = z.object({
   prizemoney: z.string().nullable(),
 });
 
-export const qnaSchema = z.object({
+export const faqSchema = z.object({
   id: z.string(),
   question: z.string().nullable(),
   order: z.number().nullable(),
@@ -52,7 +52,7 @@ export const informationSchema = z.object({
 });
 
 export type Award = z.infer<typeof awardSchema>;
-export type QnA = z.infer<typeof qnaSchema>;
+export type Faq = z.infer<typeof faqSchema>;
 export type Member = z.infer<typeof memberSchema>;
 export type Project = z.infer<typeof projectSchema>;
 export type Information = z.infer<typeof informationSchema>;

@@ -1,5 +1,5 @@
 import { notionRequest } from '@/lib/notion';
-import type { NotionAwardPage, NotionMemberPage, NotionProjectPage, NotionQnAPage } from '@/lib/notion-types';
+import type { NotionAwardPage, NotionFaqPage, NotionMemberPage, NotionProjectPage } from '@/lib/notion-types';
 import {
   dateRange,
   fileUrl,
@@ -10,15 +10,15 @@ import {
   selectName,
   titleText,
 } from '@/lib/notion/mappers';
-import { awardSchema, informationSchema, memberSchema, projectSchema, qnaSchema } from '@/lib/schemas';
-import type { Award, Information, Member, Project, QnA } from '@/lib/types';
+import { awardSchema, faqSchema, informationSchema, memberSchema, projectSchema } from '@/lib/schemas';
+import type { Award, Faq, Information, Member, Project } from '@/lib/types';
 import { calculateTotalPrizeMoney } from '@/lib/utils';
 import { unstable_cache } from 'next/cache';
 import { cache } from 'react';
 
 const DATABASE_IDS = {
   AWARDS: '5c6c5d4aa4e24a1ba18aee280fcfc39a',
-  QNA: '5153a7c657844eebaa62b737c726447d',
+  FAQ: '5153a7c657844eebaa62b737c726447d',
   MEMBERS: '3d3cae4b3b50481497a6c52f61413921',
   PROJECTS: 'f73e99abb9ea4817b2d6c6333d152242',
 } as const;
@@ -55,19 +55,19 @@ async function loadAwards(): Promise<Award[]> {
   return awardSchema.array().parse(awards);
 }
 
-async function loadQnA(): Promise<QnA[]> {
-  const response = await queryDatabase<NotionQnAPage>(DATABASE_IDS.QNA, {
+async function loadFaq(): Promise<Faq[]> {
+  const response = await queryDatabase<NotionFaqPage>(DATABASE_IDS.FAQ, {
     sorts: [{ property: 'order', direction: 'ascending' }],
   });
 
-  const qna = response.results.map((result) => ({
+  const faqs = response.results.map((result) => ({
     id: result.id,
     question: titleText(result.properties.question),
     order: result.properties.order?.number ?? null,
     answer: richText(result.properties.answer),
   }));
 
-  return qnaSchema.array().parse(qna);
+  return faqSchema.array().parse(faqs);
 }
 
 async function loadMembers(): Promise<Member[]> {
@@ -136,9 +136,9 @@ const getAwardsCached = unstable_cache(loadAwards, ['luna-awards'], {
   tags: ['awards'],
 });
 
-const getQnACached = unstable_cache(loadQnA, ['luna-qna'], {
+const getFaqCached = unstable_cache(loadFaq, ['luna-faq'], {
   revalidate: REVALIDATE_SECONDS,
-  tags: ['qna'],
+  tags: ['faq'],
 });
 
 const getMembersCached = unstable_cache(loadMembers, ['luna-members'], {
@@ -152,7 +152,7 @@ const getProjectsCached = unstable_cache(loadProjects, ['luna-projects'], {
 });
 
 export const fetchAwards = cache(() => getAwardsCached());
-export const fetchQnA = cache(() => getQnACached());
+export const fetchFaq = cache(() => getFaqCached());
 export const fetchMembers = cache(() => getMembersCached());
 export const fetchProjects = cache(() => getProjectsCached());
 

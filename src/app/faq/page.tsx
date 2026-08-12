@@ -8,7 +8,7 @@ export const dynamic = 'force-dynamic';
 export const metadata: Metadata = {
   title: 'FAQ',
   description:
-    'LUNA(루나)에 대해 자주 묻는 질문과 답변을 모았습니다. 디미고 IT 소셜벤처 동아리 지원·활동이 궁금하다면 확인해 보세요.',
+    'LUNA에 대해 자주 묻는 질문과 답변을 모았습니다. 디미고 IT 소셜벤처 동아리 지원·활동이 궁금하다면 확인해 보세요.',
   alternates: { canonical: '/faq' },
   openGraph: {
     title: 'FAQ | LUNA',

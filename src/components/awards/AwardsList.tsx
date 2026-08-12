@@ -5,6 +5,7 @@ import EmptyState from '@/components/common/EmptyState';
 import FilterChips from '@/components/common/FilterChips';
 import Section from '@/components/common/Section';
 import { defaultYear, formatKoreanDate, uniqueSortedYears } from '@/lib/collection';
+import { notionImageSrc } from '@/lib/image-utils';
 import type { Award } from '@/lib/types';
 import Image from 'next/image';
 import { useMemo, useState } from 'react';
@@ -33,11 +34,12 @@ export default function AwardsList({ awards }: AwardsListProps) {
           <article key={award.id} className="flex w-full flex-col rounded-[20px] border-2 border-luna-dark-10">
             <Image
               className="h-[180px] w-full rounded-t-[20px] object-cover"
-              src={award.image || '/images/awards/default.svg'}
+              src={notionImageSrc(award.id, award.image, '/images/awards/default.svg')}
               alt={award.name || 'award'}
               width={376}
               height={180}
               draggable={false}
+              unoptimized
             />
             <div className="flex flex-col gap-5 p-5">
               <div className="flex flex-col gap-1.5">

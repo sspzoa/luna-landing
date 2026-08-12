@@ -1,19 +1,10 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  transpilePackages: ['three', '@splinetool/loader'],
   images: {
-    unoptimized: true,
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'prod-files-secure.s3.us-west-2.amazonaws.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'api.luna.codes',
-      },
-    ],
+    formats: ['image/webp'],
+    dangerouslyAllowSVG: true,
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
   async headers() {
     return [
@@ -26,9 +17,9 @@ const nextConfig: NextConfig = {
               "default-src 'self'",
               "script-src 'self' 'unsafe-eval' 'wasm-unsafe-eval' 'unsafe-inline' blob: https://pagead2.googlesyndication.com https://*.google.com https://*.googlesyndication.com https://*.google-analytics.com https://va.vercel-scripts.com",
               "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com",
-              "img-src 'self' data: blob: https://prod-files-secure.s3.us-west-2.amazonaws.com https://api.luna.codes https://*.googlesyndication.com https://*.google.com https://*.google-analytics.com",
+              "img-src 'self' data: blob: https://*.googlesyndication.com https://*.google.com https://*.google-analytics.com",
               "font-src 'self' https://cdn.jsdelivr.net https://fonts.gstatic.com",
-              "connect-src 'self' blob: https://api.luna.codes https://pagead2.googlesyndication.com https://*.google.com https://*.googlesyndication.com https://*.google-analytics.com https://va.vercel-scripts.com",
+              "connect-src 'self' blob: https://pagead2.googlesyndication.com https://*.google.com https://*.googlesyndication.com https://*.google-analytics.com https://va.vercel-scripts.com",
               "worker-src 'self' blob:",
               "child-src 'self' blob:",
               "frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com",

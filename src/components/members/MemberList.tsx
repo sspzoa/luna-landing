@@ -3,6 +3,7 @@
 import Container from '@/components/common/Container';
 import FilterChips from '@/components/common/FilterChips';
 import Section from '@/components/common/Section';
+import { notionImageSrc } from '@/lib/image-utils';
 import type { Member } from '@/lib/types';
 import Image from 'next/image';
 import { useMemo, useState } from 'react';
@@ -50,21 +51,10 @@ function groupMembers(members: Member[]) {
 }
 
 export default function MemberList({ members }: MemberListProps) {
-  const currentYear = new Date().getFullYear();
   const { grouped, generations, defaultGeneration } = useMemo(() => groupMembers(members), [members]);
   const [selectedGeneration, setSelectedGeneration] = useState(defaultGeneration);
   const activeGeneration = selectedGeneration || defaultGeneration;
   const visibleMembers = grouped[activeGeneration] ?? [];
-
-  const shouldUseDefaultImage = (member: Member) => {
-    if (member.lunaGeneration === '명예 멤버') return true;
-    if (!member.generation) return false;
-    const match = member.generation.match(/(\d+)기/);
-    if (!match?.[1]) return false;
-    const generationNumber = Number.parseInt(match[1], 10);
-    if (Number.isNaN(generationNumber)) return false;
-    return generationNumber <= currentYear - 2004;
-  };
 
   return (
     <Section className="gap-25">
@@ -85,15 +75,12 @@ export default function MemberList({ members }: MemberListProps) {
             <p className="text-16 font-semibold opacity-50">{member.position || 'Member'}</p>
             <Image
               className="aspect-square rounded-full object-cover"
-              src={
-                shouldUseDefaultImage(member)
-                  ? '/images/members/default.svg'
-                  : member.image || '/images/members/default.svg'
-              }
+              src={notionImageSrc(member.id, member.image, '/images/members/default.svg')}
               alt={`${member.name} profile`}
               width={140}
               height={140}
               draggable={false}
+              unoptimized
             />
             <div className="flex flex-col items-center justify-center gap-1.5">
               <p className="text-24 font-semibold">{member.name}</p>

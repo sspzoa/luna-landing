@@ -32,14 +32,6 @@ const DATABASE_IDS = {
 
 const REVALIDATE_SECONDS = 60 * 5;
 
-export interface LunaData {
-  awards: Award[];
-  qna: QnA[];
-  members: Member[];
-  projects: Project[];
-  information: Information[];
-}
-
 async function queryDatabase<T>(databaseId: string, body?: Record<string, unknown>) {
   return notionRequest<{ results: T[] }>(`/databases/${databaseId}/query`, {
     method: 'POST',
@@ -99,25 +91,26 @@ async function loadMembers(): Promise<Member[]> {
 
   const members = response.results.map((result) => {
     const generation = selectName(result.properties.generation);
-    let returnImage = false;
+    const lunaGeneration = selectName(result.properties.lunaGeneration);
+    let showImage = false;
 
-    if (generation) {
+    if (lunaGeneration !== '명예 멤버' && generation) {
       const match = generation.match(/^(\d+)기$/);
       if (match?.[1]) {
         const generationNumber = Number.parseInt(match[1], 10);
-        returnImage = generationNumber > thresholdGeneration;
+        showImage = generationNumber > thresholdGeneration;
       }
     }
 
     return {
       id: result.id,
       position: selectName(result.properties.position),
-      image: returnImage ? fileUrl(result.properties.image) : null,
+      image: showImage ? fileUrl(result.properties.image) : null,
       name: titleText(result.properties.name),
       generation,
       class: selectName(result.properties.class),
       description: richText(result.properties.description),
-      lunaGeneration: selectName(result.properties.lunaGeneration),
+      lunaGeneration,
     };
   });
 
@@ -178,7 +171,6 @@ const getInformationBaseCached = unstable_cache(loadInformationBase, ['luna-info
   tags: ['information'],
 });
 
-/** Request-level dedupe + 5m cross-request cache */
 export const fetchAwards = cache(() => getAwardsCached());
 export const fetchQnA = cache(() => getQnACached());
 export const fetchMembers = cache(() => getMembersCached());
@@ -197,18 +189,6 @@ export const fetchInformation = cache(async (): Promise<Information[]> => {
   }));
 
   return informationSchema.array().parse(information);
-});
-
-export const getLunaData = cache(async (): Promise<LunaData> => {
-  const [awards, qna, members, projects, information] = await Promise.all([
-    fetchAwards(),
-    fetchQnA(),
-    fetchMembers(),
-    fetchProjects(),
-    fetchInformation(),
-  ]);
-
-  return { awards, qna, members, projects, information };
 });
 
 export async function getHomeData() {

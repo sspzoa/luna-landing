@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@google/genai": "^1.1.0",
-    "@splinetool/loader": "0.9.214",
     "@tailwindcss/oxide-linux-x64-gnu": "^4.0.9",
     "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",
@@ -20,7 +19,6 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "sharp": "^0.33.5",
-    "three": "0.142.0",
     "zod": "^3.24.2"
   },
   "devDependencies": {
@@ -29,7 +27,6 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@types/three": "0.142.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

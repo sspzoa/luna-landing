@@ -5,6 +5,7 @@ import EmptyState from '@/components/common/EmptyState';
 import FilterChips from '@/components/common/FilterChips';
 import Section from '@/components/common/Section';
 import { defaultYear, uniqueSortedYears } from '@/lib/collection';
+import { notionImageSrc } from '@/lib/image-utils';
 import type { Project } from '@/lib/types';
 import Image from 'next/image';
 import { useMemo, useState } from 'react';
@@ -38,11 +39,12 @@ export default function ProjectsList({ projects }: ProjectsListProps) {
             className="flex w-full flex-row items-center gap-7 rounded-[20px] border-2 border-luna-dark-10 p-7">
             <Image
               className="aspect-square shrink-0 object-contain"
-              src={project.image || '/images/projects/default.svg'}
+              src={notionImageSrc(project.id, project.image, '/images/projects/default.svg')}
               alt={project.name || 'project'}
               width={140}
               height={140}
               draggable={false}
+              unoptimized
             />
             <div className="flex flex-col gap-1.5">
               <p className="text-24 font-bold">{project.name}</p>

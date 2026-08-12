@@ -4,7 +4,7 @@ import Container from '@/components/common/Container';
 import HeroSection from '@/components/common/HeroSection';
 import { DarkScroller } from '@/components/common/Scroller';
 import type { Information } from '@/lib/types';
-import LunaSpline from './LunaSpline';
+import LunaModel from './LunaModel';
 
 interface IntroProps {
   information: Information[];
@@ -29,7 +29,7 @@ export default function Intro({ information }: IntroProps) {
           </p>
         </div>
         <div className="self-end md:absolute md:right-0 md:self-center">
-          <LunaSpline />
+          <LunaModel />
         </div>
       </Container>
     </HeroSection>

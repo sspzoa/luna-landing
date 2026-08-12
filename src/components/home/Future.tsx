@@ -1,7 +1,7 @@
 'use client';
 
-import OptimizedImage from '@/components/common/OptimizedImage';
 import Section from '@/components/common/Section';
+import Image from 'next/image';
 import { useMemo } from 'react';
 
 const animationItems = [
@@ -51,7 +51,7 @@ export default function Future() {
   const animationElements = useMemo(
     () =>
       animationItems.map((item, index) => (
-        <OptimizedImage
+        <Image
           key={item.alt}
           src={item.src}
           alt={item.alt}
@@ -60,7 +60,7 @@ export default function Future() {
           className={item.className}
           style={item.style}
           draggable={false}
-          index={index}
+          priority={index < 3}
         />
       )),
     [],
